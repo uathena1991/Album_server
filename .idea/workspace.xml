@@ -1,0 +1,913 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="2c717201-9a43-41e3-9f97-e969f26362c4" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/Album_server.iml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/algorithm_comparison.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/gen_scene_ground_truth.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/solo_time.py" />
+      <change beforePath="$PROJECT_DIR$/combine_album_server.py" afterPath="$PROJECT_DIR$/combine_album_server.py" />
+      <change beforePath="$PROJECT_DIR$/data_retriever_server.py" afterPath="$PROJECT_DIR$/data_retriever_server.py" />
+      <change beforePath="$PROJECT_DIR$/rank_cluster.py" afterPath="$PROJECT_DIR$/rank_cluster.py" />
+      <change beforePath="$PROJECT_DIR$/sudo_get_input_jason.py" afterPath="$PROJECT_DIR$/sudo_get_input_json.py" />
+      <change beforePath="$PROJECT_DIR$/wide_deep_predict.py" afterPath="$PROJECT_DIR$/wide_deep_predict.py" />
+      <change beforePath="$PROJECT_DIR$/wide_deep_train.py" afterPath="$PROJECT_DIR$/wide_deep_train.py" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="combine_album_server.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/combine_album_server.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="193">
+              <caret line="23" column="75" lean-forward="true" selection-start-line="23" selection-start-column="75" selection-end-line="23" selection-end-column="75" />
+              <folding>
+                <element signature="e#105#114#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="data_retriever_server.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/data_retriever_server.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="309">
+              <caret line="562" column="54" lean-forward="true" selection-start-line="562" selection-start-column="54" selection-end-line="562" selection-end-column="54" />
+              <folding>
+                <element signature="e#106#115#0" expanded="true" />
+                <element signature="e#585#781#0" expanded="false" />
+                <element signature="e#1392#1492#0" expanded="false" />
+                <element signature="e#2844#6221#0" expanded="false" />
+                <element signature="e#3811#3829#0" expanded="false" />
+                <element signature="e#4687#4694#0" expanded="false" />
+                <element signature="e#6945#8568#0" expanded="false" />
+                <element signature="e#9842#13127#0" expanded="false" />
+                <element signature="e#13316#13539#0" expanded="false" />
+                <element signature="e#13917#14335#1" expanded="false" />
+                <element signature="e#16089#16153#0" expanded="false" />
+                <element signature="e#20525#20601#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wide_deep_train.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wide_deep_train.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-7">
+              <caret line="220" column="24" lean-forward="true" selection-start-line="220" selection-start-column="24" selection-end-line="220" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="wide_deep_predict.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wide_deep_predict.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-3">
+              <caret line="89" column="38" lean-forward="true" selection-start-line="89" selection-start-column="38" selection-end-line="89" selection-end-column="38" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="solo_time.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/solo_time.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3358">
+              <caret line="146" column="24" lean-forward="false" selection-start-line="146" selection-start-column="24" selection-end-line="146" selection-end-column="24" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="algorithm_comparison.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/algorithm_comparison.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="405">
+              <caret line="25" column="12" lean-forward="true" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="12" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>miss_files</find>
+      <find>predict_output</find>
+      <find>visualize_cluster</find>
+      <find>compile_plist_info</find>
+      <find>pdb.</find>
+      <find>Scene</find>
+      <find>plist_parent_path</find>
+      <find>pdb.set_trace</find>
+      <find>Sample length</find>
+      <find>scene</find>
+      <find>plist_json</find>
+      <find>_scene</find>
+      <find>get_image_event_scene_label</find>
+      <find>image_cluster_idx</find>
+      <find>construct_pair_feature_matrix</find>
+      <find>features_m</find>
+      <find>true_label</find>
+      <find>labeling_image_cluster</find>
+      <find>cal_accuracy</find>
+      <find>zt-0092</find>
+      <find>zt-0091</find>
+      <find>cal_accuracy_pair</find>
+      <find>img_label</find>
+      <find>-1</find>
+      <find>cal_rank_total</find>
+      <find>cal_acc</find>
+      <find>label_pic_path</find>
+      <find>json.load</find>
+      <find>get_plist_from_json</find>
+      <find>json.load(</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>img_label</replace>
+      <replace>cluster</replace>
+    </replaceStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/../../toolbox_personal/common_lib.py" />
+        <option value="$PROJECT_DIR$/wide_deep_album1.py" />
+        <option value="$PROJECT_DIR$/wide_deep_album.py" />
+        <option value="$PROJECT_DIR$/Cluster_from_model.py" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/cluster_from_model.py" />
+        <option value="$PROJECT_DIR$/data_retriever.py" />
+        <option value="$PROJECT_DIR$/tmp_test.py" />
+        <option value="$PROJECT_DIR$/common_lib.py" />
+        <option value="$PROJECT_DIR$/tmp" />
+        <option value="$USER_HOME$/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/aa078c76d25a6ca599da6fb69c1d51a6/Message/MessageTemp/9e20f478899dc29eb19741386f9343c8/File/api_album.py" />
+        <option value="$PROJECT_DIR$/tmp_delete.py" />
+        <option value="$USER_HOME$/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/aa078c76d25a6ca599da6fb69c1d51a6/Message/MessageTemp/31c855b4f4f55712a0daaddce909800c/File/automl_controller.py" />
+        <option value="$USER_HOME$/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/aa078c76d25a6ca599da6fb69c1d51a6/Message/MessageTemp/9e20f478899dc29eb19741386f9343c8/File/api.py" />
+        <option value="$PROJECT_DIR$/gprof2dot.py" />
+        <option value="$PROJECT_DIR$/api_album.py" />
+        <option value="$PROJECT_DIR$/sudo_client.py" />
+        <option value="$PROJECT_DIR$/tmp.py" />
+        <option value="$PROJECT_DIR$/optics.py" />
+        <option value="$PROJECT_DIR$/tmp_check.py" />
+        <option value="$PROJECT_DIR$/compare_two_algorithm.py" />
+        <option value="$PROJECT_DIR$/../Album/tmp_delete.py" />
+        <option value="$PROJECT_DIR$/scene_ground_truth.py" />
+        <option value="$PROJECT_DIR$/sudo_get_input_jason.py" />
+        <option value="$PROJECT_DIR$/gen_scene_ground_truth.py" />
+        <option value="$PROJECT_DIR$/sudo_get_input_json.py" />
+        <option value="$PROJECT_DIR$/wide_deep_train.py" />
+        <option value="$PROJECT_DIR$/algorithm_comparison.py" />
+        <option value="$PROJECT_DIR$/solo_time.py" />
+        <option value="$PROJECT_DIR$/data_retriever_server.py" />
+        <option value="$PROJECT_DIR$/wide_deep_predict.py" />
+        <option value="$PROJECT_DIR$/rank_cluster.py" />
+        <option value="$PROJECT_DIR$/combine_album_server.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-1920" />
+    <option name="y" value="116" />
+    <option name="width" value="1920" />
+    <option name="height" value="1057" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State>
+            <id />
+          </State>
+          <State>
+            <id>Python</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>PyCompatibilityInspection</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scratches" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Album_server" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Album_server" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Album_server" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Album_server" type="462c0819:PsiDirectoryNode" />
+              <item name="data_retriever_server.py" type="8704e2dd:PyFileNode" />
+            </path>
+            <path>
+              <item name="Album_server" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Album_server" type="462c0819:PsiDirectoryNode" />
+              <item name="solo_time.py" type="8704e2dd:PyFileNode" />
+            </path>
+            <path>
+              <item name="Album_server" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Album_server" type="462c0819:PsiDirectoryNode" />
+              <item name="sudo_get_input_json.py" type="8704e2dd:PyFileNode" />
+            </path>
+            <path>
+              <item name="Album_server" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+            <path>
+              <item name="Album_server" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.6 (tf_py3) &gt;" type="70bed36:NamedLibraryElementNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="two.files.diff.last.used.file" value="$PROJECT_DIR$/wide_deep_album.py" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Color Scheme Font" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.combine_album_server">
+    <configuration name="algorithm_comparison" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Album_server" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/algorithm_comparison.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="combine_album_server" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/anaconda/envs/tf_py3/bin/python3.6" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Album_server" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/combine_album_server.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="data_retriever_server" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Album_server" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data_retriever_server.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="rank_cluster" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Album_server" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/rank_cluster.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="solo_time" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Album_server" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/solo_time.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <list size="5">
+      <item index="0" class="java.lang.String" itemvalue="Python.combine_album_server" />
+      <item index="1" class="java.lang.String" itemvalue="Python.rank_cluster" />
+      <item index="2" class="java.lang.String" itemvalue="Python.solo_time" />
+      <item index="3" class="java.lang.String" itemvalue="Python.data_retriever_server" />
+      <item index="4" class="java.lang.String" itemvalue="Python.algorithm_comparison" />
+    </list>
+    <recent_temporary>
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="Python.combine_album_server" />
+        <item index="1" class="java.lang.String" itemvalue="Python.rank_cluster" />
+        <item index="2" class="java.lang.String" itemvalue="Python.algorithm_comparison" />
+        <item index="3" class="java.lang.String" itemvalue="Python.solo_time" />
+        <item index="4" class="java.lang.String" itemvalue="Python.data_retriever_server" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-1920" y="116" width="1920" height="1057" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11901001" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3018066" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32731137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3092455" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3060574" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32943678" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21572796" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+    </layout>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="back up, debugging.. (before change rank events)" />
+    <MESSAGE value="finished debugging rank_cluster" />
+    <option name="LAST_COMMIT_MESSAGE" value="finished debugging rank_cluster" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/wide_deep_train.py</url>
+          <line>4</line>
+          <option name="timeStamp" value="150" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/../Album/tmp_delete.py</url>
+          <line>29</line>
+          <option name="timeStamp" value="266" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/../Album/tmp_delete.py</url>
+          <line>23</line>
+          <option name="timeStamp" value="267" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/../Album/tmp_delete.py</url>
+          <line>36</line>
+          <option name="timeStamp" value="268" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/algorithm_comparison.py</url>
+          <line>62</line>
+          <option name="timeStamp" value="281" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/gen_scene_ground_truth.py</url>
+          <option name="timeStamp" value="288" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/gen_scene_ground_truth.py</url>
+          <line>77</line>
+          <option name="timeStamp" value="293" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/rank_cluster.py</url>
+          <line>337</line>
+          <option name="timeStamp" value="303" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/data_retriever_server.py</url>
+          <line>557</line>
+          <option name="timeStamp" value="304" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+      <option name="time" value="305" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="evaluateCodeFragment">
+      <expression>
+        <expression-string>def construct_feature_matrix(wanted_gps, wanted_time, exif_info, wanted_secs, wanted_holiday, wanted_closest_holiday,
+                             wanted_city, wanted_city_prop, image_cluster_idx, filter_range=168 * 60 * 60):
+    &quot;&quot;&quot;construct feature matrix
+    # $\Delta(distance)$,  $\Delta(time)$[ from exif &quot;DateTimeDigitized&quot;, not from gps], $\Delta(ExposureTime)$,
+    # $\Delta(flash)$, $\Delta(FocalLength)$, $\Delta(ShutterSpeedValue)$, Holiday_idx, nearest_holiday, city freq,
+    # $\Delta(SceneType)$, $\Delta(SensingMethod)$
+    &quot;&quot;&quot;
+    length = int(len(wanted_gps) * (len(wanted_gps) + 1) / 2)
+    features_m = np.empty(
+        shape=(1, 11))  # the first two columns are the idxes of the two images, the last column is label
+    count = 0
+    for idx_i in range(len(wanted_gps)):
+        for idx_j in range(idx_i, len(wanted_gps)):
+            tmp = np.empty(shape=(1, 15))
+            if abs((wanted_time[idx_i] - wanted_time[idx_j])[0].total_seconds()) &lt;= filter_range:
+                # feature
+                tmp[0][:2] = [idx_i, idx_j]  # index of first event, second event
+                tmp[0][2] = lalong2distance(tuple(wanted_gps[idx_i]),
+                                            tuple(wanted_gps[idx_j]))  # Eclidean distance
+                tmp[0][3] = abs(wanted_secs[idx_i] - wanted_secs[idx_j])  # seconds
+                tmp[0][4] = abs(exif_info[idx_i][&quot;ExposureTime&quot;] - exif_info[idx_j][&quot;ExposureTime&quot;])  # Exposure time
+                tmp[0][5] = abs(exif_info[idx_i][&quot;Flash&quot;] - exif_info[idx_j][&quot;Flash&quot;])  # flash
+                tmp[0][6] = abs(exif_info[idx_i][&quot;FocalLength&quot;] - exif_info[idx_j][&quot;FocalLength&quot;])  # FocalLength
+                tmp[0][7] = abs(
+                    exif_info[idx_i][&quot;ShutterSpeedValue&quot;] - exif_info[idx_j][&quot;ShutterSpeedValue&quot;])  # ShutterSpeedValue
+                tmp[0][8] = abs(exif_info[idx_i][&quot;SceneType&quot;] - exif_info[idx_j][&quot;SceneType&quot;])  # SceneType
+                tmp[0][9] = abs(
+                    exif_info[idx_i][&quot;SensingMethod&quot;] - exif_info[idx_j][&quot;SensingMethod&quot;])  # SensingMethod
+                # tmp[0][10]  = hol_tab[wanted_time[idx_i].strtime(&quot;%Y%m%d&quot;)][0]
+                # label
+                # holiday?? 0: (0,0), 1: (1,1), 2:(2,2), 3: (1,2) or (2,1), 4:(1,0) or (0,1), 5:(2,0) or (0,2)
+                dict_list = {('0','0') : 0, ('1','1'):1, ('2','2'):2, ('1','2'):3, ('2','1'):3, ('1','0'):4, ('0','1'):4, ('2','0'):5, ('0','2'):5}
+                tmp[0][10] = dict_list[(wanted_holiday[idx_i][0], wanted_holiday[idx_j][0])]
+                # holiday delta time
+                tmp[0][11] = abs(wanted_closest_holiday[idx_i] - wanted_closest_holiday[idx_j])
+                # holiday average time
+                tmp[0][12] = (wanted_closest_holiday[idx_i] + wanted_closest_holiday[idx_j])/2
+                # city average proportion
+                tmp[0][13] = (wanted_city_prop[idx_i] + wanted_city_prop[idx_j])/2
+                if image_cluster_idx[idx_i] == image_cluster_idx[idx_j]:
+                    tmp[0][14] = 1
+                else:
+                    tmp[0][14] = 0
+                features_m = np.append(features_m, tmp, axis=0)
+                count += 1
+    # print(features_m[-1])
+    # check label and features
+    # min(features_m[:, 9])
+    print(&quot;Total images: %d, training_samples: %d&quot; % (length, len(features_m)))
+    print(&quot;1/0 ratio:&quot;, sum(features_m[:, -1] == 1) / len(features_m))
+    return features_m</expression-string>
+        <language-id>Python</language-id>
+        <evaluation-mode>CODE_FRAGMENT</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/../../models/official/wide_deep/wide_deep_predict.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="192">
+          <caret line="13" column="8" lean-forward="true" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wide_deep_album1.py" />
+    <entry file="file://$PROJECT_DIR$/../../toolbox_personal/common_lib.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="10" column="48" lean-forward="true" selection-start-line="10" selection-start-column="48" selection-end-line="10" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/site-packages/tensorflow/python/ops/metrics_impl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="296">
+          <caret line="674" column="29" lean-forward="false" selection-start-line="674" selection-start-column="29" selection-end-line="674" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/unionfind.py" />
+    <entry file="file://$PROJECT_DIR$/../../.Trashes/501/unionfind.py" />
+    <entry file="file://$PROJECT_DIR$/main.py" />
+    <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/site-packages/pandas/core/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="118">
+          <caret line="909" column="0" lean-forward="false" selection-start-line="909" selection-start-column="0" selection-end-line="909" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/site-packages/tensorflow/python/platform/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="125" column="0" lean-forward="false" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/site-packages/tensorflow/python/estimator/estimator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="380">
+          <caret line="68" column="27" lean-forward="true" selection-start-line="68" selection-start-column="27" selection-end-line="68" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wide_deep_album.py" />
+    <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/argparse.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="212">
+          <caret line="1509" column="0" lean-forward="false" selection-start-line="1509" selection-start-column="0" selection-end-line="1509" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cluster_from_model.py" />
+    <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/site-packages/tensorflow/python/saved_model/loader_impl.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="49" column="53" lean-forward="false" selection-start-line="49" selection-start-column="4" selection-end-line="49" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/pydevd.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="339">
+          <caret line="1661" column="0" lean-forward="false" selection-start-line="1661" selection-start-column="0" selection-end-line="1661" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tmp_test.py" />
+    <entry file="file://$PROJECT_DIR$/tmp" />
+    <entry file="file://$USER_HOME$/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/aa078c76d25a6ca599da6fb69c1d51a6/Message/MessageTemp/9e20f478899dc29eb19741386f9343c8/File/api_album.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="17" column="18" lean-forward="false" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_retriever.py" />
+    <entry file="file://$PROJECT_DIR$/tmp_delete.py" />
+    <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/site-packages/IPython/core/interactiveshell.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="2967" column="34" lean-forward="true" selection-start-line="2967" selection-start-column="34" selection-end-line="2967" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/aa078c76d25a6ca599da6fb69c1d51a6/Message/MessageTemp/31c855b4f4f55712a0daaddce909800c/File/automl_controller.py" />
+    <entry file="file://$PROJECT_DIR$/gprof2dot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="516">
+          <caret line="3302" column="30" lean-forward="false" selection-start-line="3302" selection-start-column="30" selection-end-line="3302" selection-end-column="30" />
+          <folding>
+            <element signature="e#822#832#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/aa078c76d25a6ca599da6fb69c1d51a6/Message/MessageTemp/9e20f478899dc29eb19741386f9343c8/File/api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/site-packages/requests/api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="57" column="0" lean-forward="false" selection-start-line="57" selection-start-column="0" selection-end-line="57" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sudo_client.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="114">
+          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#15#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api_album.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="497">
+          <caret line="70" column="69" lean-forward="false" selection-start-line="70" selection-start-column="59" selection-end-line="70" selection-end-column="69" />
+          <folding>
+            <element signature="e#0#21#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/site-packages/matplotlib/pyplot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="536" column="0" lean-forward="false" selection-start-line="536" selection-start-column="0" selection-end-line="536" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/helpers/pydev/_pydev_imps/_pydev_execfile.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="17" column="0" lean-forward="false" selection-start-line="17" selection-start-column="0" selection-end-line="17" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/optics.py" />
+    <entry file="file://$PROJECT_DIR$/tmp_check.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="12" column="16" lean-forward="false" selection-start-line="12" selection-start-column="16" selection-end-line="12" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#9#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/site-packages/numpy/core/_methods.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="235">
+          <caret line="69" column="0" lean-forward="false" selection-start-line="69" selection-start-column="0" selection-end-line="69" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/site-packages/numpy/core/fromnumeric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="2956" column="0" lean-forward="false" selection-start-line="2956" selection-start-column="0" selection-end-line="2956" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/genericpath.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="423">
+          <caret line="148" column="0" lean-forward="false" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Album/tmp_delete.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="26" column="8" lean-forward="true" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="8" />
+          <folding>
+            <element signature="e#1#25#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Album/data_retriever.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24">
+          <caret line="288" column="27" lean-forward="false" selection-start-line="288" selection-start-column="27" selection-end-line="288" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common_lib.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="339" column="0" lean-forward="false" selection-start-line="339" selection-start-column="0" selection-end-line="339" selection-end-column="0" />
+          <folding>
+            <element signature="e#90#181#0" expanded="false" />
+            <element signature="e#322#9063#0" expanded="false" />
+            <element signature="e#9530#9638#0" expanded="false" />
+            <element signature="e#9702#9827#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/site-packages/pandas/io/excel.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="1710" column="31" lean-forward="true" selection-start-line="1710" selection-start-column="31" selection-end-line="1710" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/json/encoder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="211">
+          <caret line="256" column="0" lean-forward="false" selection-start-line="256" selection-start-column="0" selection-end-line="256" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gen_scene_ground_truth.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="311">
+          <caret line="141" column="35" lean-forward="true" selection-start-line="141" selection-start-column="35" selection-end-line="141" selection-end-column="35" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#397#2645#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sudo_get_input_json.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="84" column="24" lean-forward="false" selection-start-line="84" selection-start-column="15" selection-end-line="84" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="379">
+          <caret line="304" column="13" lean-forward="false" selection-start-line="304" selection-start-column="13" selection-end-line="304" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_retriever.cprof.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/solo_time.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3358">
+          <caret line="146" column="24" lean-forward="false" selection-start-line="146" selection-start-column="24" selection-end-line="146" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rank_cluster.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="332">
+          <caret line="385" column="29" lean-forward="true" selection-start-line="385" selection-start-column="29" selection-end-line="385" selection-end-column="29" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#933#1180#0" expanded="false" />
+            <element signature="e#1320#1803#0" expanded="false" />
+            <element signature="e#1954#2346#0" expanded="false" />
+            <element signature="e#7675#7867#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wide_deep_train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-7">
+          <caret line="220" column="24" lean-forward="true" selection-start-line="220" selection-start-column="24" selection-end-line="220" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wide_deep_predict.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3">
+          <caret line="89" column="38" lean-forward="true" selection-start-line="89" selection-start-column="38" selection-end-line="89" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/posixpath.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="79" column="0" lean-forward="false" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_retriever_server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="309">
+          <caret line="562" column="54" lean-forward="true" selection-start-line="562" selection-start-column="54" selection-end-line="562" selection-end-column="54" />
+          <folding>
+            <element signature="e#106#115#0" expanded="true" />
+            <element signature="e#585#781#0" expanded="false" />
+            <element signature="e#1392#1492#0" expanded="false" />
+            <element signature="e#2844#6221#0" expanded="false" />
+            <element signature="e#3811#3829#0" expanded="false" />
+            <element signature="e#4687#4694#0" expanded="false" />
+            <element signature="e#6945#8568#0" expanded="false" />
+            <element signature="e#9842#13127#0" expanded="false" />
+            <element signature="e#13316#13539#0" expanded="false" />
+            <element signature="e#13917#14335#1" expanded="false" />
+            <element signature="e#16089#16153#0" expanded="false" />
+            <element signature="e#20525#20601#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/algorithm_comparison.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="25" column="12" lean-forward="true" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/combine_album_server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="23" column="75" lean-forward="true" selection-start-line="23" selection-start-column="75" selection-end-line="23" selection-end-column="75" />
+          <folding>
+            <element signature="e#105#114#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>

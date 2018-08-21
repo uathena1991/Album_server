@@ -35,12 +35,12 @@ def build_model_columns():
 
 	# wide model
 	base_columns = [
-		# distance,
+		distance,
 		 time, expo_time, flash,
-		# focal_len, shutter, tf.feature_column.indicator_column(scene_type), tf.feature_column.indicator_column(sensing_m)
+		focal_len, shutter, tf.feature_column.indicator_column(scene_type), tf.feature_column.indicator_column(sensing_m)
 		focal_len, shutter, scene_type, sensing_m,
 		holiday, delta_closest_holiday, average_closest_holiday
-		# ,average_city_prop
+		,average_city_prop
 	]
 	cross_columns = []
 	#cross_columns = [
@@ -49,7 +49,7 @@ def build_model_columns():
 	wide_columns = base_columns + cross_columns
 	# deep model
 	deep_columns = [
-	#	distance,
+		distance,
 		 time, expo_time, flash,
 		focal_len, shutter, tf.feature_column.indicator_column(scene_type), tf.feature_column.indicator_column(sensing_m),
 		tf.feature_column.indicator_column(holiday),
@@ -104,7 +104,7 @@ def input_fn(data_file, num_epochs, shuffle, batch_size):
 		print('Parsing', data_file)
 		columns = tf.decode_csv(value, record_defaults=_CSV_COLUMN_DEFAULTS)
 		features = dict(zip(_CSV_COLUMNS, columns))
-		labels = features.pop('Label')
+		labels = features.pop('Label_e')
 		features.pop('1st Image')
 		features.pop('2nd Image')
 		return features, tf.equal(labels, 1)
@@ -169,13 +169,13 @@ if __name__ == '__main__':
     '1st Image', '2nd Image', 'Distance', 'Time', 'ExposureTime',
     'Flash', 'FocalLength', 'ShutterSpeedValue', 'SceneType','SensingMethod',
 	'Holiday', 'Delta_closest_holiday', 'Average_closest_holiday', 'Average_city_prop',
-	'Label'
+	'Label_e', 'Label_s'
 	]
 
 	#_CSV_COLUMN_DEFAULTS = [[0], [0], [0.0], [0.0], [0.0],
 	 #                       [0.0], [0.0], [0.0], [0], [0], [0]]
 	_CSV_COLUMN_DEFAULTS = [['xx'], ['xx'], [-1.0], [-1.0], [-1.0],
-	                       [-1.0], [-1.0], [-1.0], [-1], [-1], [-1], [-1.0], [-1.0], [-1.0], [0]]
+	                       [-1.0], [-1.0], [-1.0], [-1], [-1], [-1], [-1.0], [-1.0], [-1.0], [0], [0]]
 
 	parser = argparse.ArgumentParser()
 

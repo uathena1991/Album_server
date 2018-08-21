@@ -95,6 +95,7 @@ def cal_rank_city_freq(clusters, wanted_city_prop, file_names):
 	return np.array(res_average).argsort()[::-1].argsort()
 
 
+######################################################################
 def cal_rank_ave_event(struct_clus, img_label, rank_events):
 	"""
 	return rank for each given cluster, and update new event ranke
@@ -180,7 +181,7 @@ def find_best_thres(clust, len_cluster, eps_range = [0, 1], step = 0.01):
 
 
 ################################################################
-def cluster_into_scnenes(res_rank, wanted_gps, wanted_time, file_names, min_pic_num, max_pic, thres=0.16,
+def cluster_into_scenes(res_rank, wanted_gps, wanted_time, file_names, min_pic_num, max_pic, thres=0.16,
                          show_idx=False):
 	"""
 
@@ -257,10 +258,10 @@ def cluster_into_scnenes(res_rank, wanted_gps, wanted_time, file_names, min_pic_
 
 ################################################################
 
-def cal_accuracy(etrue, spredict, file_names):
+def cal_accuracy_pair(strue, spredict, file_names):
 	"""
 	calculate one-one pair accuracy and so
-	:param etrue: true label (event)
+	:param strue: true label (scene)
 	:param spredict: predict label (scene)
 	:param file_names:
 	:return:
@@ -268,8 +269,8 @@ def cal_accuracy(etrue, spredict, file_names):
 	res_true = np.array([])
 	res_predict = np.array([])
 	for idx1, fn1 in enumerate(file_names):
-		tmp1 = np.array([int(etrue[fn1]) == int(etrue[fn2]) for fn2 in file_names[idx1+1:]])
-		tmp2 = np.array([int(spredict[fn1][1]) == int(spredict[fn2][1]) for fn2 in file_names[idx1+1:]])
+		tmp1 = np.array([strue[fn1] == strue[fn2] for fn2 in file_names[idx1+1:]])
+		tmp2 = np.array([spredict[fn1] == spredict[fn2] for fn2 in file_names[idx1+1:]])
 		res_true = np.append(res_true, tmp1)
 		res_predict = np.append(res_predict, tmp2)
 	acc = metrics.accuracy_score(res_true, res_predict)
@@ -310,17 +311,13 @@ def main(FLAGS0):
 	print("Clustering images into events based on predictions")
 	res_events = cluster_into_events(os.path.join(FLAGS.predict_output),
 	                           os.path.join(FLAGS.image_parent_path, FLAGS.label_pic_path),
-	                           vis_idx=FLAGS.vis_idx_cluster)
+	                           vis_idx = FLAGS.vis_idx_cluster)
 	# record event # and scene # for each image
 	img_label = dict()
-	for fn in file_names:
-		img_label[fn] = [-1, -1]
+	for idx, fn in enumerate(file_names):
+		img_label[fn] = [-idx, -idx]
 	img_label = labeling_image_cluster(img_label, res_events, [], 0)
 
-	# filter based on min_pic_num
-	# chosen_events_idx = [len(x) >= FLAGS.min_pic_num for x in res_events]
-	# chosen_events = res_events[chosen_events_idx]
-	# res_unchosen = np.concatenate([np.array(list(x)) for x in res_events[[not x for x in chosen_events_idx]]])
 	print('Done...%d events found' %len(res_events))
 
 
@@ -338,7 +335,7 @@ def main(FLAGS0):
 
 	######################################### choose scenes within events (if # pic > FLAGS.max_pic) ###############################
 	print('Splitting events into scenes....threshold')
-	structed_res, res_scenes, res_unchosen, res_noise = cluster_into_scnenes(res_event_rank1, wanted_gps, wanted_time, file_names, FLAGS.min_pic_num, FLAGS.max_pic, FLAGS.thres_scene, show_idx = False)
+	structed_res, res_scenes, res_unchosen, res_noise = cluster_into_scenes(res_event_rank1, wanted_gps, wanted_time, file_names, FLAGS.min_pic_num, FLAGS.max_pic, FLAGS.thres_scene, show_idx = False)
 	# res_unchosen = np.append(res_unchosen, tmp_unchosen)
 	# record scene # for each image
 	img_label = labeling_image_cluster(img_label, res_scenes, res_noise, 1)
@@ -349,21 +346,6 @@ def main(FLAGS0):
 	print("Scene ranking and final selection")
 	res_final, rank_scenes_val, rank_events_val = cal_rank_total(1, res_scenes, structed_res, wanted_closest_holiday, file_names, wanted_city_prop, wanted_holiday,
 	                                          img_label, rank_events_val)
-
-	############################## calculate accracy, precision, recall #####################################
-	file_names, gps_info, exif_info, true_label = drs.get_plist_from_json(FLAGS.plist_json)
-	acc, rec, prec, auc = cal_accuracy(true_label, img_label, file_names)
-	print("+++++++++++++Scenes cluster results:+++++++++++++++++")
-	print("Accuracy: %1.4f" %acc)
-	print("Precision: %1.4f" %prec)
-	print("Recall: %1.4f" %rec)
-	print("AUC: %1.4f" %auc)
-	############################ visualize ########################
-	if FLAGS.vis_idx_final:
-		visualize_cluster(res_final, os.path.join(FLAGS.image_parent_path, FLAGS.label_pic_path))
-	print('All done!')
-	print(res_final)
-
 
 
 	################ save to json file #######################
@@ -387,11 +369,26 @@ def main(FLAGS0):
 	tmp_dict['res_unchosen'] = json.dumps([list(x) for x in res_unchosen])
 	tmp_dict['res_rank_event'] = json.dumps([x for x in rank_events_val])
 	tmp_dict['res_rank_scene'] = json.dumps([x for x in rank_scenes_val])
-	output_fn = FLAGS.predict_output.replace('model_prediction/', FLAGS.final_save_path).replace('prediction', 'cluster').replace('.csv', '.json')
+	output_fn = os.path.join(FLAGS.working_path, FLAGS.final_save_path, FLAGS.usr_nm + '_WDL.json')
 	with open(output_fn, 'w') as file:
 		json.dump(json.dumps(tmp_dict), file)
 	print('Final cluster results is saved in %s' %output_fn)
 	file.close()
+
+	############################ visualize ########################
+	if FLAGS.vis_idx_final:
+		visualize_cluster(res_final, os.path.join(FLAGS.image_parent_path, FLAGS.label_pic_path))
+	print('All done!')
+	print("Final scene", res_final)
+
+	############################## calculate accracy, precision, recall #####################################
+	file_names, gps_info, exif_info, true_label = drs.get_plist_from_json(FLAGS.plist_json)
+	acc, rec, prec, auc = cal_accuracy_pair(true_label, img_label, file_names)
+	print("+++++++++++++Scenes cluster results:+++++++++++++++++")
+	print("Accuracy: %1.4f" %acc)
+	print("Precision: %1.4f" %prec)
+	print("Recall: %1.4f" %rec)
+	print("AUC: %1.4f" %auc)
 
 	return output_fn
 
@@ -399,20 +396,20 @@ def main(FLAGS0):
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser("Cluster based on model prediction, rank clusters, and choose given numbers of albums")
 
-	parser.add_argument('--usr_nm', type=str, default='wy_tmp',
+	parser.add_argument('--usr_nm', type=str, default='zt',
 	                    help='User name (must remain the same across plist, picture folders')
 
-	parser.add_argument('--plist_json', type=str, default='/Volumes/working/album_project/serving_data/wy_tmp_plist.json',
+	parser.add_argument('--plist_json', type=str, default='/Volumes/working/album_project/serving_data/zt_plist.json',
 	                    help=' Path to the saved plist json file (input)')
 
 	parser.add_argument(
-		'--predict_output', type=str, default='/Volumes/working/album_project/model_prediction/pred_wy_tmp_2018081413.csv',
+		'--predict_output', type=str, default='/Volumes/working/album_project/model_prediction/pred_zt_2018082110.csv',
 		help='Model prediction file.')
 
-	parser.add_argument('--plist_path', type=str, default='gps_time_info/wy_tmp/',
+	parser.add_argument('--plist_path', type=str, default='gps_time_info/zt/',
                     help=' Path to save plist in the format of .npy (exclude user name)')
 
-	parser.add_argument('--label_pic_path', type=str, default='wy_tmp_label_raw/', help='Picture path (with event).')
+	parser.add_argument('--label_pic_path', type=str, default='zt_label_raw/', help='Picture path (with event).')
 
 
 
@@ -465,4 +462,4 @@ if __name__ == "__main__":
 
 	FLAGS, unparsed = parser.parse_known_args()
 	output_fn = main(FLAGS)
-	# print(output_fn)hh
+	# print(output_fn)

@@ -12,7 +12,7 @@ parser = argparse.ArgumentParser(description="All parameters")
 
 ######################common string#####################
 
-parser.add_argument('--usr_nm', type=str, default='zd',
+parser.add_argument('--usr_nm', type=str, default='hxl2016',
                     help='User name')
 
 parser.add_argument('--working_path', type = str,
@@ -35,7 +35,7 @@ parser.add_argument('--image_parent_path', type = str,
 parser.add_argument('--generate_plist_idx', type = ast.literal_eval, default = False,
                 help='if True, generate features from plist info, otherwise, load from the .npy file ')
 
-parser.add_argument('--generate_feature_idx', type = ast.literal_eval, default = False,
+parser.add_argument('--generate_feature_idx', type = ast.literal_eval, default = True,
                 help='if True, generate features for two-two compare, otherwise, load from the .npy file ')
 
 parser.add_argument('--generate_holiday_tab', type = ast.literal_eval, default= False,
@@ -48,7 +48,7 @@ parser.add_argument('--vis_idx_cluster', type=ast.literal_eval, default = False,
 parser.add_argument('--vis_idx_rank', type=ast.literal_eval, default = False,
                     help='Bool value: whether to show ranked albums.')
 
-parser.add_argument('--vis_idx_final', type=ast.literal_eval, default = True,
+parser.add_argument('--vis_idx_final', type=ast.literal_eval, default = False,
                     help='Bool value: whether to show final selected albums.')
 
 parser.add_argument('--print_parser', type=ast.literal_eval, default = True,
@@ -78,7 +78,7 @@ parser.add_argument('--train_ratio', type=float, default = 0.0,
 #################### Normally unchanged #########################
 
 parser.add_argument(
-    '--model_exported_path', type=str, default='model_output/comb_1501005010_00003_004_16_timegps_cross_best/',
+    '--model_exported_path', type=str, default='model_output/comb_1501005010_00003_004_16_timegps_nocross_0/',
     help='Saved model path')
 
 parser.add_argument('--model_input_path', type = str, default = 'preprocessed_data/',

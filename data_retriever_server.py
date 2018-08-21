@@ -279,14 +279,20 @@ def get_plist_from_json(file_path):
 	:return: file_names, wanted_gps, wanted_exif, img_label
 	"""
 	tmp_file = open(file_path, 'r')
-	raw_data = json.loads(json.load(tmp_file))
+	plist_data = json.loads(json.load(tmp_file))
+	raw_data = plist_data[0]
+	# scene_dict = plist_data[1]
+	# scene_clusters = plist_data[2]
 	file_names, wanted_gps, wanted_exif = [], [], []
 	img_label = dict()
 	for key in raw_data:
 		file_names.append(key)
-		wanted_gps.append(dict2defaultdict(raw_data[key]['gps_info']))
-		wanted_exif.append(dict2defaultdict(raw_data[key]['exif_info']))
-		img_label[key] = raw_data[key]['label']
+		try:
+			wanted_gps.append(dict2defaultdict(raw_data[key]['gps_info']))
+			wanted_exif.append(dict2defaultdict(raw_data[key]['exif_info']))
+			img_label[key] = raw_data[key]['label'] # include event and scene
+		except:
+			pdb.set_trace()
 	return np.array(file_names), np.array(wanted_gps), np.array(wanted_exif), img_label
 
 
@@ -384,7 +390,7 @@ def construct_pair_feature_matrix(file_names, wanted_gps, wanted_time, exif_info
              ('0', '1'): 4, ('2', '0'): 5, ('0', '2'): 5}
 	## multiprocessing##
 	def sub_process(cond, res):
-		features_m = np.empty(shape=(0, 15))  # the first two columns are the indexes of the two images, the last column is label
+		features_m = np.empty(shape=(0, 16))  # the first two columns are the indexes of the two images, the last two columns are event label, and scene label
 		count = 0
 		count2 = 0
 		len_fn = len(file_names)
@@ -392,7 +398,7 @@ def construct_pair_feature_matrix(file_names, wanted_gps, wanted_time, exif_info
 			for idx_j,fn_j in enumerate(file_names):
 				count2 += 1
 				if  cond[0]*len_fn <= idx_i < (cond[1]*len_fn+1) and idx_j >= idx_i and abs((wanted_time[idx_i] - wanted_time[idx_j])[0].total_seconds()) <= filter_range:
-					tmp = np.empty(shape=(1, 15))
+					tmp = np.empty(shape=(1, 16))
 					# feature
 					tmp[0][:2] = [idx_i, idx_j]  # index of first event, second event
 					tmp[0][2] = altlalong2distance(tuple(wanted_gps[idx_i]),
@@ -418,10 +424,9 @@ def construct_pair_feature_matrix(file_names, wanted_gps, wanted_time, exif_info
 					# city average proportion
 					tmp[0][13] = (wanted_city_prop[idx_i] + wanted_city_prop[idx_j]) / 2
 
-					if image_cluster_idx[fn_i] == image_cluster_idx[fn_j]:
-						tmp[0][14] = 1
-					else:
-						tmp[0][14] = 0
+					tmp[0][14] = 1 if image_cluster_idx[fn_i][0] == image_cluster_idx[fn_j][0] else 0  # event
+					tmp[0][15] = 1 if image_cluster_idx[fn_i] == image_cluster_idx[fn_j] else 0  # scene
+
 					features_m = np.concatenate((features_m, tmp), axis=0)
 					count += 1
 				if count % 5000 == 0  and count != 0:
@@ -455,7 +460,7 @@ def save2csv(features_m, file_names, usr_nm, save_path, file_type='original', co
 	# pdb.set_trace()
 	columns_name = ['1st Image', '2nd Image', 'Distance', 'Time', 'ExposureTime',
 	                'Flash', 'FocalLength', 'ShutterSpeedValue', 'SceneType', 'SensingMethod',
-	                'Holiday', 'Delta_closest_holiday', 'Average_closest_holiday', 'Average_city_prop', 'Label']
+	                'Holiday', 'Delta_closest_holiday', 'Average_closest_holiday', 'Average_city_prop', 'Label_e', "Label_s"]
 	try:
 		df = pd.DataFrame(features_m, columns = columns_name)
 		# pdb.set_trace()
@@ -465,7 +470,8 @@ def save2csv(features_m, file_names, usr_nm, save_path, file_type='original', co
 
 		df.loc[:, 'SceneType'] = df['SceneType'].apply(int)  # convert A to an int
 		df.loc[:, 'SensingMethod'] = df['SensingMethod'].apply(int)  # convert A to an int
-		df.loc[:, 'Label'] = df['Label'].apply(int)  # convert A to an int
+		df.loc[:, 'Label_e'] = df['Label_e'].apply(int)  # convert A to an int
+		df.loc[:, 'Label_s'] = df['Label_s'].apply(int)  # convert A to an int
 		df.loc[:, 'Holiday'] = df['Holiday'].apply(int)  # convert A to an int
 		df.to_csv(os.path.join(save_path, file_type, "%s_%s_data_%1.2f.csv" %(usr_nm, file_type, FLAGS.train_ratio)), header=None, index=False)
 		print("Number of %s samples is %d" %(file_type, len(df)))
@@ -569,15 +575,15 @@ if __name__ == '__main__':
 
 	##
 
-	parser.add_argument('--usr_nm', type=str, default='zzx',
+	parser.add_argument('--usr_nm', type=str, default='hhl',
 	                help='User name for saving files')
 
-	parser.add_argument('--pic_path_label', type=str, default='zzx_label_raw',
+	parser.add_argument('--pic_path_label', type=str, default='hhl_label_raw',
 	                help='Full path to pictures')
 
 	parser.add_argument('--plist_json', type=str,
 	                    # default='/project/album_project/serving_data/hw_plist.json',
-	                    default='/Volumes/working/album_project/serving_data/zzx_plist.json',
+	                    default='/Volumes/working/album_project/serving_data/hhl_plist.json',
                     help=' Path to the saved plist json file (input)')
 
 
@@ -585,7 +591,7 @@ if __name__ == '__main__':
 	                    # default = '/project/album_project/')
 	                    default = '/Volumes/working/album_project/')
 
-	parser.add_argument('--data_parent_path', type = str,
+	parser.add_argument('--image_parent_path', type = str,
 	                    # default = '/project/album_project/album_data/')
 	                    default = '/Volumes/working/album_project/album_data/')
 
@@ -602,7 +608,7 @@ if __name__ == '__main__':
 
 
 
-	parser.add_argument('--train_ratio', type=float, default=0.98,
+	parser.add_argument('--train_ratio', type=float, default=1,
 	                help='Ratio between train/validation samples (use 0 if for test/prediction)')
 
 	parser.add_argument('--filter_range', type=int, default=96 * 60 * 60,
