@@ -369,7 +369,7 @@ def main(FLAGS0):
 	tmp_dict['res_unchosen'] = json.dumps([list(x) for x in res_unchosen])
 	tmp_dict['res_rank_event'] = json.dumps([x for x in rank_events_val])
 	tmp_dict['res_rank_scene'] = json.dumps([x for x in rank_scenes_val])
-	output_fn = os.path.join(FLAGS.working_path, FLAGS.final_save_path, FLAGS.usr_nm + '_WDL.json')
+	output_fn = os.path.join(FLAGS.working_path, FLAGS.final_save_path, FLAGS.usr_nm + FLAGS.final_post)
 	with open(output_fn, 'w') as file:
 		json.dump(json.dumps(tmp_dict), file)
 	print('Final cluster results is saved in %s' %output_fn)
@@ -396,20 +396,20 @@ def main(FLAGS0):
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser("Cluster based on model prediction, rank clusters, and choose given numbers of albums")
 
-	parser.add_argument('--usr_nm', type=str, default='zt',
+	parser.add_argument('--usr_nm', type=str, default='hxl',
 	                    help='User name (must remain the same across plist, picture folders')
 
-	parser.add_argument('--plist_json', type=str, default='/Volumes/working/album_project/serving_data/zt_plist.json',
+	parser.add_argument('--plist_json', type=str, default='/Volumes/working/album_project/serving_data/hxl_plist.json',
 	                    help=' Path to the saved plist json file (input)')
 
 	parser.add_argument(
-		'--predict_output', type=str, default='/Volumes/working/album_project/model_prediction/pred_zt_2018082110.csv',
+		'--predict_output', type=str, default='/Volumes/working/album_project/model_prediction/timeonly_pred_hxl_2018082411.csv',
 		help='Model prediction file.')
 
-	parser.add_argument('--plist_path', type=str, default='gps_time_info/zt/',
+	parser.add_argument('--plist_path', type=str, default='gps_time_info/hxl/',
                     help=' Path to save plist in the format of .npy (exclude user name)')
 
-	parser.add_argument('--label_pic_path', type=str, default='zt_label_raw/', help='Picture path (with event).')
+	parser.add_argument('--label_pic_path', type=str, default='hxl_label_scene/', help='Picture path (with event).')
 
 
 
@@ -419,6 +419,10 @@ if __name__ == "__main__":
 
 	parser.add_argument(
 		'--final_save_path', type=str, default='final_result/',
+		help='Path to save the final result.')
+
+	parser.add_argument(
+		'--final_post', type=str, default='_WDL/',
 		help='Path to save the final result.')
 
 	parser.add_argument(

@@ -37,7 +37,7 @@ def build_model_columns():
 	base_columns = [
 		distance,
 		 time, expo_time, flash,
-		focal_len, shutter, tf.feature_column.indicator_column(scene_type), tf.feature_column.indicator_column(sensing_m)
+		# focal_len, shutter, tf.feature_column.indicator_column(scene_type), tf.feature_column.indicator_column(sensing_m)
 		focal_len, shutter, scene_type, sensing_m,
 		holiday, delta_closest_holiday, average_closest_holiday
 		,average_city_prop
@@ -91,8 +91,8 @@ def build_estimator(model_dir, model_type, dnn_learning_rate, linear_learning_ra
             linear_feature_columns = wide_columns,
             dnn_feature_columns = deep_columns,
             dnn_hidden_units = hidden_units,
-			linear_optimizer = tf.train.GradientDescentOptimizer(learning_rate = linear_learning_rate),
-            dnn_optimizer = tf.train.GradientDescentOptimizer(learning_rate = dnn_learning_rate),
+			linear_optimizer = tf.train.AdagradOptimizer(learning_rate = linear_learning_rate),
+            dnn_optimizer = tf.train.AdagradOptimizer(learning_rate = dnn_learning_rate),
             n_classes = 2,
             config = run_config)
 

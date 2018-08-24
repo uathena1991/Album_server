@@ -2,19 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c717201-9a43-41e3-9f97-e969f26362c4" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/Album_server.iml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/algorithm_comparison.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/gen_scene_ground_truth.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/solo_time.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/get_input_wdl_timeonly.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/timeonly_combine_album_server.py" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/combine_album_server.py" afterPath="$PROJECT_DIR$/combine_album_server.py" />
       <change beforePath="$PROJECT_DIR$/data_retriever_server.py" afterPath="$PROJECT_DIR$/data_retriever_server.py" />
       <change beforePath="$PROJECT_DIR$/rank_cluster.py" afterPath="$PROJECT_DIR$/rank_cluster.py" />
-      <change beforePath="$PROJECT_DIR$/sudo_get_input_jason.py" afterPath="$PROJECT_DIR$/sudo_get_input_json.py" />
-      <change beforePath="$PROJECT_DIR$/wide_deep_predict.py" afterPath="$PROJECT_DIR$/wide_deep_predict.py" />
       <change beforePath="$PROJECT_DIR$/wide_deep_train.py" afterPath="$PROJECT_DIR$/wide_deep_train.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,13 +20,41 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="combine_album_server.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="combine_album_server.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/combine_album_server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="193">
-              <caret line="23" column="75" lean-forward="true" selection-start-line="23" selection-start-column="75" selection-end-line="23" selection-end-column="75" />
+            <state relative-caret-position="-1049">
+              <caret line="82" column="0" lean-forward="true" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
               <folding>
                 <element signature="e#105#114#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="timeonly_combine_album_server.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/timeonly_combine_album_server.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="358">
+              <caret line="63" column="45" lean-forward="false" selection-start-line="63" selection-start-column="45" selection-end-line="63" selection-end-column="45" />
+              <folding>
+                <element signature="e#105#114#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="rank_cluster.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/rank_cluster.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="432">
+              <caret line="458" column="55" lean-forward="false" selection-start-line="458" selection-start-column="55" selection-end-line="458" selection-end-column="55" />
+              <folding>
+                <element signature="e#0#14#0" expanded="true" />
+                <element signature="e#933#1180#0" expanded="false" />
+                <element signature="e#1320#1803#0" expanded="false" />
+                <element signature="e#1954#2346#0" expanded="false" />
+                <element signature="e#7675#7867#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -41,8 +63,8 @@
       <file leaf-file-name="data_retriever_server.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data_retriever_server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
-              <caret line="562" column="54" lean-forward="true" selection-start-line="562" selection-start-column="54" selection-end-line="562" selection-end-column="54" />
+            <state relative-caret-position="23">
+              <caret line="497" column="46" lean-forward="false" selection-start-line="497" selection-start-column="46" selection-end-line="497" selection-end-column="46" />
               <folding>
                 <element signature="e#106#115#0" expanded="true" />
                 <element signature="e#585#781#0" expanded="false" />
@@ -51,22 +73,13 @@
                 <element signature="e#3811#3829#0" expanded="false" />
                 <element signature="e#4687#4694#0" expanded="false" />
                 <element signature="e#6945#8568#0" expanded="false" />
+                <element signature="e#8741#9437#0" expanded="false" />
                 <element signature="e#9842#13127#0" expanded="false" />
                 <element signature="e#13316#13539#0" expanded="false" />
                 <element signature="e#13917#14335#1" expanded="false" />
                 <element signature="e#16089#16153#0" expanded="false" />
-                <element signature="e#20525#20601#0" expanded="false" />
+                <element signature="e#20679#20755#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="wide_deep_train.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wide_deep_train.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-7">
-              <caret line="220" column="24" lean-forward="true" selection-start-line="220" selection-start-column="24" selection-end-line="220" selection-end-column="24" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -74,21 +87,42 @@
       <file leaf-file-name="wide_deep_predict.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wide_deep_predict.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-3">
-              <caret line="89" column="38" lean-forward="true" selection-start-line="89" selection-start-column="38" selection-end-line="89" selection-end-column="38" />
+            <state relative-caret-position="1073">
+              <caret line="89" column="38" lean-forward="false" selection-start-line="89" selection-start-column="38" selection-end-line="89" selection-end-column="38" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="solo_time.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/solo_time.py">
+      <file leaf-file-name="wide_deep_train.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wide_deep_train.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3358">
-              <caret line="146" column="24" lean-forward="false" selection-start-line="146" selection-start-column="24" selection-end-line="146" selection-end-column="24" />
+            <state relative-caret-position="429">
+              <caret line="96" column="32" lean-forward="true" selection-start-line="96" selection-start-column="32" selection-end-line="96" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="get_input_wdl_timeonly.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/get_input_wdl_timeonly.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="178">
+              <caret line="145" column="16" lean-forward="false" selection-start-line="145" selection-start-column="16" selection-end-line="145" selection-end-column="16" />
               <folding>
-                <element signature="e#0#10#0" expanded="true" />
+                <element signature="e#0#9#0" expanded="true" />
+                <element signature="e#1083#1231#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="timeonly_wide_deep_predict.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/timeonly_wide_deep_predict.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="106">
+              <caret line="143" column="80" lean-forward="false" selection-start-line="143" selection-start-column="65" selection-end-line="143" selection-end-column="80" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -96,8 +130,8 @@
       <file leaf-file-name="algorithm_comparison.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/algorithm_comparison.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="25" column="12" lean-forward="true" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="12" />
+            <state relative-caret-position="1955">
+              <caret line="85" column="82" lean-forward="false" selection-start-line="85" selection-start-column="4" selection-end-line="85" selection-end-column="82" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -116,36 +150,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>miss_files</find>
-      <find>predict_output</find>
-      <find>visualize_cluster</find>
-      <find>compile_plist_info</find>
-      <find>pdb.</find>
-      <find>Scene</find>
-      <find>plist_parent_path</find>
-      <find>pdb.set_trace</find>
-      <find>Sample length</find>
-      <find>scene</find>
-      <find>plist_json</find>
-      <find>_scene</find>
-      <find>get_image_event_scene_label</find>
-      <find>image_cluster_idx</find>
-      <find>construct_pair_feature_matrix</find>
-      <find>features_m</find>
-      <find>true_label</find>
-      <find>labeling_image_cluster</find>
-      <find>cal_accuracy</find>
-      <find>zt-0092</find>
-      <find>zt-0091</find>
-      <find>cal_accuracy_pair</find>
-      <find>img_label</find>
-      <find>-1</find>
       <find>cal_rank_total</find>
       <find>cal_acc</find>
       <find>label_pic_path</find>
-      <find>json.load</find>
+      <find>build_model_columns</find>
+      <find>wide</find>
+      <find>'wide'</find>
+      <find>build_estimator</find>
       <find>get_plist_from_json</find>
+      <find>img_label</find>
+      <find>str</find>
+      <find>holiday_file</find>
+      <find>compile_plist_info</find>
+      <find>true_label</find>
       <find>json.load(</find>
+      <find>pdb.set</find>
+      <find>train_data</find>
+      <find>ExposureTime</find>
+      <find>servable_model_dir</find>
+      <find>save2</find>
+      <find>construct_pair_feature_matrix</find>
+      <find>np.where</find>
+      <find>try</find>
+      <find>model_dir</find>
+      <find>0</find>
+      <find>cal_harmonic_mean</find>
+      <find>epoch</find>
+      <find>at epoch</find>
+      <find>input_fn</find>
+      <find>json.load</find>
+      <find>save2csv</find>
     </findStrings>
     <replaceStrings>
       <replace>img_label</replace>
@@ -184,13 +218,19 @@
         <option value="$PROJECT_DIR$/sudo_get_input_jason.py" />
         <option value="$PROJECT_DIR$/gen_scene_ground_truth.py" />
         <option value="$PROJECT_DIR$/sudo_get_input_json.py" />
-        <option value="$PROJECT_DIR$/wide_deep_train.py" />
         <option value="$PROJECT_DIR$/algorithm_comparison.py" />
         <option value="$PROJECT_DIR$/solo_time.py" />
-        <option value="$PROJECT_DIR$/data_retriever_server.py" />
         <option value="$PROJECT_DIR$/wide_deep_predict.py" />
-        <option value="$PROJECT_DIR$/rank_cluster.py" />
+        <option value="$PROJECT_DIR$/data_retriever_server.py" />
+        <option value="$PROJECT_DIR$/wide_deep_train.py" />
+        <option value="$PROJECT_DIR$/wide_deep_train_timeonly.py" />
+        <option value="$PROJECT_DIR$/wide_deep_predict_timeonly.py" />
+        <option value="$PROJECT_DIR$/timeonly_wide_deep_train.py" />
+        <option value="$PROJECT_DIR$/timonly_wide_deep_predict.py" />
+        <option value="$PROJECT_DIR$/get_input_wdl_timeonly.py" />
+        <option value="$PROJECT_DIR$/timeonly_combine_album_server.py" />
         <option value="$PROJECT_DIR$/combine_album_server.py" />
+        <option value="$PROJECT_DIR$/rank_cluster.py" />
       </list>
     </option>
   </component>
@@ -237,7 +277,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -262,17 +301,14 @@
             </path>
             <path>
               <item name="Album_server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-            <path>
-              <item name="Album_server" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; Python 3.6 (tf_py3) &gt;" type="70bed36:NamedLibraryElementNode" />
+              <item name="Album_server" type="462c0819:PsiDirectoryNode" />
+              <item name="timeonly_combine_album_server.py" type="8704e2dd:PyFileNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -299,24 +335,6 @@
     </option>
   </component>
   <component name="RunManager" selected="Python.combine_album_server">
-    <configuration name="algorithm_comparison" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Album_server" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/algorithm_comparison.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
     <configuration name="combine_album_server" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -330,24 +348,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="Album_server" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/combine_album_server.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-    </configuration>
-    <configuration name="data_retriever_server" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="Album_server" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data_retriever_server.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -371,7 +371,7 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
-    <configuration name="solo_time" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="timeonly_combine_album_server" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -383,7 +383,43 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="Album_server" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/solo_time.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/timeonly_combine_album_server.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="timonly_wide_deep_predict" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Album_server" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/timeonly_wide_deep_predict.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="wide_deep_predict_timeonly" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="Album_server" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/wide_deep_predict_timeonly.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -392,17 +428,17 @@
     <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python.combine_album_server" />
       <item index="1" class="java.lang.String" itemvalue="Python.rank_cluster" />
-      <item index="2" class="java.lang.String" itemvalue="Python.solo_time" />
-      <item index="3" class="java.lang.String" itemvalue="Python.data_retriever_server" />
-      <item index="4" class="java.lang.String" itemvalue="Python.algorithm_comparison" />
+      <item index="2" class="java.lang.String" itemvalue="Python.wide_deep_predict_timeonly" />
+      <item index="3" class="java.lang.String" itemvalue="Python.timonly_wide_deep_predict" />
+      <item index="4" class="java.lang.String" itemvalue="Python.timeonly_combine_album_server" />
     </list>
     <recent_temporary>
       <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Python.combine_album_server" />
-        <item index="1" class="java.lang.String" itemvalue="Python.rank_cluster" />
-        <item index="2" class="java.lang.String" itemvalue="Python.algorithm_comparison" />
-        <item index="3" class="java.lang.String" itemvalue="Python.solo_time" />
-        <item index="4" class="java.lang.String" itemvalue="Python.data_retriever_server" />
+        <item index="1" class="java.lang.String" itemvalue="Python.timeonly_combine_album_server" />
+        <item index="2" class="java.lang.String" itemvalue="Python.rank_cluster" />
+        <item index="3" class="java.lang.String" itemvalue="Python.timonly_wide_deep_predict" />
+        <item index="4" class="java.lang.String" itemvalue="Python.wide_deep_predict_timeonly" />
       </list>
     </recent_temporary>
   </component>
@@ -417,7 +453,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11901001" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3018066" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37725824" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32731137" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3092455" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3060574" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -484,9 +520,14 @@
           <option name="timeStamp" value="303" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/data_retriever_server.py</url>
-          <line>557</line>
-          <option name="timeStamp" value="304" />
+          <url>file://$PROJECT_DIR$/get_input_wdl_timeonly.py</url>
+          <line>12</line>
+          <option name="timeStamp" value="325" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/rank_cluster.py</url>
+          <line>315</line>
+          <option name="timeStamp" value="328" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -496,7 +537,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="305" />
+      <option name="time" value="330" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -560,42 +601,11 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../../models/official/wide_deep/wide_deep_predict.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="13" column="8" lean-forward="true" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wide_deep_album1.py" />
-    <entry file="file://$PROJECT_DIR$/../../toolbox_personal/common_lib.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="10" column="48" lean-forward="true" selection-start-line="10" selection-start-column="48" selection-end-line="10" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/site-packages/tensorflow/python/ops/metrics_impl.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="674" column="29" lean-forward="false" selection-start-line="674" selection-start-column="29" selection-end-line="674" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/unionfind.py" />
-    <entry file="file://$PROJECT_DIR$/../../.Trashes/501/unionfind.py" />
     <entry file="file://$PROJECT_DIR$/main.py" />
     <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/site-packages/pandas/core/base.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="118">
           <caret line="909" column="0" lean-forward="false" selection-start-line="909" selection-start-column="0" selection-end-line="909" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/site-packages/tensorflow/python/platform/app.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="125" column="0" lean-forward="false" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -631,13 +641,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tmp_test.py" />
     <entry file="file://$PROJECT_DIR$/tmp" />
-    <entry file="file://$USER_HOME$/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/aa078c76d25a6ca599da6fb69c1d51a6/Message/MessageTemp/9e20f478899dc29eb19741386f9343c8/File/api_album.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="17" column="18" lean-forward="false" selection-start-line="17" selection-start-column="18" selection-end-line="17" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/aa078c76d25a6ca599da6fb69c1d51a6/Message/MessageTemp/9e20f478899dc29eb19741386f9343c8/File/api_album.py" />
     <entry file="file://$PROJECT_DIR$/data_retriever.py" />
     <entry file="file://$PROJECT_DIR$/tmp_delete.py" />
     <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/site-packages/IPython/core/interactiveshell.py">
@@ -658,13 +662,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/aa078c76d25a6ca599da6fb69c1d51a6/Message/MessageTemp/9e20f478899dc29eb19741386f9343c8/File/api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$USER_HOME$/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/aa078c76d25a6ca599da6fb69c1d51a6/Message/MessageTemp/9e20f478899dc29eb19741386f9343c8/File/api.py" />
     <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/site-packages/requests/api.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="151">
@@ -779,7 +777,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="211">
           <caret line="256" column="0" lean-forward="false" selection-start-line="256" selection-start-column="0" selection-end-line="256" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -788,7 +785,7 @@
         <state relative-caret-position="311">
           <caret line="141" column="35" lean-forward="true" selection-start-line="141" selection-start-column="35" selection-end-line="141" selection-end-column="35" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="false" />
             <element signature="e#397#2645#0" expanded="false" />
           </folding>
         </state>
@@ -799,7 +796,7 @@
         <state relative-caret-position="195">
           <caret line="84" column="24" lean-forward="false" selection-start-line="84" selection-start-column="15" selection-end-line="84" selection-end-column="24" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#0#9#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -808,7 +805,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="379">
           <caret line="304" column="13" lean-forward="false" selection-start-line="304" selection-start-column="13" selection-end-line="304" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -816,47 +812,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/solo_time.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3358">
-          <caret line="146" column="24" lean-forward="false" selection-start-line="146" selection-start-column="24" selection-end-line="146" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rank_cluster.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="385" column="29" lean-forward="true" selection-start-line="385" selection-start-column="29" selection-end-line="385" selection-end-column="29" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-            <element signature="e#933#1180#0" expanded="false" />
-            <element signature="e#1320#1803#0" expanded="false" />
-            <element signature="e#1954#2346#0" expanded="false" />
-            <element signature="e#7675#7867#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wide_deep_train.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7">
-          <caret line="220" column="24" lean-forward="true" selection-start-line="220" selection-start-column="24" selection-end-line="220" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wide_deep_predict.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3">
-          <caret line="89" column="38" lean-forward="true" selection-start-line="89" selection-start-column="38" selection-end-line="89" selection-end-column="38" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -864,14 +819,73 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
           <caret line="79" column="0" lean-forward="false" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/algorithm_comparison.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1955">
+          <caret line="85" column="82" lean-forward="false" selection-start-line="85" selection-start-column="4" selection-end-line="85" selection-end-column="82" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/solo_time.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="851">
+          <caret line="51" column="27" lean-forward="false" selection-start-line="51" selection-start-column="19" selection-end-line="51" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#10#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/site-packages/tensorflow/python/platform/app.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2668">
+          <caret line="125" column="0" lean-forward="false" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wide_deep_train_timeonly.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="201" column="24" lean-forward="true" selection-start-line="198" selection-start-column="29" selection-end-line="201" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wide_deep_predict_timeonly.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="69" column="133" lean-forward="false" selection-start-line="69" selection-start-column="133" selection-end-line="69" selection-end-column="133" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timeonly_wide_deep_train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wide_deep_predict.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1073">
+          <caret line="89" column="38" lean-forward="false" selection-start-line="89" selection-start-column="38" selection-end-line="89" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/data_retriever_server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
-          <caret line="562" column="54" lean-forward="true" selection-start-line="562" selection-start-column="54" selection-end-line="562" selection-end-column="54" />
+        <state relative-caret-position="23">
+          <caret line="497" column="46" lean-forward="false" selection-start-line="497" selection-start-column="46" selection-end-line="497" selection-end-column="46" />
           <folding>
             <element signature="e#106#115#0" expanded="true" />
             <element signature="e#585#781#0" expanded="false" />
@@ -880,31 +894,73 @@
             <element signature="e#3811#3829#0" expanded="false" />
             <element signature="e#4687#4694#0" expanded="false" />
             <element signature="e#6945#8568#0" expanded="false" />
+            <element signature="e#8741#9437#0" expanded="false" />
             <element signature="e#9842#13127#0" expanded="false" />
             <element signature="e#13316#13539#0" expanded="false" />
             <element signature="e#13917#14335#1" expanded="false" />
             <element signature="e#16089#16153#0" expanded="false" />
-            <element signature="e#20525#20601#0" expanded="false" />
+            <element signature="e#20679#20755#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/algorithm_comparison.py">
+    <entry file="file://$PROJECT_DIR$/timeonly_wide_deep_predict.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="25" column="12" lean-forward="true" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="12" />
+        <state relative-caret-position="106">
+          <caret line="143" column="80" lean-forward="false" selection-start-line="143" selection-start-column="65" selection-end-line="143" selection-end-column="80" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/get_input_wdl_timeonly.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="145" column="16" lean-forward="false" selection-start-line="145" selection-start-column="16" selection-end-line="145" selection-end-column="16" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#1083#1231#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wide_deep_train.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="429">
+          <caret line="96" column="32" lean-forward="true" selection-start-line="96" selection-start-column="32" selection-end-line="96" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timeonly_combine_album_server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="358">
+          <caret line="63" column="45" lean-forward="false" selection-start-line="63" selection-start-column="45" selection-end-line="63" selection-end-column="45" />
+          <folding>
+            <element signature="e#105#114#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/combine_album_server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="193">
-          <caret line="23" column="75" lean-forward="true" selection-start-line="23" selection-start-column="75" selection-end-line="23" selection-end-column="75" />
+        <state relative-caret-position="-1049">
+          <caret line="82" column="0" lean-forward="true" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
           <folding>
             <element signature="e#105#114#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rank_cluster.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="458" column="55" lean-forward="false" selection-start-line="458" selection-start-column="55" selection-end-line="458" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#933#1180#0" expanded="false" />
+            <element signature="e#1320#1803#0" expanded="false" />
+            <element signature="e#1954#2346#0" expanded="false" />
+            <element signature="e#7675#7867#0" expanded="false" />
           </folding>
         </state>
       </provider>

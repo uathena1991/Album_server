@@ -455,7 +455,7 @@ def construct_pair_feature_matrix(file_names, wanted_gps, wanted_time, exif_info
 
 
 ################################################################################################################################
-def save2csv(features_m, file_names, usr_nm, save_path, file_type='original', convert_idx_fn=True):
+def save2csv(features_m, file_names, usr_nm, train_ratio, save_path, file_type='original', convert_idx_fn=True):
 	# (optional) save it to a file
 	# pdb.set_trace()
 	columns_name = ['1st Image', '2nd Image', 'Distance', 'Time', 'ExposureTime',
@@ -473,17 +473,24 @@ def save2csv(features_m, file_names, usr_nm, save_path, file_type='original', co
 		df.loc[:, 'Label_e'] = df['Label_e'].apply(int)  # convert A to an int
 		df.loc[:, 'Label_s'] = df['Label_s'].apply(int)  # convert A to an int
 		df.loc[:, 'Holiday'] = df['Holiday'].apply(int)  # convert A to an int
-		df.to_csv(os.path.join(save_path, file_type, "%s_%s_data_%1.2f.csv" %(usr_nm, file_type, FLAGS.train_ratio)), header=None, index=False)
+		df.to_csv(os.path.join(save_path, file_type, "%s_%s_data_%1.2f.csv" %(usr_nm, file_type, train_ratio)), header=None, index=False)
 		print("Number of %s samples is %d" %(file_type, len(df)))
 	except Exception as e:
 		print('Error: save %s failed!!!' %file_type)
 		print(str(e))
-		return os.path.join(save_path, file_type, "%s_%s_data_%1.2f.csv" %(usr_nm, file_type, FLAGS.train_ratio))
-	return os.path.join(save_path, file_type, "%s_%s_data_%1.2f.csv" %(usr_nm, file_type, FLAGS.train_ratio))
+		return os.path.join(save_path, file_type, "%s_%s_data_%1.2f.csv" %(usr_nm, file_type, train_ratio))
+	return os.path.join(save_path, file_type, "%s_%s_data_%1.2f.csv" %(usr_nm, file_type, train_ratio))
 
 
 ################################################################################################################################
 def combine_csv(name_list, output_nm, common_path):
+	"""
+	name_list = ['hxl', 'hw', 'zzx', 'zt', 'zd', 'wy_tmp', 'lf', 'hhl', 'hxl2016']
+	:param name_list:
+	:param output_nm:
+	:param common_path:
+	:return:
+	"""
 	try:
 		fout = open(os.path.join(common_path, output_nm), 'a')
 		for nm in name_list:
@@ -555,10 +562,10 @@ def main(FLAGS0):
 		print('Done!')
 		print("++++++++++++++++++++++++++++++++++++++++++++++++++++++")
 		print('Saving to .csv files...')
-		original_path = save2csv(features_m, file_names, FLAGS.usr_nm, os.path.join(FLAGS.working_path, FLAGS.model_input_path), 'original')
+		original_path = save2csv(features_m, file_names, FLAGS.usr_nm, FLAGS.train_ratio, os.path.join(FLAGS.working_path, FLAGS.model_input_path), 'original')
 		train_data, predict_data = seperate_train_val(original_path, FLAGS.train_ratio)
-		train_path = save2csv(train_data, file_names, FLAGS.usr_nm, os.path.join(FLAGS.working_path, FLAGS.model_input_path), 'training', False)
-		predict_path = save2csv(predict_data, file_names, FLAGS.usr_nm, os.path.join(FLAGS.working_path, FLAGS.model_input_path), 'predict', False)
+		train_path = save2csv(train_data, file_names, FLAGS.usr_nm, FLAGS.train_ratio, os.path.join(FLAGS.working_path, FLAGS.model_input_path), 'training', False)
+		predict_path = save2csv(predict_data, file_names, FLAGS.usr_nm, FLAGS.train_ratio, os.path.join(FLAGS.working_path, FLAGS.model_input_path), 'predict', False)
 		print('Done!')
 		return original_path, train_path, predict_path
 	except Exception as e:
