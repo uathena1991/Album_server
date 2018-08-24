@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c717201-9a43-41e3-9f97-e969f26362c4" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/get_input_wdl_timeonly.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/timeonly_combine_album_server.py" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/combine_album_server.py" afterPath="$PROJECT_DIR$/combine_album_server.py" />
-      <change beforePath="$PROJECT_DIR$/data_retriever_server.py" afterPath="$PROJECT_DIR$/data_retriever_server.py" />
       <change beforePath="$PROJECT_DIR$/rank_cluster.py" afterPath="$PROJECT_DIR$/rank_cluster.py" />
-      <change beforePath="$PROJECT_DIR$/wide_deep_train.py" afterPath="$PROJECT_DIR$/wide_deep_train.py" />
+      <change beforePath="$PROJECT_DIR$/timeonly_combine_album_server.py" afterPath="$PROJECT_DIR$/timeonly_combine_album_server.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,8 +18,8 @@
       <file leaf-file-name="combine_album_server.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/combine_album_server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1049">
-              <caret line="82" column="0" lean-forward="true" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
+            <state relative-caret-position="450">
+              <caret line="28" column="20" lean-forward="false" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="20" />
               <folding>
                 <element signature="e#105#114#0" expanded="true" />
               </folding>
@@ -32,11 +27,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="timeonly_combine_album_server.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="timeonly_combine_album_server.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/timeonly_combine_album_server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="358">
-              <caret line="63" column="45" lean-forward="false" selection-start-line="63" selection-start-column="45" selection-end-line="63" selection-end-column="45" />
+            <state relative-caret-position="439">
+              <caret line="34" column="0" lean-forward="true" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
               <folding>
                 <element signature="e#105#114#0" expanded="true" />
               </folding>
@@ -44,11 +39,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="rank_cluster.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="rank_cluster.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rank_cluster.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="458" column="55" lean-forward="false" selection-start-line="458" selection-start-column="55" selection-end-line="458" selection-end-column="55" />
+            <state relative-caret-position="371">
+              <caret line="425" column="46" lean-forward="true" selection-start-line="423" selection-start-column="0" selection-end-line="425" selection-end-column="46" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
                 <element signature="e#933#1180#0" expanded="false" />
@@ -228,9 +223,9 @@
         <option value="$PROJECT_DIR$/timeonly_wide_deep_train.py" />
         <option value="$PROJECT_DIR$/timonly_wide_deep_predict.py" />
         <option value="$PROJECT_DIR$/get_input_wdl_timeonly.py" />
-        <option value="$PROJECT_DIR$/timeonly_combine_album_server.py" />
-        <option value="$PROJECT_DIR$/combine_album_server.py" />
         <option value="$PROJECT_DIR$/rank_cluster.py" />
+        <option value="$PROJECT_DIR$/combine_album_server.py" />
+        <option value="$PROJECT_DIR$/timeonly_combine_album_server.py" />
       </list>
     </option>
   </component>
@@ -931,36 +926,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/timeonly_combine_album_server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="358">
-          <caret line="63" column="45" lean-forward="false" selection-start-line="63" selection-start-column="45" selection-end-line="63" selection-end-column="45" />
-          <folding>
-            <element signature="e#105#114#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/combine_album_server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1049">
-          <caret line="82" column="0" lean-forward="true" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
-          <folding>
-            <element signature="e#105#114#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/rank_cluster.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="458" column="55" lean-forward="false" selection-start-line="458" selection-start-column="55" selection-end-line="458" selection-end-column="55" />
+        <state relative-caret-position="371">
+          <caret line="425" column="46" lean-forward="true" selection-start-line="423" selection-start-column="0" selection-end-line="425" selection-end-column="46" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
             <element signature="e#933#1180#0" expanded="false" />
             <element signature="e#1320#1803#0" expanded="false" />
             <element signature="e#1954#2346#0" expanded="false" />
             <element signature="e#7675#7867#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/combine_album_server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="28" column="20" lean-forward="false" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="20" />
+          <folding>
+            <element signature="e#105#114#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/timeonly_combine_album_server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="439">
+          <caret line="34" column="0" lean-forward="true" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
+          <folding>
+            <element signature="e#105#114#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -369,7 +369,7 @@ def main(FLAGS0):
 	tmp_dict['res_unchosen'] = json.dumps([list(x) for x in res_unchosen])
 	tmp_dict['res_rank_event'] = json.dumps([x for x in rank_events_val])
 	tmp_dict['res_rank_scene'] = json.dumps([x for x in rank_scenes_val])
-	output_fn = os.path.join(FLAGS.working_path, FLAGS.final_save_path, FLAGS.usr_nm + FLAGS.final_post)
+	output_fn = os.path.join(FLAGS.working_path, FLAGS.final_save_path, FLAGS.usr_nm + FLAGS.model_cond)
 	with open(output_fn, 'w') as file:
 		json.dump(json.dumps(tmp_dict), file)
 	print('Final cluster results is saved in %s' %output_fn)
@@ -422,7 +422,7 @@ if __name__ == "__main__":
 		help='Path to save the final result.')
 
 	parser.add_argument(
-		'--final_post', type=str, default='_WDL/',
+		'--model_cond', type=str, default='_WDL_timegps/',
 		help='Path to save the final result.')
 
 	parser.add_argument(

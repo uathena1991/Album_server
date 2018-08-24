@@ -25,7 +25,8 @@ parser.add_argument('--image_parent_path', type = str,
                     # default = '/data/album_data/',
                     help='Parent path of images')
 
-
+parser.add_argument('--model_cond', type=str, default='_WDL_timegps/',
+                    help='Path to save the final result.')
 
 
 
