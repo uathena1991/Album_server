@@ -12,7 +12,7 @@ parser = argparse.ArgumentParser(description="All parameters")
 
 ######################common string#####################
 
-parser.add_argument('--usr_nm', type=str, default='hxl2016',
+parser.add_argument('--usr_nm', type=str, default='lf',
                     help='User name')
 
 parser.add_argument('--working_path', type = str,
@@ -25,7 +25,7 @@ parser.add_argument('--image_parent_path', type = str,
                     # default = '/data/album_data/',
                     help='Parent path of images')
 
-parser.add_argument('--model_cond', type=str, default='_WDL_timegps/',
+parser.add_argument('--model_cond', type=str, default='_WDL_timegps.json',
                     help='Path to save the final result.')
 
 
@@ -81,7 +81,7 @@ parser.add_argument('--train_ratio', type=float, default = 0.0,
 #################### Normally unchanged #########################
 
 parser.add_argument(
-    '--model_exported_path', type=str, default='model_output/L4_Adadelta_00003_004_timegps_nocross_1/',
+    '--model_exported_path', type=str, default='model_output/L4_Adadelta_00003_004_timegps_nocross_0/',
     help='Saved model path')
 
 parser.add_argument('--model_input_path', type = str, default = 'preprocessed_data/',

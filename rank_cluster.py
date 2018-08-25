@@ -422,7 +422,7 @@ if __name__ == "__main__":
 		help='Path to save the final result.')
 
 	parser.add_argument(
-		'--model_cond', type=str, default='_WDL_timegps/',
+		'--model_cond', type=str, default='_WDL_timegps.json',
 		help='Path to save the final result.')
 
 	parser.add_argument(

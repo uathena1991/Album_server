@@ -178,19 +178,19 @@ def main(usr_nm, train_ratio = 0.98, filter_range = 3*24 * 60 * 60 , gen_feature
         print(e)
         return
 
-# name_list = ['hxl', 'hw', 'zzx', 'zt', 'zd', 'wy_tmp', 'lf', 'hhl', "hxl2016"]
-# # name_list = ['hxl2016']
-# original_path, train_path, predict_path  = dict(), dict(), dict()
-# working_path = "/project/album_project/"
-# # working_path = "/Volumes/working/album_project/"
-#
-# range_filter = [3,3,3, 3,3,3, 3,3,1]
-# # name_list = ['hxl2016']
-# for idx, nm in enumerate(name_list):
-#     print(nm, range_filter[idx])
-#     original_path[nm], train_path[nm], predict_path[nm] = main(nm, working_path = working_path,  gen_feature_idx = True, filter_range = range_filter[idx] * 24*60*60)
-# print("++++++++++++++++++++++++++++++++++++++++++++++++++")
-# print("Combine all data...")
-# drs.combine_csv(original_path.values(), 'timeonly_combine_original_0.98.csv', os.path.join(working_path,"preprocessed_data/timeonly/original"))
-# drs.combine_csv(train_path.values(), 'timeonly_combine_training_0.98.csv', os.path.join(working_path, "preprocessed_data/timeonly/training"))
-# drs.combine_csv(predict_path.values(), 'timeonly_combine_predict_0.98.csv', os.path.join(working_path, "preprocessed_data/timeonly/predict"))
+name_list = ['hxl', 'hw', 'zzx', 'zt', 'zd', 'wy_tmp', 'lf', 'hhl', "hxl2016"]
+# name_list = ['hxl2016']
+original_path, train_path, predict_path  = dict(), dict(), dict()
+working_path = "/project/album_project/"
+# working_path = "/Volumes/working/album_project/"
+
+range_filter = [3,3,3, 3,3,3, 3,3,1]
+# name_list = ['hxl2016']
+for idx, nm in enumerate(name_list):
+    print(nm, range_filter[idx])
+    original_path[nm], train_path[nm], predict_path[nm] = main(nm, working_path = working_path,  gen_feature_idx = True, filter_range = range_filter[idx] * 24*60*60)
+print("++++++++++++++++++++++++++++++++++++++++++++++++++")
+print("Combine all data...")
+drs.combine_csv(original_path.values(), 'timeonly_combine_original_0.98.csv', os.path.join(working_path,"preprocessed_data/timeonly/original"))
+drs.combine_csv(train_path.values(), 'timeonly_combine_training_0.98.csv', os.path.join(working_path, "preprocessed_data/timeonly/training"))
+drs.combine_csv(predict_path.values(), 'timeonly_combine_predict_0.98.csv', os.path.join(working_path, "preprocessed_data/timeonly/predict"))

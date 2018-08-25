@@ -582,15 +582,15 @@ if __name__ == '__main__':
 
 	##
 
-	parser.add_argument('--usr_nm', type=str, default='hhl',
+	parser.add_argument('--usr_nm', type=str, default='wy_tmp',
 	                help='User name for saving files')
 
-	parser.add_argument('--pic_path_label', type=str, default='hhl_label_raw',
+	parser.add_argument('--pic_path_label', type=str, default='wy_tmp_label_raw',
 	                help='Full path to pictures')
 
 	parser.add_argument('--plist_json', type=str,
 	                    # default='/project/album_project/serving_data/hw_plist.json',
-	                    default='/Volumes/working/album_project/serving_data/hhl_plist.json',
+	                    default='/Volumes/working/album_project/serving_data/wy_tmp_plist.json',
                     help=' Path to the saved plist json file (input)')
 
 
@@ -615,18 +615,18 @@ if __name__ == '__main__':
 
 
 
-	parser.add_argument('--train_ratio', type=float, default=1,
+	parser.add_argument('--train_ratio', type=float, default= 0.98,
 	                help='Ratio between train/validation samples (use 0 if for test/prediction)')
 
 	parser.add_argument('--filter_range', type=int, default=96 * 60 * 60,
 	                help='Time range to choose two images (s)')
 
 
-	parser.add_argument('--generate_plist_idx', type = ast.literal_eval, default = True,
+	parser.add_argument('--generate_plist_idx', type = ast.literal_eval, default = False,
 	                help='if True, generate features from plist info, otherwise, load from the .npy file ')
 
 
-	parser.add_argument('--generate_feature_idx', type = ast.literal_eval, default = True,
+	parser.add_argument('--generate_feature_idx', type = ast.literal_eval, default = False,
 	                help='if True, generate features for two-two compare, otherwise, load from the .npy file ')
 
 	parser.add_argument('--generate_holiday_tab', type = ast.literal_eval, default= False,

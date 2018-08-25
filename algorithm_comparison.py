@@ -79,9 +79,6 @@ def func_compare(alg, gt, vis):
 
 
 
-
-
-
 def main():
 	name_list = ['hxl', 'hxl2016', 'hw', 'zzx', 'zt', 'zd', 'wy_tmp', 'lf', 'hhl']
 	res_wdl_opt = np.empty(shape = (3, len(name_list)))

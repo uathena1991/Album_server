@@ -10,10 +10,9 @@ import argparse
 import shutil
 import os, sys
 import pdb
-import ast
 import tensorflow as tf
 import pandas as pd
-
+import ast
 
 def build_model_columns():
 	"""Builds a set of wide and deep feature columns."""
@@ -85,7 +84,7 @@ def build_estimator(model_dir, model_type, dnn_learning_rate, linear_learning_ra
             model_dir = model_dir,
             feature_columns = deep_columns,
             hidden_units = hidden_units,
-			dnn_dropout= dropout_rate,
+           dnn_dropout= dropout_rate,
 			batch_norm = bn_idx,
             config = run_config)
 	else:
@@ -96,7 +95,7 @@ def build_estimator(model_dir, model_type, dnn_learning_rate, linear_learning_ra
             dnn_hidden_units = hidden_units,
 			linear_optimizer = tf.train.AdadeltaOptimizer(learning_rate = linear_learning_rate),
             dnn_optimizer = tf.train.AdadeltaOptimizer(learning_rate = dnn_learning_rate),
-            n_classes = 2, 
+            n_classes = 2,
             dnn_dropout= dropout_rate,
 			batch_norm = bn_idx,
             config = run_config)
@@ -109,11 +108,9 @@ def input_fn(data_file, num_epochs, shuffle, batch_size):
 		print('Parsing', data_file)
 		columns = tf.decode_csv(value, record_defaults=_CSV_COLUMN_DEFAULTS)
 		features = dict(zip(_CSV_COLUMNS, columns))
-		labels = features.pop('Label_e')
+		labels = features.pop('Label')
 		features.pop('1st Image')
 		features.pop('2nd Image')
-		features.pop('Label_s')
-		print('Length of features:', len(features))
 		return features, tf.equal(labels, 1)
 
 	# Extract lines from input files using the Dataset API.
@@ -175,20 +172,16 @@ if __name__ == '__main__':
 	global _CSV_COLUMNS,_CSV_COLUMN_DEFAULTS,FLAGS,_NUM_EXAMPLES
 
 	_CSV_COLUMNS = [
-    '1st Image', '2nd Image',
-	'Distance', 'Time',
-	'ExposureTime', 'Flash', 'FocalLength', 'ShutterSpeedValue', 'SceneType','SensingMethod',
+    '1st Image', '2nd Image', 'Distance', 'Time', 'ExposureTime',
+    'Flash', 'FocalLength', 'ShutterSpeedValue', 'SceneType','SensingMethod',
 	'Holiday', 'Delta_closest_holiday', 'Average_closest_holiday', 'Average_city_prop',
-	'Label_e', 'Label_s'
+	'Label'
 	]
 
 	#_CSV_COLUMN_DEFAULTS = [[0], [0], [0.0], [0.0], [0.0],
 	 #                       [0.0], [0.0], [0.0], [0], [0], [0]]
-	_CSV_COLUMN_DEFAULTS = [['xx'], ['xx'],
-	                        [-1.0], [-1.0],
-	                        [-1.0],[-1.0], [-1.0], [-1.0], [-1], [-1],
-	                        [-1], [-1.0], [-1.0], [-1.0],
-	                        [0], [0]]
+	_CSV_COLUMN_DEFAULTS = [['xx'], ['xx'], [-1.0], [-1.0], [-1.0],
+	                       [-1.0], [-1.0], [-1.0], [-1], [-1], [-1], [-1.0], [-1.0], [-1.0], [0]]
 
 	parser = argparse.ArgumentParser()
 
@@ -204,7 +197,7 @@ if __name__ == '__main__':
 
 	parser.add_argument(
 	    # '--servable_model_dir', type = str, default = '/project/album_project/model_output/',
-	    '--model_rename', type = str, default = 'timegps_L4_Adadelta_noDO_noBN_00003_004_0/',
+	    '--model_rename', type = str, default = 'timegps_L4_Adadelta_00003_004_nodropout/',
 	    help = 'Path to rename the trained model for serving')
 
 	parser.add_argument(

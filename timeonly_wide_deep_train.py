@@ -12,7 +12,7 @@ import os, sys
 import pdb
 import tensorflow as tf
 import pandas as pd
-
+import ast
 
 def build_model_columns():
 	"""Builds a set of wide and deep feature columns."""
@@ -54,7 +54,7 @@ def build_model_columns():
 	return wide_columns, deep_columns
 
 
-def build_estimator(model_dir, model_type, dnn_learning_rate, linear_learning_rate):
+def build_estimator(model_dir, model_type, dnn_learning_rate, linear_learning_rate, dnn_dropout):
 	"""Build an estimator appropriate for the given model type."""
 	wide_columns, deep_columns = build_model_columns()
 	# hidden_units = [100, 75, 50, 25]
@@ -86,8 +86,8 @@ def build_estimator(model_dir, model_type, dnn_learning_rate, linear_learning_ra
             optimizer = tf.train.AdagradOptimizer(learning_rate = dnn_learning_rate), # default, stable, don't need to adjust params
             hidden_units = hidden_units,
 			n_classes = 2,
-			dropout= 0.05,
-			batch_norm = True,
+			dropout= dnn_dropout,
+			# batch_norm = True,
             config = run_config)
 	else:
 		return tf.estimator.DNNLinearCombinedClassifier(
@@ -99,6 +99,8 @@ def build_estimator(model_dir, model_type, dnn_learning_rate, linear_learning_ra
             # dnn_optimizer = tf.train.GradientDescentOptimizer(learning_rate = dnn_learning_rate),
             dnn_optimizer = tf.train.AdadeltaOptimizer(learning_rate = dnn_learning_rate),
             n_classes = 2,
+			dropout = dnn_dropout,
+			# bath_norm = True,
             config = run_config)
 
 def input_fn(data_file, num_epochs, shuffle, batch_size):
@@ -151,7 +153,8 @@ def input_fn(data_file, num_epochs, shuffle, batch_size):
 def main(self):
 	# Clean up the model directory if present
 	shutil.rmtree(os.path.join(FLAGS.servable_model_dir, FLAGS.model_dir), ignore_errors=True)
-	model = build_estimator(os.path.join(FLAGS.servable_model_dir, FLAGS.model_dir), FLAGS.model_type, FLAGS.dnn_learning_rate, FLAGS.linear_learning_rate)
+	model = build_estimator(os.path.join(FLAGS.servable_model_dir, FLAGS.model_dir), FLAGS.model_type,
+	                        FLAGS.dnn_learning_rate, FLAGS.linear_learning_rate, FLAGS.dnn_dropout)
 
 	# Train and evaluate the model every `FLAGS.epochs_per_eval` epochs.
 	for n in range(FLAGS.train_epochs // FLAGS.epochs_per_eval):
@@ -177,7 +180,7 @@ def main(self):
 	servable_model_path = model.export_savedmodel(FLAGS.servable_model_dir, export_input_fn)
 	print("*********** Done Exporting at PAth - %s", servable_model_path)
 	print("Run parameters:")
-	pdb.set_trace()
+	# pdb.set_trace()
 	shutil.move(servable_model_path.decode(), os.path.join(FLAGS.servable_model_dir, FLAGS.model_rename))
 	shutil.move(os.path.join(FLAGS.servable_model_dir, FLAGS.model_dir), os.path.join(FLAGS.servable_model_dir, FLAGS.model_rename))
 	print(FLAGS)
@@ -208,8 +211,8 @@ if __name__ == '__main__':
 	    help = 'Path to rename the trained model for serving')
 
 	parser.add_argument(
-	    # '--working_path', type=str, default='/project/album_project/',
-	    '--working_path', type=str, default='/Volumes/working/album_project/',
+	    '--working_path', type=str, default='/project/album_project/',
+	    # '--working_path', type=str, default='/Volumes/working/album_project/',
 	    help='Base working directory.')
 
 	parser.add_argument(
@@ -217,19 +220,23 @@ if __name__ == '__main__':
 	    # '--model_dir', type=str, default='wide_deep_model/',
 	    help='Base directory for the model.')
 
+	parser.add_argument('--dnn_dropout', type=float, default=0.0, help='DNN dropout rate.')
+
+	parser.add_argument('--dnn_batch_norm', type=ast.literal_eval, default=False, help='DNN batch normalization.')
+
 	parser.add_argument(
-	    # '--train_data', type=str, default= '/project/album_project/preprocessed_data/timeonly/training/timeonly_combine_training_0.98.csv',
-	    '--train_data', type=str, default= '/Volumes/working/album_project/preprocessed_data/timeonly/training/zzx_training_data_0.98.csv',
+	    '--train_data', type=str, default= '/project/album_project/preprocessed_data/timeonly/training/timeonly_combine_training_0.98.csv',
+	    # '--train_data', type=str, default= '/Volumes/working/album_project/preprocessed_data/timeonly/training/timeonly_combine_training_0.98.csv',
 	    help='Path to the training data.')
 
 	parser.add_argument(
-	    # '--test_data', type=str, default='/project/album_project/preprocessed_data/timeonly/predict/timeonly_combine_predict_0.98.csv',
-	    '--test_data', type=str, default='/Volumes/working/album_project/preprocessed_data/timeonly/predict/zzx_predict_data_0.98.csv',
+	    '--test_data', type=str, default='/project/album_project/preprocessed_data/timeonly/predict/timeonly_combine_predict_0.98.csv',
+	    # '--test_data', type=str, default='/Volumes/working/album_project/preprocessed_data/timeonly/predict/timeonly_combine_predict_0.98.csv',
 	    help='Path to the test data.')
 
 	parser.add_argument(
-	    # '--servable_model_dir', type = str, default = '/project/album_project/model_output/',
-	    '--servable_model_dir', type = str, default = '/Volumes/working/album_project/model_output/',
+	    '--servable_model_dir', type = str, default = '/project/album_project/model_output/',
+	    # '--servable_model_dir', type = str, default = '/Volumes/working/album_project/model_output/',
 	    help = 'Path to save the trained model for serving')
 
 

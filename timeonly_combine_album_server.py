@@ -135,6 +135,7 @@ def main(FLAGS):
 	print('++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 	print('Scene splitting...')
 	FLAGS.label_pic_path = FLAGS.usr_nm + '_label_raw'
+	FLAGS.model_cond = "_WDL_time.json"
 	res_file = rcr.main(FLAGS)
 	return res_file
 
