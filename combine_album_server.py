@@ -12,7 +12,7 @@ parser = argparse.ArgumentParser(description="All parameters")
 
 ######################common string#####################
 
-parser.add_argument('--usr_nm', type=str, default='lf',
+parser.add_argument('--usr_nm', type=str, default='zd',
                     help='User name')
 
 parser.add_argument('--working_path', type = str,
@@ -25,11 +25,8 @@ parser.add_argument('--image_parent_path', type = str,
                     # default = '/data/album_data/',
                     help='Parent path of images')
 
-parser.add_argument('--model_cond', type=str, default='_WDL_timegps.json',
+parser.add_argument('--model_cond', type=str, default='WDL',
                     help='Path to save the final result.')
-
-
-
 
 
 ##################### bool #####################
@@ -51,7 +48,7 @@ parser.add_argument('--vis_idx_cluster', type=ast.literal_eval, default = False,
 parser.add_argument('--vis_idx_rank', type=ast.literal_eval, default = False,
                     help='Bool value: whether to show ranked albums.')
 
-parser.add_argument('--vis_idx_final', type=ast.literal_eval, default = True,
+parser.add_argument('--vis_idx_final', type=ast.literal_eval, default = False,
                     help='Bool value: whether to show final selected albums.')
 
 parser.add_argument('--print_parser', type=ast.literal_eval, default = True,
@@ -81,13 +78,16 @@ parser.add_argument('--train_ratio', type=float, default = 0.0,
 #################### Normally unchanged #########################
 
 parser.add_argument(
-    '--model_exported_path', type=str, default='model_output/L4_Adadelta_00003_004_timegps_nocross_0/',
-    help='Saved model path')
+    '--model_exported_path', type=str, default='model_output/',
+    help='Base directory for the model.')
+parser.add_argument(
+    '--model_folder_name', type=str, default='timegps_Adadelta_L3_noDO_noBN_00003_004_0',
+    help='Base directory for the model.')
 
 parser.add_argument('--model_input_path', type = str, default = 'preprocessed_data/',
                     help='Partial path to save preprocessed data')
 
-parser.add_argument('--plist_json', type=str,
+parser.add_argument('--plist_folder', type=str,
                     default='serving_data/',
                     help=' Path to the saved plist json file (input)')
 
@@ -110,21 +110,23 @@ parser.add_argument('--city_lonlat', type=str, default='preprocessed_data/city_l
 parser.add_argument("--holiday_file", type = str, default = 'preprocessed_data/holidays.csv',
                     help = "Full path to the holiday lookup table.")
 
+parser.add_argument('--pic_path_label', type=str, default='_label_raw',
+	                help='Full path to pictures')
 ##############################################################################################
 
 
 FLAGS, unparsed = parser.parse_known_args()
-FLAGS.plist_json = os.path.join(FLAGS.working_path, FLAGS.plist_json, FLAGS.usr_nm + '_plist.json')
 if FLAGS.print_parser:
 	print(FLAGS)
 
 
 
 def main(FLAGS):
+	res = dict()
+	FLAGS.plist_json = os.path.join(FLAGS.working_path, FLAGS.plist_folder, FLAGS.usr_nm + '_plist.json')
 	###### data preprocessing ############
 	print('++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 	print("Data preprocessing....")
-	# if FLAGS.run_prediction:
 	original_path, train_path, predict_path = drs.main(FLAGS)
 	FLAGS.predict_input = predict_path
 	####### model prediction #############
@@ -132,20 +134,21 @@ def main(FLAGS):
 	print("Model prediction....")
 	cts, acc, prec, rec, auc, predict_fn = wdp.main(FLAGS)
 	FLAGS.predict_output = predict_fn
+	res['Event_res'] = {'eval': (cts, acc, prec, rec, auc), 'file': predict_fn}
 	print("Double-check: prediction file: %s" %FLAGS.predict_output)
 	######## rank cluster #############
 	print('++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 	print('Scene splitting...')
 	FLAGS.label_pic_path = FLAGS.usr_nm + '_label_raw'
-	res_file = rcr.main(FLAGS)
-	return res_file
+	res_file, acc, rec, prec, auc = rcr.main(FLAGS)
+	res['Scene_res'] = {'eval': ( acc, rec, prec, auc), 'file': res_file}
+	return res_file, res
 
 
 
 
 if __name__ == '__main__':
 	FLAGS, unparsed = parser.parse_known_args()
-	FLAGS.plist_json = os.path.join(FLAGS.working_path, FLAGS.plist_json, FLAGS.usr_nm + '_plist.json')
 	if FLAGS.print_parser:
 		print(FLAGS)
 

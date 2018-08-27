@@ -4,15 +4,15 @@
 import os
 import argparse
 import ast
-import get_input_wdl_timeonly as giwt
-import timeonly_wide_deep_predict as wdp
+import timeonly_data_retriever_server as tdrs
+import timeonly_wide_deep_predict as twdp
 import rank_cluster as rcr
 ##
 parser = argparse.ArgumentParser(description="All parameters")
 
 ######################common string#####################
 
-parser.add_argument('--usr_nm', type=str, default='hxl2016',
+parser.add_argument('--usr_nm', type=str, default='zd',
                     help='User name')
 
 parser.add_argument('--working_path', type = str,
@@ -25,7 +25,7 @@ parser.add_argument('--image_parent_path', type = str,
                     # default = '/data/album_data/',
                     help='Parent path of images')
 
-parser.add_argument('--model_cond', type=str, default='_WDL_timegps/',
+parser.add_argument('--model_cond', type=str, default='WDL',
                     help='Path to save the final result.')
 
 
@@ -49,7 +49,7 @@ parser.add_argument('--vis_idx_cluster', type=ast.literal_eval, default = False,
 parser.add_argument('--vis_idx_rank', type=ast.literal_eval, default = False,
                     help='Bool value: whether to show ranked albums.')
 
-parser.add_argument('--vis_idx_final', type=ast.literal_eval, default = True,
+parser.add_argument('--vis_idx_final', type=ast.literal_eval, default = False,
                     help='Bool value: whether to show final selected albums.')
 
 parser.add_argument('--print_parser', type=ast.literal_eval, default = True,
@@ -75,17 +75,23 @@ parser.add_argument('--thres_scene', type=float, default = 0.16,
 parser.add_argument('--train_ratio', type=float, default = 0.0,
                     help='Ratio between train/test')
 
+parser.add_argument('--half_win_size', type=int, default = 2,
+                    help='window size to calculate image frequency in time')
 
 #################### Normally unchanged #########################
 
 parser.add_argument(
-    '--model_exported_path', type=str, default='model_output/timeonly_????_0/',
+    '--model_exported_path', type=str, default='model_output',
     help='Saved model path')
+
+parser.add_argument(
+	'--model_folder_name', type=str, default='timeonly_Adadelta_L4_DO_BN_00003_0',
+	help='Base directory for the model.')
 
 parser.add_argument('--model_input_path', type = str, default = 'preprocessed_data/',
                     help='Partial path to save preprocessed data')
 
-parser.add_argument('--plist_json', type=str,
+parser.add_argument('--plist_folder', type=str,
                     default='serving_data/',
                     help=' Path to the saved plist json file (input)')
 
@@ -108,43 +114,46 @@ parser.add_argument('--city_lonlat', type=str, default='preprocessed_data/city_l
 parser.add_argument("--holiday_file", type = str, default = 'preprocessed_data/holidays.csv',
                     help = "Full path to the holiday lookup table.")
 
+parser.add_argument('--pic_path_label', type=str, default='_label_raw',
+	                help='Full path to pictures')
 ##############################################################################################
 
 
 FLAGS, unparsed = parser.parse_known_args()
-FLAGS.plist_json = os.path.join(FLAGS.working_path, FLAGS.plist_json, FLAGS.usr_nm + '_plist.json')
 if FLAGS.print_parser:
 	print(FLAGS)
 
 
 
 def main(FLAGS):
+	res = dict()
+	FLAGS.plist_json = os.path.join(FLAGS.working_path, FLAGS.plist_folder, FLAGS.usr_nm + '_plist.json')
 	###### data preprocessing ############
 	print('++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 	print("Data preprocessing....")
-	# if FLAGS.run_prediction:
-	original_path, train_path, predict_path = giwt.main(FLAGS.usr_nm, 0.0, working_path=FLAGS.working_path, gen_feature_idx=FLAGS.generate_feature_idx)
+	original_path, train_path, predict_path = tdrs.main(FLAGS)
 	FLAGS.predict_input = predict_path
 	####### model prediction #############
 	print('++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 	print("Model prediction....")
-	cts, acc, prec, rec, auc, predict_fn = wdp.main(FLAGS)
+	cts, acc, prec, rec, auc, predict_fn = twdp.main(FLAGS)
+	res['Event_res'] = {'eval': (cts, acc, prec, rec, auc), 'file': predict_fn}
 	FLAGS.predict_output = predict_fn
 	print("Double-check: prediction file: %s" %FLAGS.predict_output)
 	######## rank cluster #############
 	print('++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 	print('Scene splitting...')
 	FLAGS.label_pic_path = FLAGS.usr_nm + '_label_raw'
-	FLAGS.model_cond = "_WDL_time.json"
-	res_file = rcr.main(FLAGS)
-	return res_file
+	# FLAGS.model_cond = "WDL"
+	res_file, acc, rec, prec, auc = rcr.main(FLAGS)
+	res['Scene_res'] = {'eval': (acc, rec, prec, auc), 'file': res_file}
+	return res_file, res
 
 
 
 
 if __name__ == '__main__':
 	FLAGS, unparsed = parser.parse_known_args()
-	FLAGS.plist_json = os.path.join(FLAGS.working_path, FLAGS.plist_json, FLAGS.usr_nm + '_plist.json')
 	if FLAGS.print_parser:
 		print(FLAGS)
 

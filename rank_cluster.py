@@ -13,7 +13,7 @@ from sklearn.cluster import OPTICS
 from sklearn import metrics
 import data_retriever_server as drs
 from common_lib import UnionFind, visualize_cluster
-
+import sudo_get_input_json as sgij
 
 ######################################################################
 
@@ -162,7 +162,7 @@ def labeling_image_cluster(img_label, clusters, noise_cl, cond_idx):
 	return img_label
 
 
-################################################################
+############################################################################################
 def find_best_thres(clust, len_cluster, eps_range = [0, 1], step = 0.01):
 			"""
 			to have fewest noisy sample
@@ -174,11 +174,47 @@ def find_best_thres(clust, len_cluster, eps_range = [0, 1], step = 0.01):
 				_, tmp_label = clust.extract_dbscan(eps)
 				min_noise, res_eps, res_label = (sum(tmp_label == -1), eps, tmp_label) if (sum(tmp_label == -1) < min_noise and len(np.unique(tmp_label)) > 1)  else (min_noise, res_eps, res_label)
 			return res_label, res_eps, min_noise
-#####################################
+
+
+
+#############################################################################################
 # cluster based on gps_threshold, and time threshold
+def cal_similarity(set_a, set_b):
+	# return (len(set_a.intersection(set_b))/(1e-16+ len(set_b)) + len(set_b.intersection(set_a))/(1e-6+len(set_b)))/2
+	return len(set_a.intersection(set_b))/(len(set_b)+1e-6)
 
-################################################################
 
+###############################################################################################
+def func_compare(alg, gt, vis):
+	""" Compare algorithm with ground truth, alg, gt
+	return: precision, recall, F1 score
+	"""
+
+	matrix_similar = np.array([[cal_similarity(set(xa), set(xb)) for xb in gt] for xa in alg])
+	paired_gt = [[] for _ in alg]
+	for i in range(len(alg)):
+		try:
+			alg_idx, gt_idx = np.unravel_index(matrix_similar.argmax(),matrix_similar.shape)
+		except:
+			pdb.set_trace()
+		paired_gt[alg_idx] = gt[gt_idx]
+		matrix_similar[alg_idx, gt_idx] = 0
+
+	matrix_similar1 = np.array([[cal_similarity(set(xa), set(xb)) for xb in paired_gt] for xa in alg])
+	if vis:
+		print("len(gt)=%d, len(opt) = %d" %(len(gt), len(alg)))
+		plt.imshow(matrix_similar1)
+		plt.show()
+	# calculate accuracy, recall, precision, auc
+
+	rec, prec, f1 = [],[],[]
+	for idx, calg in enumerate(alg):
+		inters = set(calg).intersection(set(paired_gt[idx]))
+		rec.append(len(inters)/(1e-6+len(paired_gt[idx])))
+		prec.append(len(inters)/(1e-6+len(calg)))
+		f1.append(2*prec[-1]*rec[-1]/(prec[-1]+rec[-1] + 1e-6))
+	# [print(x,y,z) for x,y,z in zip(prec, rec, f1)]
+	return np.mean(prec), np.mean(rec), np.mean(f1)
 
 ################################################################
 def cluster_into_scenes(res_rank, wanted_gps, wanted_time, file_names, min_pic_num, max_pic, thres=0.16,
@@ -285,6 +321,8 @@ def cal_accuracy_pair(strue, spredict, file_names):
 def main(FLAGS0):
 	global FLAGS
 	FLAGS = FLAGS0
+	FLAGS.plist_json = os.path.join(FLAGS.working_path, FLAGS.plist_folder, FLAGS.usr_nm + "_plist.json")
+	FLAGS.label_pic_path = os.path.join(FLAGS.image_parent_path, FLAGS.usr_nm + "_label_raw")
 	############################################### load features for each image (for test images) ########################################################
 	print("Image feature path %s" % (os.path.join(FLAGS.working_path, FLAGS.feature_save_path,
 	                                              'feature_matrix_' + FLAGS.usr_nm.split('/')[0] + '.npz')))
@@ -294,8 +332,7 @@ def main(FLAGS0):
 		drs.FLAGS.usr_nm = FLAGS.usr_nm.split('/')[0]
 		drs.FLAGS.generate_holiday_tab, drs.FLAGS.generate_plist_idx, drs.FLAGS.generate_feature_idx = False, False, False
 		drs.FLAGS.train_ratio = 0
-		drs.FLAGS.working_path, drs.FLAGS.label_pic_path, drs.FLAGS.data_parent_path, drs.FLAGS.plist_path = FLAGS.working_path, FLAGS.label_pic_path, \
-		                                                                                                     FLAGS.image_parent_path, FLAGS.plist_path
+		drs.FLAGS.working_path, drs.FLAGS.label_pic_path, drs.FLAGS.data_parent_path = FLAGS.working_path, FLAGS.label_pic_path, FLAGS.image_parent_path
 		drs.main(1)
 	npz_features = np.load(os.path.join(FLAGS.working_path, FLAGS.feature_save_path,
 	                                    'feature_matrix_' + FLAGS.usr_nm.split('/')[0] + '.npz'))
@@ -334,7 +371,7 @@ def main(FLAGS0):
 
 
 	######################################### choose scenes within events (if # pic > FLAGS.max_pic) ###############################
-	print('Splitting events into scenes....threshold')
+	print('Splitting events into scenes....')
 	structed_res, res_scenes, res_unchosen, res_noise = cluster_into_scenes(res_event_rank1, wanted_gps, wanted_time, file_names, FLAGS.min_pic_num, FLAGS.max_pic, FLAGS.thres_scene, show_idx = False)
 	# res_unchosen = np.append(res_unchosen, tmp_unchosen)
 	# record scene # for each image
@@ -347,6 +384,25 @@ def main(FLAGS0):
 	res_final, rank_scenes_val, rank_events_val = cal_rank_total(1, res_scenes, structed_res, wanted_closest_holiday, file_names, wanted_city_prop, wanted_holiday,
 	                                          img_label, rank_events_val)
 
+
+	############################## calculate accuracy, precision, recall #####################################
+	file_names, gps_info, exif_info, true_label = drs.get_plist_from_json(FLAGS.plist_json)
+	acc, rec, prec, auc = cal_accuracy_pair(true_label, img_label, file_names)
+	print("+++++++++++++Scenes cluster results (one-one pair results):+++++++++++++++++")
+	print("Accuracy: %1.4f" %acc)
+	print("Precision: %1.4f" %prec)
+	print("Recall: %1.4f" %rec)
+	print("AUC: %1.4f" %auc)
+
+	################ calculate precision, recall, F1 score based on scene cluster ############################
+	print("+++++++++++++Scenes cluster results (based on scene cluster):+++++++++++++++++")
+	_, _, scene_gt0 = sgij.get_image_event_scene_label(FLAGS.usr_nm)
+	scene_gt0 = np.array(scene_gt0)
+	scene_gt = scene_gt0[[FLAGS.min_pic_num<=len(x) <= FLAGS.max_pic for x in scene_gt0]]
+	res_gt_wdl = func_compare(res_final, scene_gt, False)
+	print("F1 score: %1.4f" %res_gt_wdl[2])
+	print("Precision: %1.4f" %res_gt_wdl[0])
+	print("Recall: %1.4f\n" %res_gt_wdl[1])
 
 	################ save to json file #######################
 	tmp_dict = dict()
@@ -369,7 +425,10 @@ def main(FLAGS0):
 	tmp_dict['res_unchosen'] = json.dumps([list(x) for x in res_unchosen])
 	tmp_dict['res_rank_event'] = json.dumps([x for x in rank_events_val])
 	tmp_dict['res_rank_scene'] = json.dumps([x for x in rank_scenes_val])
-	output_fn = os.path.join(FLAGS.working_path, FLAGS.final_save_path, FLAGS.usr_nm + FLAGS.model_cond)
+	tmp_dict['res_rank_scene'] = json.dumps([x for x in rank_scenes_val])
+	tmp_dict['eval_pair'] = json.dumps([acc, rec, prec, auc])
+	tmp_dict['eval_cluster'] = json.dumps(res_gt_wdl)
+	output_fn = os.path.join(FLAGS.working_path, FLAGS.final_save_path, FLAGS.usr_nm + "_" + FLAGS.model_cond + "_" + FLAGS.model_folder_name + ".json")
 	with open(output_fn, 'w') as file:
 		json.dump(json.dumps(tmp_dict), file)
 	print('Final cluster results is saved in %s' %output_fn)
@@ -381,48 +440,44 @@ def main(FLAGS0):
 	print('All done!')
 	print("Final scene", res_final)
 
-	############################## calculate accracy, precision, recall #####################################
-	file_names, gps_info, exif_info, true_label = drs.get_plist_from_json(FLAGS.plist_json)
-	acc, rec, prec, auc = cal_accuracy_pair(true_label, img_label, file_names)
-	print("+++++++++++++Scenes cluster results:+++++++++++++++++")
-	print("Accuracy: %1.4f" %acc)
-	print("Precision: %1.4f" %prec)
-	print("Recall: %1.4f" %rec)
-	print("AUC: %1.4f" %auc)
-
-	return output_fn
+	return output_fn, acc, rec, prec, auc
 
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser("Cluster based on model prediction, rank clusters, and choose given numbers of albums")
 
-	parser.add_argument('--usr_nm', type=str, default='hxl',
-	                    help='User name (must remain the same across plist, picture folders')
-
-	parser.add_argument('--plist_json', type=str, default='/Volumes/working/album_project/serving_data/hxl_plist.json',
-	                    help=' Path to the saved plist json file (input)')
-
-	parser.add_argument(
-		'--predict_output', type=str, default='/Volumes/working/album_project/model_prediction/timeonly_pred_hxl_2018082411.csv',
-		help='Model prediction file.')
-
-	parser.add_argument('--plist_path', type=str, default='gps_time_info/hxl/',
-                    help=' Path to save plist in the format of .npy (exclude user name)')
-
-	parser.add_argument('--label_pic_path', type=str, default='hxl_label_scene/', help='Picture path (with event).')
-
-
-
 	parser.add_argument(
 		'--working_path', type=str, default='/Volumes/working/album_project/',
 		help='working dir for the project.')
 
+	parser.add_argument('--usr_nm', type=str, default='zd',
+	                    help='User name (must remain the same across plist, picture folders')
+
+
 	parser.add_argument(
-		'--final_save_path', type=str, default='final_result/',
+		'--model_cond', type=str, default='WDL',
 		help='Path to save the final result.')
 
 	parser.add_argument(
-		'--model_cond', type=str, default='_WDL_timegps.json',
+	    '--model_folder_name', type=str, default='timeonly_Adadelta_L3_noDO_noBN_00003_2',
+	    help='Base directory for the model.')
+
+	parser.add_argument(
+		'--predict_output', type=str, default='/Volumes/working/album_project/model_prediction/timeonly_pred_zd_timeonly_Adadelta_L3_noDO_noBN_00003_2_20180827195725.csv',
+		help='Model prediction file.')
+
+
+	parser.add_argument('--plist_folder', type=str,
+	                    # default='/project/album_project/serving_data/hw_plist.json',
+	                    default='serving_data/',
+                    help=' Path to the saved plist json file (input)')
+
+
+
+
+
+	parser.add_argument(
+		'--final_save_path', type=str, default='final_result/',
 		help='Path to save the final result.')
 
 	parser.add_argument(
@@ -452,7 +507,7 @@ if __name__ == "__main__":
 	parser.add_argument('--vis_idx_rank', type=ast.literal_eval, default = False,
 	                    help='Bool value: whether to show selected albums.')
 
-	parser.add_argument('--vis_idx_final', type=ast.literal_eval, default = True,
+	parser.add_argument('--vis_idx_final', type=ast.literal_eval, default = False,
 	                    help='Bool value: whether to show selected albums.')
 
 	parser.add_argument(

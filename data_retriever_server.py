@@ -510,6 +510,8 @@ def main(FLAGS0):
 
 		global city_table, FLAGS
 		FLAGS = FLAGS0
+		FLAGS.pic_path_label = FLAGS.usr_nm + FLAGS.pic_path_label
+		FLAGS.plist_json = os.path.join(FLAGS.working_path, FLAGS.plist_folder, FLAGS.usr_nm + "_plist.json")
 		if os.path.exists(os.path.join(FLAGS.working_path, FLAGS.city_lonlat)):
 			city_table = (pd.read_csv(os.path.join(FLAGS.working_path, FLAGS.city_lonlat), header=0, names=["city"], dtype='str')).T.to_dict('list')
 		else:
@@ -582,15 +584,17 @@ if __name__ == '__main__':
 
 	##
 
-	parser.add_argument('--usr_nm', type=str, default='wy_tmp',
+	parser.add_argument('--usr_nm', type=str, default='zd',
 	                help='User name for saving files')
 
-	parser.add_argument('--pic_path_label', type=str, default='wy_tmp_label_raw',
-	                help='Full path to pictures')
 
-	parser.add_argument('--plist_json', type=str,
+
+	# parser.add_argument('--pic_path_label', type=str, default='_label_raw',
+	#                 help='Full path to pictures')
+
+	parser.add_argument('--plist_folder', type=str,
 	                    # default='/project/album_project/serving_data/hw_plist.json',
-	                    default='/Volumes/working/album_project/serving_data/wy_tmp_plist.json',
+	                    default='serving_data/',
                     help=' Path to the saved plist json file (input)')
 
 
@@ -598,10 +602,9 @@ if __name__ == '__main__':
 	                    # default = '/project/album_project/')
 	                    default = '/Volumes/working/album_project/')
 
-	parser.add_argument('--image_parent_path', type = str,
-	                    # default = '/project/album_project/album_data/')
-	                    default = '/Volumes/working/album_project/album_data/')
-
+	# parser.add_argument('--image_parent_path', type = str,
+	#                     # default = '/project/album_project/album_data/')
+	#                     default = '/Volumes/working/album_project/album_data/')
 
 
 	parser.add_argument('--model_input_path', type=str, default='preprocessed_data',
@@ -615,7 +618,7 @@ if __name__ == '__main__':
 
 
 
-	parser.add_argument('--train_ratio', type=float, default= 0.98,
+	parser.add_argument('--train_ratio', type=float, default= 0.0,
 	                help='Ratio between train/validation samples (use 0 if for test/prediction)')
 
 	parser.add_argument('--filter_range', type=int, default=96 * 60 * 60,

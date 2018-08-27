@@ -15,14 +15,15 @@ import datetime
 def main(FLAGS):
 	config = tf.ConfigProto()
 	config.gpu_options.per_process_gpu_memory_fraction=0.4
+	print(FLAGS.model_folder_name)
 	with tf.Session(config=config) as sess:
 		# load the saved model
-		tf.saved_model.loader.load(sess, [tf.saved_model.tag_constants.SERVING], os.path.join(FLAGS.working_path, FLAGS.model_exported_path))
+		tf.saved_model.loader.load(sess, [tf.saved_model.tag_constants.SERVING], os.path.join(FLAGS.working_path, FLAGS.model_exported_path, FLAGS.model_folder_name))
 		
 		# get the predictor , refer tf.contrib.predictor
-		predictor = tf.contrib.predictor.from_saved_model(os.path.join(FLAGS.working_path, FLAGS.model_exported_path))
+		predictor = tf.contrib.predictor.from_saved_model(os.path.join(FLAGS.working_path, FLAGS.model_exported_path, FLAGS.model_folder_name))
 
-		output_fn = os.path.join(FLAGS.working_path, FLAGS.prediction_path, "pred_%s_%s.csv" %(FLAGS.usr_nm, datetime.datetime.now().strftime("%Y%m%d%H")))
+		output_fn = os.path.join(FLAGS.working_path, FLAGS.prediction_path, "timegps_pred_%s_%s_%s.csv" %(FLAGS.usr_nm, FLAGS.model_folder_name, datetime.datetime.now().strftime("%Y%m%d%H%M%S")))
 		# input_fn = os.path.join(FLAGS.working_path, FLAGS.model_input_path, "%s_training_")
 		prediction_OutFile = open(output_fn, 'w')
 		
@@ -100,6 +101,7 @@ def main(FLAGS):
 	sess.run(tf.global_variables_initializer())
 	sess.run(tf.local_variables_initializer())
 	print("--------------------W&D model prediction results (Event)-------------------------")
+	print(FLAGS.model_folder_name)
 	print('Number of samples:', len(true_label))
 	v1 = sess.run([acc, acc_op], feed_dict={x: true_label, y: predict_label})
 	print("Accuracy", v1[-1])
@@ -138,16 +140,19 @@ if __name__ == "__main__":
 		default='/Volumes/working/album_project/',
 	    help='Base working directory.')
 
-	parser.add_argument('--usr_nm', type=str, default='hw',
+	parser.add_argument('--usr_nm', type=str, default='zd',
 	                help='User name for saving files')
 
 	parser.add_argument('--predict_input', type=str,
 	                    # default='/project/album_project/preprocessed_data/predict/lf_predict_data_0.98.csv',
-	                    default='/Volumes/working/album_project/preprocessed_data/training/hw_training_data_0.98.csv',
+	                    default='/Volumes/working/album_project/preprocessed_data/predict/zd_predict_data_0.00.csv',
 	                help='Full path to the csv files to be predicted')
 
 	parser.add_argument(
-	    '--model_exported_path', type=str, default='model_output/working',
+	    '--model_exported_path', type=str, default='model_output/',
+	    help='Base directory for the model.')
+	parser.add_argument(
+	    '--model_folder_name', type=str, default='timegps_L4_Adadelta_noDO_noBN_00003_004_0',
 	    help='Base directory for the model.')
 
 	parser.add_argument(

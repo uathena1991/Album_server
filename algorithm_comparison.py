@@ -4,7 +4,7 @@ import pdb
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-# import common_lib as clb
+import common_lib as clb
 # import collections
 
 from sudo_get_input_json import get_image_event_scene_label
@@ -79,15 +79,16 @@ def func_compare(alg, gt, vis):
 
 
 
-def main():
-	name_list = ['hxl', 'hxl2016', 'hw', 'zzx', 'zt', 'zd', 'wy_tmp', 'lf', 'hhl']
+def main_wdl_optics(name_list = ['hxl', 'hxl2016', 'hw', 'zzx', 'zt', 'zd', 'wy_tmp', 'lf', 'hhl']):
 	res_wdl_opt = np.empty(shape = (3, len(name_list)))
 	res_gt_wdl = np.empty(shape = (3, len(name_list)))
 	res_gt_opt= np.empty(shape = (3, len(name_list)))
 	vis = False
 	common_path = "/Volumes/working/album_project/final_result/"
+	scene_gt = dict()
 	for idx,name in enumerate(name_list):
-		img_label, scene_dict, scene_gt = get_image_event_scene_label(name)
+		if name not in scene_gt:
+			img_label, scene_dict, scene_gt[name] = get_image_event_scene_label(name)
 		# compare two algorithms directly
 		tmp_file = open(os.path.join(common_path, name + "_WDL.json"), 'r')
 		wdl = json.loads(json.load(tmp_file))
@@ -98,10 +99,10 @@ def main():
 		res_wdl_opt[:, idx] = func_compare(opt_scene, wdl_scene, vis)
 		print("WDL (as GT) vs opt:\n %s: precision: %1.2f, recall: %1.2f, F1 score: %1.2f\n" %(name, res_wdl_opt[0, idx], res_wdl_opt[1, idx], res_wdl_opt[2, idx]))
 		# wdl and ground truth
-		res_gt_wdl[:, idx] = func_compare(wdl_scene, scene_gt, vis)
+		res_gt_wdl[:, idx] = func_compare(wdl_scene, scene_gt[name], vis)
 		print("WDL vs Ground Truth:\n %s: precision: %1.2f, recall: %1.2f, F1 score: %1.2f\n" %(name, res_gt_wdl[0, idx], res_gt_wdl[1, idx], res_gt_wdl[2, idx]))
 		# opt and ground truth
-		res_gt_opt[:, idx] = func_compare(opt_scene, scene_gt, vis)
+		res_gt_opt[:, idx] = func_compare(opt_scene, scene_gt[name], vis)
 		print("OPTICS vs Ground Truth:\n %s: precision: %1.2f, recall: %1.2f, F1 score: %1.2f\n\n" %(name, res_gt_opt[0, idx], res_gt_opt[1, idx], res_gt_opt[2, idx]))
 
 	# save results to a table
@@ -117,4 +118,43 @@ def main():
 
 	# Close the Pandas Excel writer and output the Excel file.
 	writer.save()
-main()
+
+
+def main_wdl(usr_nm = 'zd', result_path = "/Volumes/working/album_project/final_result"):
+	"""
+	compare different wdl models of the same user
+	:param result_path:
+	:return:
+	"""
+	file_names = clb.find_all_file_name(result_path, '.json', usr_nm)
+	res_gt_wdl = np.empty(shape = (len(file_names), 3))
+	vis = False
+	model_nm = []
+	img_label, scene_dict, scene_gt = get_image_event_scene_label(usr_nm)
+	for idx,(fnm, tnm) in enumerate(file_names):
+		name= tnm.split('_WDL_')[0]
+		model_nm.append(tnm)
+		# load model result
+		tmp_file = open(fnm)
+		wdl = json.loads(json.load(tmp_file))
+		wdl_scene = json.loads(wdl['res_final'])
+		# wdl and ground truth
+		res_gt_wdl[idx, :] = func_compare(wdl_scene, scene_gt, vis)
+		print(tnm)
+		print("WDL vs Ground Truth:\n %s: precision: %1.2f, recall: %1.2f, F1 score: %1.2f\n" %(name, res_gt_wdl[idx, 0], res_gt_wdl[idx, 1], res_gt_wdl[idx, 2]))
+
+	# save results to a table
+	df_gt_wdl = pd.DataFrame(res_gt_wdl, index = model_nm, columns = ['Precision', "Recall", "F1 score"])
+	# pdb.set_trace()
+	df_gt_wdl = df_gt_wdl.sort_values(by=['F1 score', 'Precision', 'Recall'], ascending = [False, False, False])
+	writer = pd.ExcelWriter(os.path.join(result_path, 'algorithm_evaluation.xlsx'), engine='xlsxwriter')
+
+	# Write each dataframe to a different worksheet.
+	df_gt_wdl.to_excel(writer, sheet_name=usr_nm,  index= True,  index_label = set(model_nm))
+
+	# Close the Pandas Excel writer and output the Excel file.
+	writer.save()
+
+name_list = ['hxl', 'hxl2016', 'hw', 'zzx', 'zt', 'zd', 'wy_tmp', 'lf', 'hhl']
+for nm in name_list:
+	main_wdl(nm)

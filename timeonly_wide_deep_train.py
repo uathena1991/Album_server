@@ -54,14 +54,14 @@ def build_model_columns():
 	return wide_columns, deep_columns
 
 
-def build_estimator(model_dir, model_type, dnn_learning_rate, linear_learning_rate, dnn_dropout):
+def build_estimator(model_dir, model_type, dnn_learning_rate, linear_learning_rate, dnn_dropout, bn_idx):
 	"""Build an estimator appropriate for the given model type."""
 	wide_columns, deep_columns = build_model_columns()
 	# hidden_units = [100, 75, 50, 25]
 	# hidden_units = [200, 120, 80, 20]
 	# hidden_units = [150, 100, 50, 10] # 0.31, 0.48
-	hidden_units = [150, 100, 50, 10]
-	# hidden_units = [150, 75, 10]
+	#hidden_units = [150, 100, 50, 10]
+	hidden_units = [150, 75, 10]
 	print("Hidden units:", hidden_units)
 
 	# Create a tf.estimator.RunConfig to ensure the model is run on CPU, which
@@ -73,7 +73,7 @@ def build_estimator(model_dir, model_type, dnn_learning_rate, linear_learning_ra
 		return tf.estimator.LinearClassifier(
             model_dir = model_dir,
             feature_columns = wide_columns,
-            optimizer = tf.train.GradientDescentOptimizer(learning_rate = linear_learning_rate),
+            optimizer = tf.train.AdadeltaOptimizer(learning_rate = linear_learning_rate),
             config = run_config)
 	elif model_type == 'deep':
 		return tf.estimator.DNNClassifier(
@@ -83,11 +83,11 @@ def build_estimator(model_dir, model_type, dnn_learning_rate, linear_learning_ra
             # optimizer = tf.train.AdamOptimizer(learning_rate = dnn_learning_rate),
             # optimizer = tf.train.RMSPropOptimizer(learning_rate = dnn_learning_rate), # best??
             # optimizer = tf.train.AdadeltaOptimizer(learning_rate = dnn_learning_rate), #
-            optimizer = tf.train.AdagradOptimizer(learning_rate = dnn_learning_rate), # default, stable, don't need to adjust params
+            optimizer = tf.train.AdadeltaOptimizer(learning_rate = dnn_learning_rate), # default, stable, don't need to adjust params
             hidden_units = hidden_units,
 			n_classes = 2,
 			dropout= dnn_dropout,
-			# batch_norm = True,
+			batch_norm = bn_idx,
             config = run_config)
 	else:
 		return tf.estimator.DNNLinearCombinedClassifier(
@@ -95,12 +95,12 @@ def build_estimator(model_dir, model_type, dnn_learning_rate, linear_learning_ra
             linear_feature_columns = wide_columns,
             dnn_feature_columns = deep_columns,
             dnn_hidden_units = hidden_units,
-            linear_optimizer = tf.train.GradientDescentOptimizer(learning_rate = linear_learning_rate),
+            linear_optimizer = tf.train.AdadeltaOptimizer(learning_rate = linear_learning_rate),
             # dnn_optimizer = tf.train.GradientDescentOptimizer(learning_rate = dnn_learning_rate),
             dnn_optimizer = tf.train.AdadeltaOptimizer(learning_rate = dnn_learning_rate),
             n_classes = 2,
 			dropout = dnn_dropout,
-			# bath_norm = True,
+			dnn_bath_norm = bn_idx,
             config = run_config)
 
 def input_fn(data_file, num_epochs, shuffle, batch_size):
@@ -154,7 +154,7 @@ def main(self):
 	# Clean up the model directory if present
 	shutil.rmtree(os.path.join(FLAGS.servable_model_dir, FLAGS.model_dir), ignore_errors=True)
 	model = build_estimator(os.path.join(FLAGS.servable_model_dir, FLAGS.model_dir), FLAGS.model_type,
-	                        FLAGS.dnn_learning_rate, FLAGS.linear_learning_rate, FLAGS.dnn_dropout)
+	                        FLAGS.dnn_learning_rate, FLAGS.linear_learning_rate, FLAGS.dnn_dropout, FLAGS.dnn_batch_norm)
 
 	# Train and evaluate the model every `FLAGS.epochs_per_eval` epochs.
 	for n in range(FLAGS.train_epochs // FLAGS.epochs_per_eval):
@@ -180,7 +180,7 @@ def main(self):
 	servable_model_path = model.export_savedmodel(FLAGS.servable_model_dir, export_input_fn)
 	print("*********** Done Exporting at PAth - %s", servable_model_path)
 	print("Run parameters:")
-	# pdb.set_trace()
+#	pdb.set_trace()
 	shutil.move(servable_model_path.decode(), os.path.join(FLAGS.servable_model_dir, FLAGS.model_rename))
 	shutil.move(os.path.join(FLAGS.servable_model_dir, FLAGS.model_dir), os.path.join(FLAGS.servable_model_dir, FLAGS.model_rename))
 	print(FLAGS)

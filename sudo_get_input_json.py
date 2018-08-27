@@ -95,4 +95,4 @@ def get_plist_info(save_usr_nm = 'hxl', plist_path_parent='/Volumes/working/albu
 # for nm in name_list:
 # 	get_plist_info(nm)
 
-get_plist_info('hhl')
+# get_plist_info('hhl')
