@@ -260,6 +260,9 @@ if __name__ == '__main__':
 	parser.add_argument('--filter_range', type=int, default=96 * 60 * 60,
 	                    help='Time range to choose two images (s)')
 
+	parser.add_argument('--half_win_size', type=int, default= 2,
+            help='Time window to calc time freq')
+
 	parser.add_argument('--generate_plist_idx', type=ast.literal_eval, default=False,
 	                    help='if True, generate features from plist info, otherwise, load from the .npy file ')
 

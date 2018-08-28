@@ -28,7 +28,7 @@ def main(FLAGS):
 		prediction_OutFile = open(output_fn, 'w')
 		
 		#Write Header for naCSV file
-		prediction_OutFile.write("first, second, distance, time, expo_time, flash, focal_len, shutter, scene_type, sensing_m, holiday, delta_closest_holiday, average_closest_holiday, average_city_prop, true_label, predicted_label, probability")
+		prediction_OutFile.write("first, second, distance, time, expo_time, flash, focal_len, shutter, scene_type, sensing_m, holiday, delta_closest_holiday, average_closest_holiday, average_city_prop, delta_time_freq, true_label, predicted_label, probability")
 		prediction_OutFile.write('\n')
 		
 		# Read file and create feature_dict for each record
@@ -43,7 +43,7 @@ def main(FLAGS):
 					print("%d cases finished" %count)
 				# Read data, using python, into our features
 				first, second, distance, time, expo_time, flash, focal_len, shutter, scene_type, sensing_m, \
-				holiday, delta_closest_holiday, average_closest_holiday, average_city_prop, label_e, label_s = line.strip().split(",")
+				holiday, delta_closest_holiday, average_closest_holiday, average_city_prop, delta_time_freq, label_e, label_s = line.strip().split(",")
 				true_label.append(int(label_e))
 				# Create a feature_dict for train.example - Get Feature Columns using
 				feature_dict = {
@@ -59,6 +59,7 @@ def main(FLAGS):
 					'Delta_closest_holiday': _float_feature(value=float(delta_closest_holiday)),
 					'Average_closest_holiday': _float_feature(value=float(average_closest_holiday)),
 					'Average_city_prop': _float_feature(value=float(average_city_prop)),
+					'Delta_time_freq': _float_feature(value=float(delta_time_freq)),
 				}
 				
 				# Prepare model input
@@ -75,7 +76,7 @@ def main(FLAGS):
 				prediction_OutFile.write(first + "," + second + ',' + str(distance)+ "," + str(time)+ "," + str(expo_time)+
 				                         "," + str(flash)+ "," + str(focal_len) + "," + str(shutter) + "," + str(scene_type) +
 				                         "," + str(sensing_m) + "," + str(holiday) +  "," + str(delta_closest_holiday) +
-				                         "," + str(average_closest_holiday) + "," + str(average_city_prop) + "," + str(label_e) + ",")
+				                         "," + str(average_closest_holiday) + "," + str(average_city_prop) + "," + str(delta_time_freq) + ',' +  str(label_e) + ",")
 				label_index = np.argmax(output_dict['scores'])
 				prediction_OutFile.write(str(label_index))
 				prediction_OutFile.write(',')

@@ -47,6 +47,12 @@ def convert_datetime_seconds(dt_list):
 			dt_list_new[i] = ((dt_list[i] - min_time)[0].total_seconds())
 	return dt_list_new
 
+################################################################################################################################
+def cal_time_freq(time_list):
+	if len(time_list) <= 1:
+		return 1
+	delta_time = max(time_list) - min(time_list)
+	return len(time_list) / max(delta_time[0].total_seconds(), 1)
 
 ################################################################################################################################
 def lonlat2xyz(alt, lat, lon):
@@ -297,7 +303,7 @@ def get_plist_from_json(file_path):
 
 
 ####################################################################################################################################
-def compile_plist_info(file_names, gps_info, exif_info,
+def compile_plist_info(file_names, gps_info, exif_info, half_win_size,
                        save_user_name = 'hxl',
                        save_file="/Volumes/working/album_project/album_data/",
                        hol_file="/Volumes/working/album_project/Album/holidays.csv"):
@@ -345,6 +351,17 @@ def compile_plist_info(file_names, gps_info, exif_info,
 		if idx % 500 == 0:
 			print("%d files finished" % idx)
 	print("%d files finished" % idx)
+
+	# calc img frequency in time
+	sort_time_idx = sorted(range(len(wanted_time)), key=lambda k: wanted_time[k])
+	sort_wtime = sorted(wanted_time)
+	time_freq0 = [cal_time_freq(sort_wtime[max(0, idx - half_win_size): min(len(sort_wtime) - 1, idx + half_win_size + 1)])
+	              for idx in range(len(sort_wtime))]
+	wanted_time_freq = np.copy(time_freq0)
+	for idx, x in enumerate(sort_time_idx):
+		wanted_time_freq[x] = time_freq0[idx]
+
+	# calc city proportion
 	wanted_city = np.array(wanted_city)
 	unique, counts = np.unique(wanted_city, return_counts=True)
 	city_prop_dict = dict(zip(unique, counts / counts.sum()))
@@ -355,7 +372,8 @@ def compile_plist_info(file_names, gps_info, exif_info,
 	print("image name:\n", file_names[0])
 	print("Failed exif: %d" % len(failed_idx))
 	# save to file
-	np.savez(os.path.join(save_file, 'feature_matrix_' + save_user_name.split('/')[0] + '.npz'), wanted_gps = wanted_gps, wanted_time = wanted_time,
+	np.savez(os.path.join(save_file, 'feature_matrix_' + save_user_name.split('/')[0] + '.npz'),
+	         wanted_gps = wanted_gps, wanted_time = wanted_time, wanted_time_freq = np.array(wanted_time_freq),
 	         wanted_exif = wanted_exif, gps_info = np.array([dict(x) for x in gps_info]),
 	         exif_info = np.array([dict(x) for x in exif_info]), file_names = file_names, wanted_holiday = wanted_holiday,
 	         wanted_closest_holiday = wanted_closest_holiday, wanted_city = wanted_city, wanted_city_prop = wanted_city_prop)
@@ -363,7 +381,7 @@ def compile_plist_info(file_names, gps_info, exif_info,
 	# df = pd.DataFrame.from_dict(city_table, orient="index")
 	# df.to_csv(os.path.join(FLAGS.working_path, FLAGS.city_lonlat), header = ['city'])
 
-	return wanted_gps, wanted_time, wanted_exif, wanted_holiday, wanted_closest_holiday, wanted_city, wanted_city_prop
+	return wanted_gps, wanted_time, wanted_time_freq, wanted_exif, wanted_holiday, wanted_closest_holiday, wanted_city, wanted_city_prop
 
 
 
@@ -377,7 +395,7 @@ def seperate_train_val(filename, train_size=0.98):
 
 
 ####################################################################################################################################
-def construct_pair_feature_matrix(file_names, wanted_gps, wanted_time, exif_info, wanted_secs, wanted_holiday, wanted_closest_holiday,
+def construct_pair_feature_matrix(file_names, wanted_gps, wanted_time, wanted_time_freq,  exif_info, wanted_secs, wanted_holiday, wanted_closest_holiday,
                              wanted_city_prop, image_cluster_idx, save_path, filter_range=168 * 60 * 60):
 	"""construct feature matrix
     # $\Delta(distance)$,  $\Delta(time)$[ from exif "DateTimeDigitized", not from gps], $\Delta(ExposureTime)$,
@@ -390,7 +408,7 @@ def construct_pair_feature_matrix(file_names, wanted_gps, wanted_time, exif_info
              ('0', '1'): 4, ('2', '0'): 5, ('0', '2'): 5}
 	## multiprocessing##
 	def sub_process(cond, res):
-		features_m = np.empty(shape=(0, 16))  # the first two columns are the indexes of the two images, the last two columns are event label, and scene label
+		features_m = np.empty(shape=(0, 17))  # the first two columns are the indexes of the two images, the last two columns are event label, and scene label
 		count = 0
 		count2 = 0
 		len_fn = len(file_names)
@@ -398,7 +416,7 @@ def construct_pair_feature_matrix(file_names, wanted_gps, wanted_time, exif_info
 			for idx_j,fn_j in enumerate(file_names):
 				count2 += 1
 				if  cond[0]*len_fn <= idx_i < (cond[1]*len_fn+1) and idx_j >= idx_i and abs((wanted_time[idx_i] - wanted_time[idx_j])[0].total_seconds()) <= filter_range:
-					tmp = np.empty(shape=(1, 16))
+					tmp = np.empty(shape=(1, 17))
 					# feature
 					tmp[0][:2] = [idx_i, idx_j]  # index of first event, second event
 					tmp[0][2] = altlalong2distance(tuple(wanted_gps[idx_i]),
@@ -423,9 +441,10 @@ def construct_pair_feature_matrix(file_names, wanted_gps, wanted_time, exif_info
 					tmp[0][12] = (wanted_closest_holiday[idx_i] + wanted_closest_holiday[idx_j]) / 2
 					# city average proportion
 					tmp[0][13] = (wanted_city_prop[idx_i] + wanted_city_prop[idx_j]) / 2
+					tmp[0][14] = abs(wanted_time_freq[idx_i] - wanted_time_freq[idx_j])
 
-					tmp[0][14] = 1 if image_cluster_idx[fn_i][0] == image_cluster_idx[fn_j][0] else 0  # event
-					tmp[0][15] = 1 if image_cluster_idx[fn_i] == image_cluster_idx[fn_j] else 0  # scene
+					tmp[0][15] = 1 if image_cluster_idx[fn_i][0] == image_cluster_idx[fn_j][0] else 0  # event
+					tmp[0][16] = 1 if image_cluster_idx[fn_i] == image_cluster_idx[fn_j] else 0  # scene
 
 					features_m = np.concatenate((features_m, tmp), axis=0)
 					count += 1
@@ -460,7 +479,9 @@ def save2csv(features_m, file_names, usr_nm, train_ratio, save_path, file_type='
 	# pdb.set_trace()
 	columns_name = ['1st Image', '2nd Image', 'Distance', 'Time', 'ExposureTime',
 	                'Flash', 'FocalLength', 'ShutterSpeedValue', 'SceneType', 'SensingMethod',
-	                'Holiday', 'Delta_closest_holiday', 'Average_closest_holiday', 'Average_city_prop', 'Label_e', "Label_s"]
+	                'Holiday', 'Delta_closest_holiday', 'Average_closest_holiday', 'Average_city_prop',
+	                'Delta_time_freq',
+	                'Label_e', "Label_s"]
 	try:
 		df = pd.DataFrame(features_m, columns = columns_name)
 		# pdb.set_trace()
@@ -492,7 +513,10 @@ def combine_csv(name_list, output_nm, common_path):
 	:return:
 	"""
 	try:
-		fout = open(os.path.join(common_path, output_nm), 'a')
+		if os.path.exists(os.path.join(common_path, output_nm)):
+			fout = open(os.path.join(common_path, output_nm), 'w')
+		else:
+			fout = open(os.path.join(common_path, output_nm), 'a')
 		for nm in name_list:
 			fnm = open(os.path.join(common_path, nm))
 			[fout.write(line) for line in fnm]
@@ -510,7 +534,7 @@ def main(FLAGS0):
 
 		global city_table, FLAGS
 		FLAGS = FLAGS0
-		FLAGS.pic_path_label = FLAGS.usr_nm + FLAGS.pic_path_label
+		# FLAGS.pic_path_label = FLAGS.usr_nm + FLAGS.pic_path_label
 		FLAGS.plist_json = os.path.join(FLAGS.working_path, FLAGS.plist_folder, FLAGS.usr_nm + "_plist.json")
 		if os.path.exists(os.path.join(FLAGS.working_path, FLAGS.city_lonlat)):
 			city_table = (pd.read_csv(os.path.join(FLAGS.working_path, FLAGS.city_lonlat), header=0, names=["city"], dtype='str')).T.to_dict('list')
@@ -529,8 +553,8 @@ def main(FLAGS0):
 		print('Done!')
 		print('Compile plist information....')
 		if FLAGS.generate_plist_idx:
-			wanted_gps, wanted_time, wanted_exif, wanted_holiday, wanted_closest_holiday, \
-			wanted_city, wanted_city_prop = compile_plist_info(file_names, gps_info, exif_info,
+			wanted_gps, wanted_time, wanted_time_freq, wanted_exif, wanted_holiday, wanted_closest_holiday, \
+			wanted_city, wanted_city_prop = compile_plist_info(file_names, gps_info, exif_info, FLAGS.half_win_size,
 			                                                   FLAGS.usr_nm,
 			                                                   os.path.join(FLAGS.working_path, FLAGS.model_input_path, 'feature_matrix'),
 			                                                   os.path.join(FLAGS.working_path, FLAGS.holiday_file))
@@ -540,6 +564,7 @@ def main(FLAGS0):
 			npz_features = np.load(os.path.join(FLAGS.working_path, FLAGS.model_input_path, 'feature_matrix', 'feature_matrix_' + FLAGS.usr_nm.split('/')[0] + '.npz'))
 			wanted_gps = npz_features['wanted_gps']
 			wanted_time = npz_features['wanted_time']
+			wanted_time_freq = npz_features['wanted_time_freq']
 			# pdb.set_trace()
 			exif_info = [dict2defaultdict(x) for x in npz_features['exif_info']]
 			file_names = npz_features['file_names']
@@ -553,7 +578,7 @@ def main(FLAGS0):
 		print("Constructing feature matrix (and label)...")
 		# pdb.set_trace()
 		if FLAGS.generate_feature_idx:
-			features_m = construct_pair_feature_matrix(file_names, wanted_gps, wanted_time, exif_info, wanted_secs, wanted_holiday,
+			features_m = construct_pair_feature_matrix(file_names, wanted_gps, wanted_time, wanted_time_freq, exif_info, wanted_secs, wanted_holiday,
 			                                           wanted_closest_holiday, wanted_city_prop, img_label,
 			                                           os.path.join(FLAGS.working_path, FLAGS.model_input_path, 'pair_feature'),
 			                                           FLAGS.filter_range)
@@ -621,15 +646,18 @@ if __name__ == '__main__':
 	parser.add_argument('--train_ratio', type=float, default= 0.0,
 	                help='Ratio between train/validation samples (use 0 if for test/prediction)')
 
-	parser.add_argument('--filter_range', type=int, default=96 * 60 * 60,
+	parser.add_argument('--filter_range', type=int, default= 96 * 60 * 60,
 	                help='Time range to choose two images (s)')
 
+	parser.add_argument('--half_win_size', type=int, default= 2,
+                help='Time window to calc time freq')
 
-	parser.add_argument('--generate_plist_idx', type = ast.literal_eval, default = False,
+
+	parser.add_argument('--generate_plist_idx', type = ast.literal_eval, default = True,
 	                help='if True, generate features from plist info, otherwise, load from the .npy file ')
 
 
-	parser.add_argument('--generate_feature_idx', type = ast.literal_eval, default = False,
+	parser.add_argument('--generate_feature_idx', type = ast.literal_eval, default = True,
 	                help='if True, generate features for two-two compare, otherwise, load from the .npy file ')
 
 	parser.add_argument('--generate_holiday_tab', type = ast.literal_eval, default= False,

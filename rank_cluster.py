@@ -459,11 +459,11 @@ if __name__ == "__main__":
 		help='Path to save the final result.')
 
 	parser.add_argument(
-	    '--model_folder_name', type=str, default='timeonly_Adadelta_L3_noDO_noBN_00003_2',
+	    '--model_folder_name', type=str, default='new_timegps_Adadelta_L3_noDO_BN_00003_004_0',
 	    help='Base directory for the model.')
 
 	parser.add_argument(
-		'--predict_output', type=str, default='/Volumes/working/album_project/model_prediction/timeonly_pred_zd_timeonly_Adadelta_L3_noDO_noBN_00003_2_20180827195725.csv',
+		'--predict_output', type=str, default='/Volumes/working/album_project/model_prediction/timegps_pred_zd_new_timegps_Adadelta_L3_noDO_BN_00003_004_0_20180828092832.csv',
 		help='Model prediction file.')
 
 

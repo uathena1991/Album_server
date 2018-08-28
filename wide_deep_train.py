@@ -33,6 +33,7 @@ def build_model_columns():
 	delta_closest_holiday = tf.feature_column.numeric_column('Delta_closest_holiday')
 	average_closest_holiday = tf.feature_column.numeric_column('Average_closest_holiday')
 	average_city_prop = tf.feature_column.numeric_column('Average_city_prop')
+	delta_time_freq = tf.feature_column.numeric_column('Delta_time_freq')
 
 	# wide model
 	base_columns = [
@@ -41,7 +42,7 @@ def build_model_columns():
 		# focal_len, shutter, tf.feature_column.indicator_column(scene_type), tf.feature_column.indicator_column(sensing_m)
 		focal_len, shutter, scene_type, sensing_m,
 		holiday, delta_closest_holiday, average_closest_holiday,
-		average_city_prop
+		average_city_prop, delta_time_freq
 	]
 	cross_columns = []
 #	cross_columns = [
@@ -55,7 +56,7 @@ def build_model_columns():
 		focal_len, shutter, tf.feature_column.indicator_column(scene_type), tf.feature_column.indicator_column(sensing_m),
 		tf.feature_column.indicator_column(holiday),
 		delta_closest_holiday, average_closest_holiday,
-		average_city_prop
+		average_city_prop, delta_time_freq
 	]
 	return wide_columns, deep_columns
 
@@ -179,6 +180,7 @@ if __name__ == '__main__':
 	'Distance', 'Time',
 	'ExposureTime', 'Flash', 'FocalLength', 'ShutterSpeedValue', 'SceneType','SensingMethod',
 	'Holiday', 'Delta_closest_holiday', 'Average_closest_holiday', 'Average_city_prop',
+	'Delta_time_freq',
 	'Label_e', 'Label_s'
 	]
 
@@ -188,6 +190,7 @@ if __name__ == '__main__':
 	                        [-1.0], [-1.0],
 	                        [-1.0],[-1.0], [-1.0], [-1.0], [-1], [-1],
 	                        [-1], [-1.0], [-1.0], [-1.0],
+	                        [-1.0],
 	                        [0], [0]]
 
 	parser = argparse.ArgumentParser()
@@ -204,14 +207,14 @@ if __name__ == '__main__':
 
 	parser.add_argument(
 	    # '--servable_model_dir', type = str, default = '/project/album_project/model_output/',
-	    '--model_rename', type = str, default = 'timegps_L4_Adadelta_noDO_noBN_00003_004_0/',
+	    '--model_rename', type = str, default = 'new_ timegps_L4_Adadelta_noDO_noBN_00003_004_0/',
 	    help = 'Path to rename the trained model for serving')
 
 	parser.add_argument(
 	    '--dnn_dropout', type=float, default=0.0, help='DNN dropout rate.')
 
 	parser.add_argument(
-	    '--dnn_batch_norm', type=ast.literal_eval, default=False, help='DNN batch normalization.')
+	    '--dnn_batch_norm', type=ast.literal_eval, default=True, help='DNN batch normalization.')
 
 	parser.add_argument(
 	    '--train_data', type=str, default= '/project/album_project/preprocessed_data/training/combine_training_0.98.csv',

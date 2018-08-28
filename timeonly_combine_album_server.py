@@ -4,7 +4,7 @@
 import os
 import argparse
 import ast
-import timeonly_data_retriever_server as tdrs
+import data_retriever_server as drs
 import timeonly_wide_deep_predict as twdp
 import rank_cluster as rcr
 ##
@@ -131,7 +131,7 @@ def main(FLAGS):
 	###### data preprocessing ############
 	print('++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 	print("Data preprocessing....")
-	original_path, train_path, predict_path = tdrs.main(FLAGS)
+	original_path, train_path, predict_path = drs.main(FLAGS)
 	FLAGS.predict_input = predict_path
 	####### model prediction #############
 	print('++++++++++++++++++++++++++++++++++++++++++++++++++++++')

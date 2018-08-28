@@ -12,7 +12,7 @@ parser = argparse.ArgumentParser(description="All parameters")
 
 ######################common string#####################
 
-parser.add_argument('--usr_nm', type=str, default='zd',
+parser.add_argument('--usr_nm', type=str, default='zzx',
                     help='User name')
 
 parser.add_argument('--working_path', type = str,
@@ -48,7 +48,7 @@ parser.add_argument('--vis_idx_cluster', type=ast.literal_eval, default = False,
 parser.add_argument('--vis_idx_rank', type=ast.literal_eval, default = False,
                     help='Bool value: whether to show ranked albums.')
 
-parser.add_argument('--vis_idx_final', type=ast.literal_eval, default = False,
+parser.add_argument('--vis_idx_final', type=ast.literal_eval, default = True,
                     help='Bool value: whether to show final selected albums.')
 
 parser.add_argument('--print_parser', type=ast.literal_eval, default = True,
@@ -74,14 +74,15 @@ parser.add_argument('--thres_scene', type=float, default = 0.16,
 parser.add_argument('--train_ratio', type=float, default = 0.0,
                     help='Ratio between train/test')
 
-
+parser.add_argument('--half_win_size', type=int, default= 2,
+                help='Time window to calc time freq')
 #################### Normally unchanged #########################
 
 parser.add_argument(
     '--model_exported_path', type=str, default='model_output/',
     help='Base directory for the model.')
 parser.add_argument(
-    '--model_folder_name', type=str, default='timegps_Adadelta_L3_noDO_noBN_00003_004_0',
+    '--model_folder_name', type=str, default='timegps_Adadelta_L4_noDO_noBN_00003_004_0',
     help='Base directory for the model.')
 
 parser.add_argument('--model_input_path', type = str, default = 'preprocessed_data/',
