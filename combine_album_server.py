@@ -25,9 +25,12 @@ parser.add_argument('--image_parent_path', type = str,
                     # default = '/data/album_data/',
                     help='Parent path of images')
 
-parser.add_argument('--model_cond', type=str, default='WDL',
-                    help='Path to save the final result.')
 
+parser.add_argument('--model_type', type=str, default='timeonly',
+                help='Model type: timegps, or timeonly; Raise error otherwise.')
+
+parser.add_argument('--model_folder_name', type=str, default='timeonly_Adadelta_L3_noDO_noBN_00003_2',
+                    help='Base directory for the model.')
 
 ##################### bool #####################
 
@@ -37,6 +40,7 @@ parser.add_argument('--generate_plist_idx', type = ast.literal_eval, default = F
 
 parser.add_argument('--generate_feature_idx', type = ast.literal_eval, default = False,
                 help='if True, generate features for two-two compare, otherwise, load from the .npy file ')
+
 
 parser.add_argument('--generate_holiday_tab', type = ast.literal_eval, default= False,
                 help='if True, generate holiday table using api')
@@ -53,6 +57,7 @@ parser.add_argument('--vis_idx_final', type=ast.literal_eval, default = True,
 
 parser.add_argument('--print_parser', type=ast.literal_eval, default = True,
                     help='Bool value: whether to show parsed FLAGS and unparsed values')
+
 
 ###################### int params ################################
 parser.add_argument('--min_pic_num', type=int, default = 10,
@@ -76,14 +81,11 @@ parser.add_argument('--train_ratio', type=float, default = 0.0,
 
 parser.add_argument('--half_win_size', type=int, default= 2,
                 help='Time window to calc time freq')
-#################### Normally unchanged #########################
 
-parser.add_argument(
-    '--model_exported_path', type=str, default='model_output/',
-    help='Base directory for the model.')
-parser.add_argument(
-    '--model_folder_name', type=str, default='new_timegps_Adadelta_L4_noDO_BN_00003_004_0',
-    help='Base directory for the model.')
+
+#################### Normally unchanged #########################
+parser.add_argument('--model_exported_path', type=str, default='model_output/',
+                    help='Base directory for the model.')
 
 parser.add_argument('--model_input_path', type = str, default = 'preprocessed_data/',
                     help='Partial path to save preprocessed data')
@@ -93,13 +95,11 @@ parser.add_argument('--plist_folder', type=str,
                     help=' Path to the saved plist json file (input)')
 
 
-parser.add_argument(
-    '--prediction_path', type=str, default='model_prediction/',
-    help='Model prediction output path')
+parser.add_argument('--prediction_path', type=str, default='model_prediction/',
+                    help='Model prediction output path')
 
-parser.add_argument(
-	'--final_save_path', type=str, default='final_result/',
-	help='Path to save the final result.')
+parser.add_argument('--final_save_path', type=str, default='final_result/',
+                    help='Path to save the final result.')
 
 parser.add_argument('--feature_save_path', type=str, default='preprocessed_data/feature_matrix',
                     help=' Path to save plist in the format of .npy (exclude user name)')
@@ -123,6 +123,7 @@ if FLAGS.print_parser:
 
 
 def main(FLAGS):
+	print(FLAGS.usr_nm)
 	res = dict()
 	FLAGS.plist_json = os.path.join(FLAGS.working_path, FLAGS.plist_folder, FLAGS.usr_nm + '_plist.json')
 	###### data preprocessing ############

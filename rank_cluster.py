@@ -428,7 +428,7 @@ def main(FLAGS0):
 	tmp_dict['res_rank_scene'] = json.dumps([x for x in rank_scenes_val])
 	tmp_dict['eval_pair'] = json.dumps([acc, rec, prec, auc])
 	tmp_dict['eval_cluster'] = json.dumps(res_gt_wdl)
-	output_fn = os.path.join(FLAGS.working_path, FLAGS.final_save_path, FLAGS.usr_nm + "_" + FLAGS.model_cond + "_" + FLAGS.model_folder_name + ".json")
+	output_fn = os.path.join(FLAGS.working_path, FLAGS.final_save_path, FLAGS.usr_nm + "_" + FLAGS.model_type + "_" + FLAGS.model_folder_name + ".json")
 	with open(output_fn, 'w') as file:
 		json.dump(json.dumps(tmp_dict), file)
 	print('Final cluster results is saved in %s' %output_fn)
@@ -454,9 +454,8 @@ if __name__ == "__main__":
 	                    help='User name (must remain the same across plist, picture folders')
 
 
-	parser.add_argument(
-		'--model_cond', type=str, default='WDL',
-		help='Path to save the final result.')
+	parser.add_argument('--model_type', type=str, default='timeonly',
+	                help='Model type: timegps, or timeonly; Raise error otherwise.')
 
 	parser.add_argument(
 	    '--model_folder_name', type=str, default='new_timegps_Adadelta_L3_noDO_BN_00003_004_0',

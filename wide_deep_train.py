@@ -15,7 +15,7 @@ import tensorflow as tf
 import pandas as pd
 
 
-def build_model_columns():
+def build_model_columns(model_type):
 	"""Builds a set of wide and deep feature columns."""
 	distance = tf.feature_column.numeric_column('Distance')
 	sec = tf.feature_column.numeric_column('Sec')
@@ -37,34 +37,49 @@ def build_model_columns():
 	average_closest_holiday = tf.feature_column.numeric_column('Average_closest_holiday')
 	average_city_prop = tf.feature_column.numeric_column('Average_city_prop')
 	# wide model
-	base_columns = [
-		distance, sec, day, sec_in_day, delta_time_freq,
-		expo_time, flash, focal_len, shutter, scene_type, sensing_m,
-		holiday, delta_closest_holiday, average_closest_holiday, average_city_prop
-	]
-	cross_columns = []
-#	cross_columns = [
-#		tf.feature_column.crossed_column(['Distance', 'Time'], hash_bucket_size=1000)
-#	]
-	wide_columns = base_columns + cross_columns
-	# deep model
-	deep_columns = [
-		distance, sec, day, sec_in_day, delta_time_freq,
-		expo_time, flash, focal_len, shutter, tf.feature_column.indicator_column(scene_type), tf.feature_column.indicator_column(sensing_m),
-		tf.feature_column.indicator_column(holiday),
-		delta_closest_holiday, average_closest_holiday, average_city_prop
-	]
+	if model_type == 'timegps':
+		base_columns = [
+			distance, sec, day, sec_in_day, delta_time_freq,
+			expo_time, flash, focal_len, shutter, scene_type, sensing_m,
+			holiday, delta_closest_holiday, average_closest_holiday, average_city_prop
+		]
+		cross_columns = []
+	#	cross_columns = [tf.feature_column.crossed_column(['Distance', 'Time'], hash_bucket_size=1000)]
+		wide_columns = base_columns + cross_columns
+		# deep model
+		deep_columns = [
+			distance, sec, day, sec_in_day, delta_time_freq,
+			expo_time, flash, focal_len, shutter, tf.feature_column.indicator_column(scene_type), tf.feature_column.indicator_column(sensing_m),
+			tf.feature_column.indicator_column(holiday),
+			delta_closest_holiday, average_closest_holiday, average_city_prop
+		]
+	elif model_type == 'timeonly':
+		# wide model
+		base_columns = [
+			sec, day, sec_in_day, delta_time_freq,
+			holiday, delta_closest_holiday, average_closest_holiday
+		]
+
+		cross_columns = []
+		wide_columns = base_columns + cross_columns
+		# deep model
+		deep_columns = [
+			sec, day, sec_in_day, delta_time_freq,
+			tf.feature_column.indicator_column(holiday), delta_closest_holiday, average_closest_holiday
+		]
+	else:
+		raise('!!!!Error!!! \n Unknown model type %s' %model_type)
 	return wide_columns, deep_columns
 
 
-def build_estimator(model_dir, model_type, dnn_learning_rate, linear_learning_rate, dropout_rate, bn_idx):
+def build_estimator(model_dir, model_cond, model_type, hidden_units, dnn_learning_rate, linear_learning_rate, dropout_rate, bn_idx):
 	"""Build an estimator appropriate for the given model type."""
-	wide_columns, deep_columns = build_model_columns()
-	# hidden_units = [100, 75, 50, 25]
-	# hidden_units = [200, 120, 80, 20]
-	# hidden_units = [150, 100, 50, 10] # 0.31, 0.48
-	hidden_units = [150, 100, 50, 10]
-	# hidden_units = [150, 75, 10]
+	wide_columns, deep_columns = build_model_columns(model_type)
+	# # hidden_units = [100, 75, 50, 25]
+	# # hidden_units = [200, 120, 80, 20]
+	# # hidden_units = [150, 100, 50, 10] # 0.31, 0.48
+	# hidden_units = [150, 100, 50, 10]
+	# # hidden_units = [150, 75, 10]
 	print("Hidden units:", hidden_units)
 
 	# Create a tf.estimator.RunConfig to ensure the model is run on CPU, which
@@ -72,17 +87,17 @@ def build_estimator(model_dir, model_type, dnn_learning_rate, linear_learning_ra
 	run_config = tf.estimator.RunConfig().replace(
 		session_config=tf.ConfigProto(device_count={'GPU': 0}))
 
-	if model_type == 'wide':
+	if model_cond == 'wide':
 		return tf.estimator.LinearClassifier(
             model_dir = model_dir,
             feature_columns = wide_columns,
             config = run_config)
-	elif model_type == 'deep':
+	elif model_cond == 'deep':
 		return tf.estimator.DNNClassifier(
             model_dir = model_dir,
             feature_columns = deep_columns,
             hidden_units = hidden_units,
-			dnn_dropout= dropout_rate,
+			dropout= dropout_rate,
 			batch_norm = bn_idx,
             config = run_config)
 	else:
@@ -98,7 +113,7 @@ def build_estimator(model_dir, model_type, dnn_learning_rate, linear_learning_ra
 			batch_norm = bn_idx,
             config = run_config)
 
-def input_fn(data_file, num_epochs, shuffle, batch_size):
+def input_fn(data_file, num_epochs, shuffle, batch_size, model_type):
 	"""Generate an input function for the Estimator."""
 	assert tf.gfile.Exists(data_file), (
 			'%s not found.' % data_file)
@@ -110,6 +125,16 @@ def input_fn(data_file, num_epochs, shuffle, batch_size):
 		features.pop('1st Image')
 		features.pop('2nd Image')
 		features.pop('Label_s')
+		if model_type == 'timeonly':
+			features.pop('Distance')
+			features.pop('ExposureTime')
+			features.pop("Flash")
+			features.pop("FocalLength")
+			features.pop("ShutterSpeedValue")
+			features.pop("SceneType")
+			features.pop("SensingMethod")
+			features.pop("Average_city_prop")
+
 		print('Length of features:', len(features))
 		return features, tf.equal(labels, 1)
 
@@ -135,15 +160,15 @@ def input_fn(data_file, num_epochs, shuffle, batch_size):
 def main(self):
 	# Clean up the model directory if present
 	shutil.rmtree(os.path.join(FLAGS.servable_model_dir, FLAGS.model_dir), ignore_errors=True)
-	model = build_estimator(os.path.join(FLAGS.servable_model_dir, FLAGS.model_dir), FLAGS.model_type,
+	model = build_estimator(os.path.join(FLAGS.servable_model_dir, FLAGS.model_dir), FLAGS.model_cond, FLAGS.model_type, FLAGS.hidden_units,
 	                        FLAGS.dnn_learning_rate, FLAGS.linear_learning_rate, FLAGS.dnn_dropout, FLAGS.dnn_batch_norm)
 
 	# Train and evaluate the model every `FLAGS.epochs_per_eval` epochs.
 	for n in range(FLAGS.train_epochs // FLAGS.epochs_per_eval):
 		model.train(input_fn=lambda: input_fn(
-			FLAGS.train_data, FLAGS.epochs_per_eval, True, FLAGS.batch_size))
+			FLAGS.train_data, FLAGS.epochs_per_eval, True, FLAGS.batch_size, FLAGS.model_type))
 		results = model.evaluate(input_fn=lambda: input_fn(
-			FLAGS.test_data, 1, False, FLAGS.batch_size))
+			FLAGS.test_data, 1, False, FLAGS.batch_size, FLAGS.model_type))
 
 		# Display evaluation metrics
 		print('Results at epoch', (n + 1) * FLAGS.epochs_per_eval)
@@ -189,25 +214,31 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser()
 
 	parser.add_argument(
-	    '--working_path', type=str, default='/project/album_project/',
-	    # '--working_path', type=str, default='/Volumes/working/album_project/',
+	    # '--working_path', type=str, default='/project/album_project/',
+	    '--working_path', type=str, default='/Volumes/working/album_project/',
 	    help='Base working directory.')
 
 	parser.add_argument(
-	    '--model_dir', type=str, default='wide_deep_model_1/',
+	    '--model_dir', type=str, default='deep_0/',
 	    # '--model_dir', type=str, default='wide_deep_model/',
 	    help='Base directory for the model.')
 
+	parser.add_argument('--model_type', type=str, default='timeonly',
+	                help='Model type: timegps, or timeonly; Raise error otherwise.')
+
+	parser.add_argument('--hidden_units', type=list, default=[150, 75, 10],
+	                help='Hidden units used by the deep model, default: [150, 100, 50, 10] for four layers, and [150, 75, 10] for three layers ')
+
 	parser.add_argument(
 	    # '--servable_model_dir', type = str, default = '/project/album_project/model_output/',
-	    '--model_rename', type = str, default = 'new_ timegps_L4_Adadelta_noDO_noBN_00003_004_0/',
+	    '--model_rename', type = str, default = 'timeonly_Adadelta_L3_noDO_noBN_00003_004_3/',
 	    help = 'Path to rename the trained model for serving')
 
 	parser.add_argument(
 	    '--dnn_dropout', type=float, default=0.0, help='DNN dropout rate.')
 
 	parser.add_argument(
-	    '--dnn_batch_norm', type=ast.literal_eval, default=True, help='DNN batch normalization.')
+	    '--dnn_batch_norm', type=ast.literal_eval, default=False, help='DNN batch normalization (True/False).')
 
 	parser.add_argument(
 	    '--train_data', type=str, default= '/project/album_project/preprocessed_data/training/combine_training_0.98.csv',
@@ -225,7 +256,7 @@ if __name__ == '__main__':
 	    help = 'Path to save the trained model for serving')
 
 	parser.add_argument(
-	    '--model_type', type=str, default='wide_deep',
+	    '--model_cond', type=str, default='deep',
 	    help="Valid model types: {'wide', 'deep', 'wide_deep'}.")
 
 	parser.add_argument(
