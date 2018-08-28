@@ -28,7 +28,7 @@ def main(FLAGS):
 		prediction_OutFile = open(output_fn, 'w')
 		
 		#Write Header for naCSV file
-		prediction_OutFile.write("first, second, Sec, Day, Sec_in_day, Time_freq, holiday, delta_closest_holiday, average_closest_holiday, true_label, predicted_label, probability")
+		prediction_OutFile.write("first, second, Sec, Day, Sec_in_day, Delta_time_freq, holiday, delta_closest_holiday, average_closest_holiday, true_label, predicted_label, probability")
 		prediction_OutFile.write('\n')
 		
 		# Read file and create feature_dict for each record
@@ -42,15 +42,15 @@ def main(FLAGS):
 				if count % 2000 == 0:
 					print("%d cases finished" %count)
 				# Read data, using python, into our features
-				first, second, sec, day, sec_in_day, time_freq, expo_time, flash, focal_len, shutter, scene_type, sensing_m, \
-				holiday, delta_closest_holiday, average_closest_holiday, label_e, label_s = line.strip().split(",")
+				first, second, distance, sec, day, sec_in_day, delta_time_freq, expo_time, flash, focal_len, shutter, scene_type, sensing_m, \
+				holiday, delta_closest_holiday, average_closest_holiday, average_city_prop, label_e, label_s = line.strip().split(",")
 				true_label.append(int(label_e))
 				# Create a feature_dict for train.example - Get Feature Columns using
 				feature_dict = {
 					'Sec': _float_feature(value=float(sec)),
-					'Day': _float_feature(value=float(day)),
+					'Day': _float_feature(value=int(day)),
 					'Sec_in_day': _float_feature(value=float(sec_in_day)),
-					'Time_freq': _float_feature(value=float(time_freq)),
+					'Delta_time_freq': _float_feature(value=float(delta_time_freq)),
 					'Holiday':_int64_feature(value=int(holiday)),
 					'Delta_closest_holiday': _float_feature(value=float(delta_closest_holiday)),
 					'Average_closest_holiday': _float_feature(value=float(average_closest_holiday)),
@@ -67,7 +67,7 @@ def main(FLAGS):
 				# print('Probability : ' + str(output_dict['scores']))
 				
 				# Positive label = 1
-				prediction_OutFile.write(first + "," + second + ',' + str(sec)+ "," + str(day)+ "," + str(sec_in_day) + "," + str(time_freq) + "," +
+				prediction_OutFile.write(first + "," + second + ',' + str(sec)+ "," + str(day)+ "," + str(sec_in_day) + "," + str(delta_time_freq) + "," +
 				                         str(holiday) +  "," + str(delta_closest_holiday) + "," + str(average_closest_holiday) + "," +
 				                         str(label_e) + ",")
 				label_index = np.argmax(output_dict['scores'])

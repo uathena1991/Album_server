@@ -20,9 +20,7 @@ def build_model_columns():
 	sec = tf.feature_column.numeric_column('Sec')
 	day = tf.feature_column.numeric_column("Day")
 	sec_in_day = tf.feature_column.numeric_column("Sec_in_day")
-	time_freq = tf.feature_column.numeric_column("Time_freq")
-
-
+	delta_time_freq = tf.feature_column.numeric_column("Delta_time_freq")
 
 	holiday = tf.feature_column.categorical_column_with_vocabulary_list('Holiday',  [0, 1, 2, 3, 4, 5])
 	delta_closest_holiday = tf.feature_column.numeric_column('Delta_closest_holiday')
@@ -32,9 +30,9 @@ def build_model_columns():
 	# wide model
 	base_columns = [
 		# distance,
-		# sec, day, sec_in_day, time_freq,
+		sec, day, sec_in_day, delta_time_freq,
 	#	expo_time, flash, focal_len, shutter, scene_type, sensing_m,
-		# holiday, delta_closest_holiday, average_closest_holiday
+		holiday, delta_closest_holiday, average_closest_holiday
 		# ,average_city_prop
 	]
 
@@ -46,7 +44,7 @@ def build_model_columns():
 	# deep model
 	deep_columns = [
 		# distance,
-		sec, day, sec_in_day, time_freq,
+		sec, day, sec_in_day, delta_time_freq,
 		# expo_time, flash, focal_len, shutter, tf.feature_column.indicator_column(scene_type), tf.feature_column.indicator_column(sensing_m),
 		tf.feature_column.indicator_column(holiday), delta_closest_holiday, average_closest_holiday
 #, average_city_prop
@@ -113,15 +111,17 @@ def input_fn(data_file, num_epochs, shuffle, batch_size):
 		features = dict(zip(_CSV_COLUMNS, columns))
 		labels = features.pop('Label_e')
 		# labels = features['Label_e']
-		features.pop('Label_s')
 		features.pop('1st Image')
 		features.pop('2nd Image')
+		features.pop('Distance')
 		features.pop('ExposureTime')
 		features.pop("Flash")
 		features.pop("FocalLength")
 		features.pop("ShutterSpeedValue")
 		features.pop("SceneType")
 		features.pop("SensingMethod")
+		features.pop("Average_city_prop")
+		features.pop('Label_s')
 		print("LENGTH", len(features))
 		# pdb.set_trace()
 		return features, tf.equal(labels, 1)
@@ -189,19 +189,20 @@ def main(self):
 if __name__ == '__main__':
 	global _CSV_COLUMNS,_CSV_COLUMN_DEFAULTS,FLAGS,_NUM_EXAMPLES
 
-	_CSV_COLUMNS = [
-    '1st Image', '2nd Image', 'Sec', 'Day', 'Sec_in_day', "Time_freq",
-    'ExposureTime', 'Flash', 'FocalLength', 'ShutterSpeedValue', 'SceneType', 'SensingMethod',
-    'Holiday', 'Delta_closest_holiday', 'Average_closest_holiday',
-    'Label_e', "Label_s"
-	]
+	_CSV_COLUMNS = ['1st Image', '2nd Image',
+	                'Distance', 'Sec', 'Day', 'Sec_in_day', 'Delta_time_freq',
+                    'ExposureTime', 'Flash', 'FocalLength', 'ShutterSpeedValue', 'SceneType', 'SensingMethod',
+                    'Holiday', 'Delta_closest_holiday', 'Average_closest_holiday', 'Average_city_prop',
+                    'Label_e', "Label_s"
+	                ]
 
 	#_CSV_COLUMN_DEFAULTS = [[0], [0], [0.0], [0.0], [0.0],
 	 #                       [0.0], [0.0], [0.0], [0], [0], [0]]
-	_CSV_COLUMN_DEFAULTS = [['xx'], ['xx'], [-1.0], [-1.0], [-1.0], [-1.0],
-	                       [-1.0], [-1.0], [-1.0], [-1.0], [-1], [-1],
-	                        [-1], [-1.0], [-1.0],
-	                        [1], [1]]
+	_CSV_COLUMN_DEFAULTS = [['xx'], ['xx'],
+	                        [-1.0], [-1.0],[-1], [-1.0], [-1.0],
+	                        [-1.0],[-1.0], [-1.0], [-1.0], [-1], [-1],
+	                        [-1], [-1.0], [-1.0], [-1.0],
+	                        [0], [0]]
 
 	parser = argparse.ArgumentParser()
 

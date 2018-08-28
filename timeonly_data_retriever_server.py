@@ -53,12 +53,12 @@ def construct_pair_feature_matrix(file_names, usr_nm, wanted_time, time_freq, ex
 					#                             tuple(wanted_gps[idx_j]))  # Eclidean distance
 					tmp[0][2] = abs(wanted_secs[idx_i] - wanted_secs[idx_j])  # seconds
 					# pdb.set_trace()
-					tmp[0][3] = abs(wanted_time[idx_i][0].date() - wanted_time[idx_j][0].date()).days  # day
-					# print(wanted_time[idx_i][0].date(), wanted_time[idx_j][0].date(), tmp[0][3])
-					# print(wanted_time[idx_i][0].time(), wanted_time[idx_j][0].time(), tmp[0][3])
+					# day
+					tmp[0][3] = abs(wanted_time[idx_i][0].date() - wanted_time[idx_j][0].date()).days
+					# seconds in a day
 					tmp[0][4] = abs(datetime.datetime.combine(datetime.date.min, wanted_time[idx_i][0].time()) -
 					                datetime.datetime.combine(datetime.date.min, wanted_time[idx_j][
-						                0].time())).total_seconds()  # seconds in a day
+						                0].time())).total_seconds()
 					# print(wanted_time[idx_i][0].time(), wanted_time[idx_j][0].time(), tmp[0][4]/3600)
 					tmp[0][5] = abs(time_freq[idx_i] - time_freq[idx_j])
 
@@ -227,7 +227,7 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser(description="Construct feature matrix (and labels) from plist files.")
 
 
-	parser.add_argument('--usr_nm', type=str, default='zd',
+	parser.add_argument('--usr_nm', type=str, default='zzx',
 	                    help='User name for saving files')
 
 	parser.add_argument('--working_path', type=str,

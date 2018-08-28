@@ -18,7 +18,10 @@ import pandas as pd
 def build_model_columns():
 	"""Builds a set of wide and deep feature columns."""
 	distance = tf.feature_column.numeric_column('Distance')
-	time = tf.feature_column.numeric_column('Time')
+	sec = tf.feature_column.numeric_column('Sec')
+	day = tf.feature_column.numeric_column('Day')
+	sec_in_day = tf.feature_column.numeric_column('Sec_in_day')
+	delta_time_freq = tf.feature_column.numeric_column('Delta_time_freq')
 	expo_time = tf.feature_column.numeric_column('ExposureTime')
 	flash = tf.feature_column.numeric_column('Flash')
 	focal_len = tf.feature_column.numeric_column('FocalLength')
@@ -33,16 +36,11 @@ def build_model_columns():
 	delta_closest_holiday = tf.feature_column.numeric_column('Delta_closest_holiday')
 	average_closest_holiday = tf.feature_column.numeric_column('Average_closest_holiday')
 	average_city_prop = tf.feature_column.numeric_column('Average_city_prop')
-	delta_time_freq = tf.feature_column.numeric_column('Delta_time_freq')
-
 	# wide model
 	base_columns = [
-		 distance,
-		 time, expo_time, flash,
-		# focal_len, shutter, tf.feature_column.indicator_column(scene_type), tf.feature_column.indicator_column(sensing_m)
-		focal_len, shutter, scene_type, sensing_m,
-		holiday, delta_closest_holiday, average_closest_holiday,
-		average_city_prop, delta_time_freq
+		distance, sec, day, sec_in_day, delta_time_freq,
+		expo_time, flash, focal_len, shutter, scene_type, sensing_m,
+		holiday, delta_closest_holiday, average_closest_holiday, average_city_prop
 	]
 	cross_columns = []
 #	cross_columns = [
@@ -51,12 +49,10 @@ def build_model_columns():
 	wide_columns = base_columns + cross_columns
 	# deep model
 	deep_columns = [
-		distance,
-		 time, expo_time, flash,
-		focal_len, shutter, tf.feature_column.indicator_column(scene_type), tf.feature_column.indicator_column(sensing_m),
+		distance, sec, day, sec_in_day, delta_time_freq,
+		expo_time, flash, focal_len, shutter, tf.feature_column.indicator_column(scene_type), tf.feature_column.indicator_column(sensing_m),
 		tf.feature_column.indicator_column(holiday),
-		delta_closest_holiday, average_closest_holiday,
-		average_city_prop, delta_time_freq
+		delta_closest_holiday, average_closest_holiday, average_city_prop
 	]
 	return wide_columns, deep_columns
 
@@ -175,22 +171,19 @@ def main(self):
 if __name__ == '__main__':
 	global _CSV_COLUMNS,_CSV_COLUMN_DEFAULTS,FLAGS,_NUM_EXAMPLES
 
-	_CSV_COLUMNS = [
-    '1st Image', '2nd Image',
-	'Distance', 'Time',
-	'ExposureTime', 'Flash', 'FocalLength', 'ShutterSpeedValue', 'SceneType','SensingMethod',
-	'Holiday', 'Delta_closest_holiday', 'Average_closest_holiday', 'Average_city_prop',
-	'Delta_time_freq',
-	'Label_e', 'Label_s'
+	_CSV_COLUMNS = ['1st Image', '2nd Image',
+	'Distance', 'Sec', 'Day', 'Sec_in_day', 'Delta_time_freq',
+    'ExposureTime', 'Flash', 'FocalLength', 'ShutterSpeedValue', 'SceneType', 'SensingMethod',
+    'Holiday', 'Delta_closest_holiday', 'Average_closest_holiday', 'Average_city_prop',
+    'Label_e', "Label_s"
 	]
 
 	#_CSV_COLUMN_DEFAULTS = [[0], [0], [0.0], [0.0], [0.0],
 	 #                       [0.0], [0.0], [0.0], [0], [0], [0]]
 	_CSV_COLUMN_DEFAULTS = [['xx'], ['xx'],
-	                        [-1.0], [-1.0],
+	                        [-1.0], [-1.0],[-1], [-1.0], [-1.0],
 	                        [-1.0],[-1.0], [-1.0], [-1.0], [-1], [-1],
 	                        [-1], [-1.0], [-1.0], [-1.0],
-	                        [-1.0],
 	                        [0], [0]]
 
 	parser = argparse.ArgumentParser()
