@@ -74,7 +74,9 @@ def main(FLAGS):
 			predict_prob = np.array([x[i] for i, x in zip(predict_label, predictions['scores'])])
 			predict_df = pd.DataFrame([predict_label, predict_prob], index=['predict_label', 'probability']).transpose()
 			predict_df['predict_label'] = predict_df['predict_label'].apply(int)
+			print(subinputs.index, predict_df.index)
 			outputs_df = pd.concat([subinputs, predict_df], axis = 1,  ignore_index = True)
+			print('lengths:', len(predictions['classes']), len(predict_df), len(outputs_df), len(subinputs))
 		sess.close()
 		res.append(outputs_df)
 		return outputs_df
