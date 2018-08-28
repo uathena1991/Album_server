@@ -12,7 +12,7 @@ parser = argparse.ArgumentParser(description="All parameters")
 
 ######################common string#####################
 
-parser.add_argument('--usr_nm', type=str, default='zzx',
+parser.add_argument('--usr_nm', type=str, default='zd',
                     help='User name')
 
 parser.add_argument('--working_path', type = str,
@@ -82,7 +82,7 @@ parser.add_argument(
     '--model_exported_path', type=str, default='model_output/',
     help='Base directory for the model.')
 parser.add_argument(
-    '--model_folder_name', type=str, default='timegps_Adadelta_L3_noDO_noBN_00003_004_0',
+    '--model_folder_name', type=str, default='new_timegps_Adadelta_L4_noDO_noBN_00003_004_0',
     help='Base directory for the model.')
 
 parser.add_argument('--model_input_path', type = str, default = 'preprocessed_data/',

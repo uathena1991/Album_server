@@ -9,6 +9,7 @@ import tensorflow as tf
 import numpy as np
 import argparse
 import datetime
+import pandas as pd
 
 
 
@@ -19,77 +20,83 @@ def main(FLAGS):
 	with tf.Session(config=config) as sess:
 		# load the saved model
 		tf.saved_model.loader.load(sess, [tf.saved_model.tag_constants.SERVING], os.path.join(FLAGS.working_path, FLAGS.model_exported_path, FLAGS.model_folder_name))
-		
+
 		# get the predictor , refer tf.contrib.predictor
 		predictor = tf.contrib.predictor.from_saved_model(os.path.join(FLAGS.working_path, FLAGS.model_exported_path, FLAGS.model_folder_name))
 
 		output_fn = os.path.join(FLAGS.working_path, FLAGS.prediction_path, "timegps_pred_%s_%s_%s.csv" %(FLAGS.usr_nm, FLAGS.model_folder_name, datetime.datetime.now().strftime("%Y%m%d%H%M%S")))
 		# input_fn = os.path.join(FLAGS.working_path, FLAGS.model_input_path, "%s_training_")
-		prediction_OutFile = open(output_fn, 'w')
-		
+
 		#Write Header for naCSV file
-		prediction_OutFile.write("first, second, distance, sec, day, sec_in_day, delta_time_freq, expo_time, flash, focal_len, shutter, scene_type, sensing_m, holiday, delta_closest_holiday, average_closest_holiday, average_city_prop, true_label, predicted_label, probability")
-		prediction_OutFile.write('\n')
-		
+		headers = ['1st Image', '2nd Image', 'Distance', 'Sec', 'Day', 'Sec_in_day', "Delta_time_freq",
+		           'ExposureTime', 'Flash', 'FocalLength', 'ShutterSpeedValue', 'SceneType', 'SensingMethod',
+		           'Holiday', 'Delta_closest_holiday', 'Average_closest_holiday','Average_city_prop', 'Label_e', "Label_s"]
 		# Read file and create feature_dict for each record
+		inputs = pd.read_csv(FLAGS.predict_input,  header = None,  index_col= False,names = headers)
+
 		true_label = []
-		predict_label = []
-		with open(FLAGS.predict_input) as inf:
+		model_input = []
+		# with open(FLAGS.predict_input) as inf:
 			# Skip header
-			next(inf)
-			count = 0
-			for line in inf:
-				if count % 2000 == 0:
-					print("%d cases finished" %count)
-				# Read data, using python, into our features
-				first, second, distance, sec, day, sec_in_day, delta_time_freq, expo_time, flash, focal_len, shutter, scene_type, sensing_m, \
-				holiday, delta_closest_holiday, average_closest_holiday, average_city_prop, label_e, label_s = line.strip().split(",")
-				true_label.append(int(label_e))
-				# Create a feature_dict for train.example - Get Feature Columns using
-				feature_dict = {
-					'Distance': _float_feature(value=float(distance)),
-					'Sec': _float_feature(value=float(sec)),
-					'Day': _float_feature(value=int(day)),
-					'Sec_in_day': _float_feature(value=float(sec_in_day)),
-					'Delta_time_freq': _float_feature(value=float(delta_time_freq)),
-					'ExposureTime': _float_feature(value=float(expo_time)),
-					'Flash': _float_feature(value=float(flash)),
-					'FocalLength': _float_feature(value=float(focal_len)),
-					'ShutterSpeedValue': _float_feature(value=float(shutter)),
-					'SceneType':_int64_feature(value=int(scene_type)),
-					'SensingMethod':_int64_feature(value=int(sensing_m)),
-					'Holiday':_int64_feature(value=int(holiday)),
-					'Delta_closest_holiday': _float_feature(value=float(delta_closest_holiday)),
-					'Average_closest_holiday': _float_feature(value=float(average_closest_holiday)),
-					'Average_city_prop': _float_feature(value=float(average_city_prop)),
-				}
-				
-				# Prepare model input
-				
-				model_input = tf.train.Example(features=tf.train.Features(feature=feature_dict))
-				
-				model_input = model_input.SerializeToString()
-				output_dict = predictor({"inputs": [model_input]})
-				
-				# print(" prediction Label is ", output_dict['classes'])
-				# print('Probability : ' + str(output_dict['scores']))
-				
-				# Positive label = 1
-				prediction_OutFile.write(first + "," + second + ',' + str(distance)+ "," + str(sec)+ "," + str(day)+ "," +str(sec_in_day)+ "," + str(delta_time_freq) +
-				                         "," + str(expo_time) + "," + str(flash)+ "," + str(focal_len) + "," + str(shutter) + "," + str(scene_type) +
-				                         "," + str(sensing_m) + "," + str(holiday) +  "," + str(delta_closest_holiday) +
-				                         "," + str(average_closest_holiday) + "," + str(average_city_prop) + "," +  str(label_e) + ",")
-				label_index = np.argmax(output_dict['scores'])
-				prediction_OutFile.write(str(label_index))
-				prediction_OutFile.write(',')
-				prediction_OutFile.write(str(output_dict['scores'][0][label_index]))
-				prediction_OutFile.write('\n')
-				predict_label.append(label_index)
+			# next(inf)
+			# count = 0
+		for count, row in inputs.iterrows():
+			if count % 2000 == 0:
+				print("%d cases finished" %count)
+			# Read data, using python, into our features
+			first, second, distance, sec, day, sec_in_day, delta_time_freq, expo_time, flash, focal_len, shutter, scene_type, sensing_m, \
+			holiday, delta_closest_holiday, average_closest_holiday, average_city_prop, label_e, label_s = row
+			true_label.append(int(label_e))
+			# Create a feature_dict for train.example - Get Feature Columns using
+			feature_dict = {
+				'Distance': _float_feature(value=float(distance)),
+				'Sec': _float_feature(value=float(sec)),
+				'Day': _float_feature(value=int(day)),
+				'Sec_in_day': _float_feature(value=float(sec_in_day)),
+				'Delta_time_freq': _float_feature(value=float(delta_time_freq)),
+				'ExposureTime': _float_feature(value=float(expo_time)),
+				'Flash': _float_feature(value=float(flash)),
+				'FocalLength': _float_feature(value=float(focal_len)),
+				'ShutterSpeedValue': _float_feature(value=float(shutter)),
+				'SceneType':_int64_feature(value=int(scene_type)),
+				'SensingMethod':_int64_feature(value=int(sensing_m)),
+				'Holiday':_int64_feature(value=int(holiday)),
+				'Delta_closest_holiday': _float_feature(value=float(delta_closest_holiday)),
+				'Average_closest_holiday': _float_feature(value=float(average_closest_holiday)),
+				'Average_city_prop': _float_feature(value=float(average_city_prop)),
+			}
 
-				count += 1
+			# Prepare model input
 
-	
-	prediction_OutFile.close()
+			model_input.append(tf.train.Example(features=tf.train.Features(feature=feature_dict)).SerializeToString())
+
+		predictions = predictor({"inputs": model_input})
+		predict_label = np.argmax(predictions['scores'], axis = 1)
+		predict_prob = np.array([x[i] for i,x in zip(predict_label, predictions['scores'])])
+		new_headers = headers + ['predict_label', 'probability']
+		predict_df = pd.DataFrame([predict_label, predict_prob], index = ['predict_label', 'probability']).transpose()
+		predict_df['predict_label'] = predict_df['predict_label'].apply(int)
+		outputs_df = pd.concat([inputs, predict_df], axis = 1)
+		outputs_df.to_csv(output_fn, header=new_headers, index = False)
+
+			# print(" prediction Label is ", output_dict['classes'])
+			# print('Probability : ' + str(output_dict['scores']))
+
+			# Positive label = 1
+			# 	prediction_OutFile.write(first + "," + second + ',' + str(distance)+ "," + str(sec)+ "," + str(day)+ "," +str(sec_in_day)+ "," + str(delta_time_freq) +
+			# 	                         "," + str(expo_time) + "," + str(flash)+ "," + str(focal_len) + "," + str(shutter) + "," + str(scene_type) +
+			# 	                         "," + str(sensing_m) + "," + str(holiday) +  "," + str(delta_closest_holiday) +
+			# 	                         "," + str(average_closest_holiday) + "," + str(average_city_prop) + "," +  str(label_e) + ",")
+			# 	label_index = np.argmax(output_dict['scores'])
+			# 	prediction_OutFile.write(str(label_index))
+			# 	prediction_OutFile.write(',')
+			# 	prediction_OutFile.write(str(output_dict['scores'][0][label_index]))
+			# 	prediction_OutFile.write('\n')
+			# 	predict_label.append(label_index)
+
+
+
+	# prediction_OutFile.close()
 	sess.close()
 	# analyze precision, recall and so
 	# pdb.set_trace()
@@ -155,7 +162,7 @@ if __name__ == "__main__":
 	    '--model_exported_path', type=str, default='model_output/',
 	    help='Base directory for the model.')
 	parser.add_argument(
-	    '--model_folder_name', type=str, default='timegps_L4_Adadelta_noDO_noBN_00003_004_0',
+	    '--model_folder_name', type=str, default='new_timegps_Adadelta_L3_noDO_noBN_00003_004_0',
 	    help='Base directory for the model.')
 
 	parser.add_argument(
