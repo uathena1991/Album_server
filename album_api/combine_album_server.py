@@ -17,24 +17,28 @@ parser = argparse.ArgumentParser(description="All parameters")
 
 ######################common string#####################
 
-parser.add_argument('--usr_nm', type=str, default='hxl',
+parser.add_argument('--usr_nm', type=str, default='zt',
                     help='User name')
 
 parser.add_argument('--working_path', type = str,
-                    default = '/Volumes/working/album_project/',
-                    # default = '/project/album_project/',
+                    # default = '/Volumes/working/album_project/',
+                    default = '/project/album_project/',
                     help='Working path')
 
+parser.add_argument('--plist_json', type=str,
+                    default='/project/album_project/tmp/hw_plist.json',
+                    help=' Path to the saved plist json file (input)')
+
 parser.add_argument('--image_parent_path', type = str,
-                    default = '/Volumes/working/album_project/album_data/',
-                    # default = '/data/album_data/',
+                    # default = '/Volumes/working/album_project/album_data/',
+                    default = '/data/album_data/',
                     help='Parent path of images')
 
 
 parser.add_argument('--model_type', type=str, default='timegps',
                 help='Model type: timegps, or timeonly; Raise error otherwise.')
 
-parser.add_argument('--model_folder_name', type=str, default='new_timegps_Adadelta_L4_noDO_BN_00003_004_0',
+parser.add_argument('--model_folder_name', type=str, default='timegps',
                     help='Base directory for the model.')
 
 ################################ bool ################################
@@ -50,7 +54,7 @@ parser.add_argument('--eval_index', type=ast.literal_eval, default = True,
 parser.add_argument('--vis_idx_cluster', type=ast.literal_eval, default = False,
                     help='Bool value: whether to show clusters.')
 
-parser.add_argument('--vis_idx_final', type=ast.literal_eval, default = True,
+parser.add_argument('--vis_idx_final', type=ast.literal_eval, default = False,
                     help='Bool value: whether to show final selected albums.')
 
 parser.add_argument('--print_parser', type=ast.literal_eval, default = True,
@@ -80,15 +84,13 @@ parser.add_argument('--half_win_size', type=int, default= 2,
 
 
 #################### Normally unchanged #########################
-parser.add_argument('--model_exported_path', type=str, default='model_output/',
+parser.add_argument('--model_exported_path', type=str, default='working_model/',
                     help='Base directory for the model.')
 
 parser.add_argument('--model_input_path', type = str, default = 'preprocessed_data/',
                     help='Partial path to save preprocessed data')
 
-parser.add_argument('--plist_folder', type=str,
-                    default='serving_data/',
-                    help=' Path to the saved plist json file (input)')
+
 
 
 parser.add_argument('--prediction_path', type=str, default='model_prediction/',
@@ -121,10 +123,11 @@ if FLAGS.print_parser:
 def main(FLAGS):
 	print(FLAGS.usr_nm)
 	res = dict()
-	FLAGS.plist_json = os.path.join(FLAGS.working_path, FLAGS.plist_folder, FLAGS.usr_nm + '_plist.json')
+	# FLAGS.plist_json = os.path.join(FLAGS.working_path, FLAGS.plist_folder, FLAGS.usr_nm + '_plist.json')
 	###### data preprocessing ############
 	print('++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 	print("Data preprocessing....")
+	FLAGS.model_folder_name = FLAGS.model_type
 	model_inputs, npz_features = drs.main(FLAGS)
 	####### model prediction #############
 	print('++++++++++++++++++++++++++++++++++++++++++++++++++++++')

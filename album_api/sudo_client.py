@@ -2,7 +2,7 @@ import requests
 import json
 import time
 import cProfile
-def main(thr_id, count, user = 'hw', file_name = '/Volumes/working/album_project/serving_data/hw_plist.json'):
+def main(thr_id, count,model_type,  user = 'hw', file_name = '/Volumes/working/album_project/serving_data/hw_plist.json'):
 	"""
 
 	:param user:  user id (string), should be unique for each user
@@ -21,6 +21,7 @@ def main(thr_id, count, user = 'hw', file_name = '/Volumes/working/album_project
 	json_input['user_id'] = user
 	json_input['thread_id'] = thr_id
 	json_input['count'] = count
+	json_input['model_type'] = model_type  # model type (either 'timeonly' or 'timegps')
 	r_post = requests.post("http://10.128.34.1:9000/run_model", data = json.dumps(json_input), headers=headers)
 
 	print(r_post.headers)
@@ -34,4 +35,4 @@ def main(thr_id, count, user = 'hw', file_name = '/Volumes/working/album_project
 	return json.loads(r_post.text)
 
 
-cProfile.run("main(1,1)", filename = 'result_client.out', sort ="cumulative")
+cProfile.run("main(1,1, 'timegps','zd', '/Volumes/working/album_project/serving_data/zd_plist.json')", filename = 'result_client.out', sort ="cumulative")
