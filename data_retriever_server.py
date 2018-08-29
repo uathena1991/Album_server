@@ -5,6 +5,8 @@
 import os
 import pdb
 import argparse
+import warnings
+
 import time
 import ast
 import math
@@ -19,6 +21,8 @@ from geopy.geocoders import Nominatim
 import pandas as pd
 import json
 import urllib.request
+
+import common_lib as clb
 
 ################################################################################################################################
 # convert dict into a defaultdict
@@ -200,7 +204,6 @@ def create_holiday_table(filename, start_date=datetime.date(2009, 1, 1),
 
 ################################################################################################################################
 
-
 def find_closest_holiday(date, holi_tab):
     """
 
@@ -224,6 +227,7 @@ def find_closest_holiday(date, holi_tab):
             date_back -= timedelta(days=1)
     return abs((date_forw - date).days) if stat1 else abs((date_back - date).days)
 
+################################################################################################################################
 
 def get_city_from_lonlat(lat, lon):
 
@@ -304,8 +308,6 @@ def get_plist_from_json(file_path):
 
 ####################################################################################################################################
 def compile_plist_info(file_names, gps_info, exif_info, half_win_size,
-                       save_user_name = 'hxl',
-                       save_file="/Volumes/working/album_project/album_data/",
                        hol_file="/Volumes/working/album_project/Album/holidays.csv"):
     # holiday information (dict: date--> [index]           0: weekday, 1: weekend, 2:holiday)
     hol_tab = (pd.read_csv(hol_file, header=0, names=["date", "index"],
@@ -371,12 +373,6 @@ def compile_plist_info(file_names, gps_info, exif_info, half_win_size,
     print("exif:\n", exif_info[0])
     print("image name:\n", file_names[0])
     print("Failed exif: %d" % len(failed_idx))
-    # save to file
-    np.savez(os.path.join(save_file, 'feature_matrix_' + save_user_name.split('/')[0] + '.npz'),
-             wanted_gps = wanted_gps, wanted_time = wanted_time, wanted_time_freq = np.array(wanted_time_freq),
-             wanted_exif = wanted_exif, gps_info = np.array([dict(x) for x in gps_info]),
-             exif_info = np.array([dict(x) for x in exif_info]), file_names = file_names, wanted_holiday = wanted_holiday,
-             wanted_closest_holiday = wanted_closest_holiday, wanted_city = wanted_city, wanted_city_prop = wanted_city_prop)
 
     # df = pd.DataFrame.from_dict(city_table, orient="index")
     # df.to_csv(os.path.join(FLAGS.working_path, FLAGS.city_lonlat), header = ['city'])
@@ -384,19 +380,9 @@ def compile_plist_info(file_names, gps_info, exif_info, half_win_size,
     return wanted_gps, wanted_time, wanted_time_freq, wanted_exif, wanted_holiday, wanted_closest_holiday, wanted_city, wanted_city_prop
 
 
-
-####################################################################################################################################
-def seperate_train_val(filename, train_size=0.98):
-    features_m = (pd.read_csv(filename)).values
-    np.random.shuffle(features_m)
-    # split into training and validation data set
-    sep_idx = int(len(features_m) * train_size)
-    return features_m[:sep_idx, :], features_m[sep_idx:, :]
-
-
 ####################################################################################################################################
 def construct_pair_feature_matrix(file_names, wanted_gps, wanted_time, wanted_time_freq,  exif_info, wanted_secs, wanted_holiday, wanted_closest_holiday,
-                             wanted_city_prop, image_cluster_idx, save_path, filter_range=168 * 60 * 60):
+                             wanted_city_prop, image_cluster_idx, filter_range=168 * 60 * 60):
     """construct feature matrix
     1st img, second img,
     distance,
@@ -409,7 +395,7 @@ def construct_pair_feature_matrix(file_names, wanted_gps, wanted_time, wanted_ti
     print('Total possible pairs: %d' %length)
     dict_list = {('0', '0'): 0, ('1', '1'): 1, ('2', '2'): 2, ('1', '2'): 3, ('2', '1'): 3, ('1', '0'): 4,
              ('0', '1'): 4, ('2', '0'): 5, ('0', '2'): 5}
-    ## multiprocessing##
+    ########################### multiprocessing ###########################
     def sub_process(cond, res):
         features_m = np.empty(shape=(0, 19))  # the first two columns are the indexes of the two images, the last two columns are event label, and scene label
         count = 0
@@ -466,8 +452,6 @@ def construct_pair_feature_matrix(file_names, wanted_gps, wanted_time, wanted_ti
                     count += 1
                 if count % 5000 == 0  and count != 0:
                     print("cond:%s, %d pairs finished, %d pairs passed" %(cond, count, count2))
-                if count % 100000 == 0 and count != 0:
-                    np.save(os.path.join(save_path, 'pair_feature_' + FLAGS.usr_nm + str(cond) + '.npy'), features_m)
         res.append(features_m)
         return features_m
 
@@ -483,64 +467,9 @@ def construct_pair_feature_matrix(file_names, wanted_gps, wanted_time, wanted_ti
         pp.join()
 ## get features_m
     features_m = np.unique(np.concatenate(res), axis = 0)
-    np.save(os.path.join(save_path, 'pair_feature_' + FLAGS.usr_nm  + '.npy'), features_m)
     print("Total image pairs: %d, paired_samples: %d" % (length, len(features_m)))
     print("1/0 ratio:", sum(features_m[:, -1] == 1) / len(features_m))
     return features_m
-
-
-################################################################################################################################
-def save2csv(features_m, file_names, usr_nm, train_ratio, save_path, file_type='original', convert_idx_fn=True):
-    # (optional) save it to a file
-    # pdb.set_trace()
-    columns_name = ['1st Image', '2nd Image', 'Distance', 'Sec', 'Day', 'Sec_in_day', 'Delta_time_freq',
-                    'ExposureTime', 'Flash', 'FocalLength', 'ShutterSpeedValue', 'SceneType', 'SensingMethod',
-                    'Holiday', 'Delta_closest_holiday', 'Average_closest_holiday', 'Average_city_prop',
-                    'Label_e', "Label_s"]
-    try:
-        df = pd.DataFrame(features_m, columns = columns_name)
-        # pdb.set_trace()
-        if convert_idx_fn:
-            df.loc[:, '1st Image'] = file_names[df['1st Image'].apply(int)]  # convert 1st Image to an int
-            df.loc[:, '2nd Image'] = file_names[df['2nd Image'].apply(int)]  # convert 2nd Image to an int
-
-        df.loc[:, 'Day'] = df['Day'].apply(int)  # convert Day to an int
-        df.loc[:, 'SceneType'] = df['SceneType'].apply(int)  # convert SceneType to an int
-        df.loc[:, 'SensingMethod'] = df['SensingMethod'].apply(int)  # convert SensingMethod to an int
-        df.loc[:, 'Label_e'] = df['Label_e'].apply(int)  # convert Label_e to an int
-        df.loc[:, 'Label_s'] = df['Label_s'].apply(int)  # convert Label_s to an int
-        df.loc[:, 'Holiday'] = df['Holiday'].apply(int)  # convert Holiday to an int
-        df.to_csv(os.path.join(save_path, file_type, "%s_%s_data_%1.2f.csv" %(usr_nm, file_type, train_ratio)), header=None, index=False)
-        print("Number of %s samples is %d" %(file_type, len(df)))
-    except Exception as e:
-        print('Error: save %s failed!!!' %file_type)
-        print(str(e))
-        return os.path.join(save_path, file_type, "%s_%s_data_%1.2f.csv" %(usr_nm, file_type, train_ratio))
-    return os.path.join(save_path, file_type, "%s_%s_data_%1.2f.csv" %(usr_nm, file_type, train_ratio))
-
-
-################################################################################################################################
-def combine_csv(name_list, output_nm, common_path):
-    """
-    name_list = ['hxl', 'hw', 'zzx', 'zt', 'zd', 'wy_tmp', 'lf', 'hhl', 'hxl2016']
-    :param name_list:
-    :param output_nm:
-    :param common_path:
-    :return:
-    """
-    try:
-        if os.path.exists(os.path.join(common_path, output_nm)):
-            fout = open(os.path.join(common_path, output_nm), 'w')
-        else:
-            fout = open(os.path.join(common_path, output_nm), 'a')
-        for nm in name_list:
-            fnm = open(os.path.join(common_path, nm))
-            [fout.write(line) for line in fnm]
-        fout.close()
-    except Exception as e:
-        print(e)
-        return False
-    return True
 
 
 
@@ -550,67 +479,65 @@ def main(FLAGS0):
 
         global city_table, FLAGS
         FLAGS = FLAGS0
-        # FLAGS.pic_path_label = FLAGS.usr_nm + FLAGS.pic_path_label
-        FLAGS.plist_json = os.path.join(FLAGS.working_path, FLAGS.plist_folder, FLAGS.usr_nm + "_plist.json")
+        # load city table or initialize it...
         if os.path.exists(os.path.join(FLAGS.working_path, FLAGS.city_lonlat)):
             city_table = (pd.read_csv(os.path.join(FLAGS.working_path, FLAGS.city_lonlat), header=0, names=["city"], dtype='str')).T.to_dict('list')
         else:
-            # city_table = pd.DataFrame({"lonlat":[], "city":[]})
+            warnings.warn("Warning: there's no city table at %s" %(os.path.join(FLAGS.working_path, FLAGS.city_lonlat)))
             city_table = dict()
-        if FLAGS.generate_holiday_tab:
-            print("++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+        # load holiday table, or create one....
+        if not os.path.exists(os.path.join(FLAGS.working_path, FLAGS.holiday_file)):
+            warnings.warn("Warning: there's no holiday table at %s" %(os.path.join(FLAGS.working_path, FLAGS.holiday_file)))
             print('Getting holiday information (2009-2018)....')
-            failed = create_holiday_table(os.path.join(FLAGS.working_path,FLAGS.holiday_file))
+            failed = clb.create_holiday_table(os.path.join(FLAGS.working_path, FLAGS.holiday_file))
             print(failed)
+
         print("++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         print('Getting plist information....')
-        file_names, gps_info, exif_info, img_label = get_plist_from_json(FLAGS.plist_json)
+        file_names, gps_info, exif_info, true_img_label = get_plist_from_json(FLAGS.plist_json)
         print("%d files found" %len(file_names))
         print('Done!')
         print('Compile plist information....')
-        if FLAGS.generate_plist_idx:
-            wanted_gps, wanted_time, wanted_time_freq, wanted_exif, wanted_holiday, wanted_closest_holiday, \
-            wanted_city, wanted_city_prop = compile_plist_info(file_names, gps_info, exif_info, FLAGS.half_win_size,
-                                                               FLAGS.usr_nm,
-                                                               os.path.join(FLAGS.working_path, FLAGS.model_input_path, 'feature_matrix'),
-                                                               os.path.join(FLAGS.working_path, FLAGS.holiday_file))
-            df = pd.DataFrame.from_dict(city_table, orient="index")
-            df.to_csv(os.path.join(FLAGS.working_path, FLAGS.city_lonlat), header = ['city'])
-        else:
-            npz_features = np.load(os.path.join(FLAGS.working_path, FLAGS.model_input_path, 'feature_matrix', 'feature_matrix_' + FLAGS.usr_nm.split('/')[0] + '.npz'))
-            wanted_gps = npz_features['wanted_gps']
-            wanted_time = npz_features['wanted_time']
-            wanted_time_freq = npz_features['wanted_time_freq']
-            # pdb.set_trace()
-            exif_info = [dict2defaultdict(x) for x in npz_features['exif_info']]
-            file_names = npz_features['file_names']
-            wanted_holiday = npz_features['wanted_holiday']
-            wanted_closest_holiday = npz_features['wanted_closest_holiday']
-            # wanted_city = npz_features['wanted_city']
-            wanted_city_prop = npz_features['wanted_city_prop']
+        # if FLAGS.generate_plist_idx:
+        wanted_gps, wanted_time, wanted_time_freq, wanted_exif, wanted_holiday, wanted_closest_holiday, \
+        wanted_city, wanted_city_prop = compile_plist_info(file_names, gps_info, exif_info, FLAGS.half_win_size,
+                                                           os.path.join(FLAGS.working_path, FLAGS.holiday_file))
+
+        # save features to a dict
+        npz_features = {'file_names': file_names, 'wanted_holiday': wanted_holiday, 'wanted_closest_holiday':wanted_closest_holiday,
+                        'wanted_city_prop':wanted_city_prop, 'wanted_gps':wanted_gps, 'wanted_time':wanted_time, 'true_label':true_img_label}
+        # update city_table
+        df = pd.DataFrame.from_dict(city_table, orient="index")
+        df.to_csv(os.path.join(FLAGS.working_path, FLAGS.city_lonlat), header = ['city'])
         print('Done!')
         wanted_secs = convert_datetime_seconds(wanted_time)
         print("++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         print("Constructing feature matrix (and label)...")
-        # pdb.set_trace()
-        if FLAGS.generate_feature_idx:
-            features_m = construct_pair_feature_matrix(file_names, wanted_gps, wanted_time, wanted_time_freq, exif_info, wanted_secs, wanted_holiday,
-                                                       wanted_closest_holiday, wanted_city_prop, img_label,
-                                                       os.path.join(FLAGS.working_path, FLAGS.model_input_path, 'pair_feature'),
-                                                       FLAGS.filter_range)
-            np.save(os.path.join(FLAGS.working_path, FLAGS.model_input_path, 'pair_feature', 'pair_feature_' + FLAGS.usr_nm + '.npy'), features_m)
+        features_m = construct_pair_feature_matrix(file_names, wanted_gps, wanted_time, wanted_time_freq, exif_info, wanted_secs, wanted_holiday,
+                                                   wanted_closest_holiday, wanted_city_prop, true_img_label,
+                                                   FLAGS.filter_range)
+        print('Done!')
+        if FLAGS.save_feature_idx:
+            np.savez(os.path.join(os.path.join(FLAGS.working_path, FLAGS.model_input_path, 'feature_matrix'), 'feature_matrix_' + FLAGS.usr_nm.split('/')[0] + '.npz'),
+                     wanted_gps = wanted_gps, wanted_time = wanted_time, wanted_time_freq = np.array(wanted_time_freq),
+                     wanted_exif = wanted_exif, gps_info = np.array([dict(x) for x in gps_info]),
+                     exif_info = np.array([dict(x) for x in exif_info]), file_names = file_names, wanted_holiday = wanted_holiday,
+                     wanted_closest_holiday = wanted_closest_holiday, wanted_city = wanted_city, wanted_city_prop = wanted_city_prop)
 
-        else:
-            features_m = np.load(os.path.join(FLAGS.working_path, FLAGS.model_input_path, 'pair_feature', 'pair_feature_' + FLAGS.usr_nm + '.npy'))
-        print('Done!')
-        print("++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-        print('Saving to .csv files...')
-        original_path = save2csv(features_m, file_names, FLAGS.usr_nm, FLAGS.train_ratio, os.path.join(FLAGS.working_path, FLAGS.model_input_path), 'original')
-        train_data, predict_data = seperate_train_val(original_path, FLAGS.train_ratio)
-        train_path = save2csv(train_data, file_names, FLAGS.usr_nm, FLAGS.train_ratio, os.path.join(FLAGS.working_path, FLAGS.model_input_path), 'training', False)
-        predict_path = save2csv(predict_data, file_names, FLAGS.usr_nm, FLAGS.train_ratio, os.path.join(FLAGS.working_path, FLAGS.model_input_path), 'predict', False)
-        print('Done!')
-        return original_path, train_path, predict_path
+            np.save(os.path.join(os.path.join(FLAGS.working_path, FLAGS.model_input_path, 'pair_feature'), 'pair_feature_' + FLAGS.usr_nm  + '.npy'), features_m)
+
+        ## convert to dataframe
+        headers = ['1st Image', '2nd Image',
+           'Distance', 'Sec', 'Day', 'Sec_in_day', "Delta_time_freq",
+           'ExposureTime', 'Flash', 'FocalLength', 'ShutterSpeedValue', 'SceneType', 'SensingMethod',
+           'Holiday', 'Delta_closest_holiday', 'Average_closest_holiday', 'Average_city_prop',
+           'Label_e', "Label_s"]
+        model_inputs = pd.DataFrame(features_m, columns=headers)
+        # revert image name
+        model_inputs.loc[:, '1st Image'] = file_names[model_inputs['1st Image'].apply(int)]  # convert 1st Image to an int
+        model_inputs.loc[:, '2nd Image'] = file_names[model_inputs['2nd Image'].apply(int)]  # convert 2nd Image to an int
+
+        return model_inputs, npz_features
     except Exception as e:
         print(e)
         df = pd.DataFrame.from_dict(city_table, orient="index")
@@ -630,9 +557,6 @@ if __name__ == '__main__':
 
 
 
-    # parser.add_argument('--pic_path_label', type=str, default='_label_raw',
-    #                 help='Full path to pictures')
-
     parser.add_argument('--plist_folder', type=str,
                         # default='/project/album_project/serving_data/hw_plist.json',
                         default='serving_data/',
@@ -642,10 +566,6 @@ if __name__ == '__main__':
     parser.add_argument('--working_path', type = str,
                         # default = '/project/album_project/')
                         default = '/Volumes/working/album_project/')
-
-    # parser.add_argument('--image_parent_path', type = str,
-    #                     # default = '/project/album_project/album_data/')
-    #                     default = '/Volumes/working/album_project/album_data/')
 
 
     parser.add_argument('--model_input_path', type=str, default='preprocessed_data',
@@ -658,26 +578,15 @@ if __name__ == '__main__':
                     help = "Full path to the holiday lookup table.")
 
 
-
-    parser.add_argument('--train_ratio', type=float, default= 0.98,
-                    help='Ratio between train/validation samples (use 0 if for test/prediction)')
-
     parser.add_argument('--filter_range', type=int, default= 96 * 60 * 60,
                     help='Time range to choose two images (s)')
 
     parser.add_argument('--half_win_size', type=int, default= 2,
                 help='Time window to calc time freq')
 
+    parser.add_argument('--save_feature_idx', type = ast.literal_eval, default = False,
+                    help='if True, save feature_matrix and pair_feature_matrix to .npy and .npz respectively ')
 
-    parser.add_argument('--generate_plist_idx', type = ast.literal_eval, default = True,
-                    help='if True, generate features from plist info, otherwise, load from the .npy file ')
-
-
-    parser.add_argument('--generate_feature_idx', type = ast.literal_eval, default = True,
-                    help='if True, generate features for two-two compare, otherwise, load from the .npy file ')
-
-    parser.add_argument('--generate_holiday_tab', type = ast.literal_eval, default= False,
-                    help='if True, generate holiday table using api')
 
 
     ##
@@ -685,6 +594,7 @@ if __name__ == '__main__':
     global city_table
     FLAGS, unparsed = parser.parse_known_args()
     print(FLAGS)
+    FLAGS.plist_json = os.path.join(FLAGS.working_path, FLAGS.plist_folder, FLAGS.usr_nm + "_plist.json")
     ## add city_longlat lookup table
     if os.path.exists(os.path.join(FLAGS.working_path, FLAGS.city_lonlat)):
         city_table = (pd.read_csv(os.path.join(FLAGS.working_path, FLAGS.city_lonlat), header=0, names=["city"], dtype='str')).T.to_dict('list')
@@ -692,4 +602,4 @@ if __name__ == '__main__':
         # city_table = pd.DataFrame({"lonlat":[], "city":[]})
         city_table = dict()
 
-    original_path, train_path, predict_path = main(FLAGS)
+    model_inputs = main(FLAGS)

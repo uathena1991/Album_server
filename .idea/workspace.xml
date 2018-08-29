@@ -2,25 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2c717201-9a43-41e3-9f97-e969f26362c4" name="Default" comment="">
+      <change beforePath="" afterPath="$PROJECT_DIR$/model_evaluation.py" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/combine_album_server.py" afterPath="$PROJECT_DIR$/combine_album_server.py" />
-      <change beforePath="$PROJECT_DIR$/data_retriever.cprof" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/data_retriever.cprof.log" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/common_lib.py" afterPath="$PROJECT_DIR$/common_lib.py" />
+      <change beforePath="$PROJECT_DIR$/data_retriever_server.py" afterPath="$PROJECT_DIR$/data_retriever_server.py" />
       <change beforePath="$PROJECT_DIR$/rank_cluster.py" afterPath="$PROJECT_DIR$/rank_cluster.py" />
-      <change beforePath="$PROJECT_DIR$/result.out" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/result.png" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/result_multi.out" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/result_single.out" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/solo_time.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/timeonly_combine_album_server.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/timeonly_data_retriever_server.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/timeonly_wide_deep_predict.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/timeonly_wide_deep_train.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/tmp_check.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/todolist.rtf" afterPath="$PROJECT_DIR$/todolist.rtf" />
       <change beforePath="$PROJECT_DIR$/wide_deep_predict.py" afterPath="$PROJECT_DIR$/wide_deep_predict.py" />
-      <change beforePath="$PROJECT_DIR$/wide_deep_predict_single.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/wide_deep_train.py" afterPath="$PROJECT_DIR$/wide_deep_train.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -31,11 +19,30 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="common_lib.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/common_lib.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="172">
+              <caret line="460" column="0" lean-forward="false" selection-start-line="460" selection-start-column="0" selection-end-line="460" selection-end-column="0" />
+              <folding>
+                <element signature="e#90#181#0" expanded="true" />
+                <element signature="e#475#9216#0" expanded="false" />
+                <element signature="e#9949#10057#0" expanded="false" />
+                <element signature="e#10254#10379#0" expanded="false" />
+                <element signature="e#10564#11315#0" expanded="false" />
+                <element signature="e#11565#13358#0" expanded="false" />
+                <element signature="e#13546#14175#0" expanded="false" />
+                <element signature="e#14366#14601#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="combine_album_server.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/combine_album_server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="348">
-              <caret line="33" column="58" lean-forward="true" selection-start-line="33" selection-start-column="58" selection-end-line="33" selection-end-column="58" />
+            <state relative-caret-position="220">
+              <caret line="20" column="40" lean-forward="true" selection-start-line="20" selection-start-column="40" selection-end-line="20" selection-end-column="40" />
               <folding>
                 <element signature="e#105#114#0" expanded="true" />
               </folding>
@@ -46,25 +53,22 @@
       <file leaf-file-name="data_retriever_server.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data_retriever_server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="616" column="68" lean-forward="false" selection-start-line="616" selection-start-column="57" selection-end-line="616" selection-end-column="68" />
+            <state relative-caret-position="548">
+              <caret line="544" column="14" lean-forward="false" selection-start-line="544" selection-start-column="14" selection-end-line="544" selection-end-column="14" />
               <folding>
                 <element signature="e#106#115#0" expanded="true" />
-                <element signature="e#1043#1315#0" expanded="false" />
-                <element signature="e#1480#1635#0" expanded="false" />
-                <element signature="e#1801#1901#0" expanded="false" />
-                <element signature="e#1952#3023#0" expanded="false" />
-                <element signature="e#3298#7218#0" expanded="false" />
-                <element signature="e#4343#4361#0" expanded="false" />
-                <element signature="e#5390#5397#0" expanded="false" />
-                <element signature="e#7398#7982#0" expanded="false" />
-                <element signature="e#8026#9979#0" expanded="false" />
-                <element signature="e#8063#8461#0" expanded="false" />
-                <element signature="e#10155#10941#0" expanded="false" />
-                <element signature="e#11364#15488#0" expanded="false" />
-                <element signature="e#15680#15915#0" expanded="false" />
-                <element signature="e#17515#20385#0" expanded="false" />
-                <element signature="e#25001#25086#0" expanded="false" />
+                <element signature="e#1086#1358#0" expanded="false" />
+                <element signature="e#1523#1678#0" expanded="false" />
+                <element signature="e#1844#1944#0" expanded="false" />
+                <element signature="e#1995#3066#0" expanded="false" />
+                <element signature="e#3341#7261#0" expanded="false" />
+                <element signature="e#7440#8024#0" expanded="false" />
+                <element signature="e#8197#10150#0" expanded="false" />
+                <element signature="e#8234#8632#0" expanded="false" />
+                <element signature="e#10326#11112#0" expanded="false" />
+                <element signature="e#11409#14966#0" expanded="false" />
+                <element signature="e#15355#15674#1" expanded="false" />
+                <element signature="e#16064#19683#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -73,8 +77,8 @@
       <file leaf-file-name="wide_deep_predict.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wide_deep_predict.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="367">
-              <caret line="67" column="18" lean-forward="false" selection-start-line="67" selection-start-column="18" selection-end-line="67" selection-end-column="18" />
+            <state relative-caret-position="345">
+              <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
               <folding>
                 <element signature="e#273#282#0" expanded="true" />
               </folding>
@@ -85,25 +89,37 @@
       <file leaf-file-name="rank_cluster.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/rank_cluster.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="333">
-              <caret line="455" column="0" lean-forward="false" selection-start-line="455" selection-start-column="0" selection-end-line="455" selection-end-column="0" />
+            <state relative-caret-position="-814">
+              <caret line="273" column="62" lean-forward="false" selection-start-line="273" selection-start-column="47" selection-end-line="273" selection-end-column="62" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <element signature="e#492#860#0" expanded="false" />
-                <element signature="e#967#1214#0" expanded="false" />
-                <element signature="e#1354#1837#0" expanded="false" />
-                <element signature="e#1988#2380#0" expanded="false" />
-                <element signature="e#2519#2898#0" expanded="false" />
-                <element signature="e#3034#3506#0" expanded="false" />
-                <element signature="e#3796#5141#0" expanded="false" />
-                <element signature="e#5252#5594#0" expanded="false" />
-                <element signature="e#5767#6199#0" expanded="false" />
-                <element signature="e#6385#6556#0" expanded="false" />
-                <element signature="e#6688#7748#0" expanded="false" />
-                <element signature="e#7963#11084#0" expanded="false" />
-                <element signature="e#9128#9320#0" expanded="false" />
-                <element signature="e#11205#11934#0" expanded="false" />
-                <element signature="e#17036#17261#0" expanded="false" />
+                <element signature="e#982#1229#0" expanded="false" />
+                <element signature="e#1369#1852#0" expanded="false" />
+                <element signature="e#2003#2395#0" expanded="false" />
+                <element signature="e#2534#2913#0" expanded="false" />
+                <element signature="e#3049#3521#0" expanded="false" />
+                <element signature="e#3811#5156#0" expanded="false" />
+                <element signature="e#5267#5609#0" expanded="false" />
+                <element signature="e#5782#6214#0" expanded="false" />
+                <element signature="e#6421#9542#0" expanded="false" />
+                <element signature="e#7586#7778#0" expanded="false" />
+                <element signature="e#12318#12543#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="model_evaluation.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/model_evaluation.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="81">
+              <caret line="152" column="0" lean-forward="false" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+                <element signature="e#270#444#0" expanded="false" />
+                <element signature="e#584#1764#0" expanded="false" />
+                <element signature="e#1885#2688#0" expanded="false" />
+                <element signature="e#2840#4051#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -120,36 +136,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>e</find>
-      <find>img_label</find>
-      <find>scene_dict</find>
-      <find>model_input_path</find>
-      <find>func_compare</find>
-      <find>cal_accuracy_pair</find>
-      <find>model_folder_name</find>
-      <find>hhl</find>
-      <find>cal_time_freq</find>
+      <find>save_path</find>
       <find>compile_plist_info</find>
-      <find>_label_raw'</find>
-      <find>pic_path_label</find>
-      <find>scene_gt0[[len(x) &gt;= FLAGS.min_pic_num for x in scene_gt0]]</find>
-      <find>half_win_size</find>
-      <find>construct_pair_feature_matrix</find>
-      <find>predictor</find>
-      <find>visualize</find>
-      <find>Time</find>
-      <find>headers</find>
-      <find>city_table</find>
-      <find>pdb.set_trace</find>
-      <find>input_fn</find>
-      <find>except</find>
-      <find>raise</find>
-      <find>city_lonlat</find>
-      <find>build_model_columns</find>
+      <find>train_ratio</find>
       <find>model_type</find>
       <find>model_cond</find>
-      <find>build_estimator</find>
-      <find>get_image_event_scene_label</find>
+      <find>prediction_path</find>
+      <find>model_exported_path</find>
+      <find>save_predict_idx</find>
+      <find>label_pic_path</find>
+      <find>cluster_into_events</find>
+      <find>labeling_image_cluster</find>
+      <find>cluster_into_scenes</find>
+      <find>thre</find>
+      <find>thres</find>
+      <find>filter_range</find>
+      <find>gps_info</find>
+      <find>exif_info</find>
+      <find>output_fn</find>
+      <find>true_label</find>
+      <find>func_compare</find>
+      <find>predict_event</find>
+      <find>true_scene</find>
+      <find>eval_scene_pair</find>
+      <find>construct_pair_feature_matrix</find>
+      <find>image_cluster_idx</find>
+      <find>img_label</find>
+      <find>vis_idx_cluster</find>
+      <find>true_event</find>
+      <find>eval_scene_cluster</find>
+      <find>eval_index</find>
     </findStrings>
     <replaceStrings>
       <replace>img_label</replace>
@@ -170,7 +186,6 @@
         <option value="$PROJECT_DIR$/cluster_from_model.py" />
         <option value="$PROJECT_DIR$/data_retriever.py" />
         <option value="$PROJECT_DIR$/tmp_test.py" />
-        <option value="$PROJECT_DIR$/common_lib.py" />
         <option value="$PROJECT_DIR$/tmp" />
         <option value="$USER_HOME$/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/aa078c76d25a6ca599da6fb69c1d51a6/Message/MessageTemp/9e20f478899dc29eb19741386f9343c8/File/api_album.py" />
         <option value="$PROJECT_DIR$/tmp_delete.py" />
@@ -198,25 +213,27 @@
         <option value="$PROJECT_DIR$/data_retriever.cprof.log" />
         <option value="$PROJECT_DIR$/timeonly_combine_album_server.py" />
         <option value="$PROJECT_DIR$/timeonly_data_retriever_server.py" />
-        <option value="$PROJECT_DIR$/data_retriever_server.py" />
         <option value="$PROJECT_DIR$/timeonly_wide_deep_train.py" />
         <option value="$PROJECT_DIR$/wide_deep_predict_multiprocessing.py" />
         <option value="$PROJECT_DIR$/gps_city_mapping.py" />
         <option value="$PROJECT_DIR$/wide_deep_predict_single.py" />
         <option value="$PROJECT_DIR$/wide_deep_predict_multi_unfinished.py" />
         <option value="$PROJECT_DIR$/timeonly_wide_deep_predict.py" />
-        <option value="$PROJECT_DIR$/rank_cluster.py" />
-        <option value="$PROJECT_DIR$/wide_deep_predict.py" />
         <option value="$PROJECT_DIR$/wide_deep_train.py" />
+        <option value="$PROJECT_DIR$/wide_deep_predict.py" />
+        <option value="$PROJECT_DIR$/data_retriever_server.py" />
+        <option value="$PROJECT_DIR$/common_lib.py" />
+        <option value="$PROJECT_DIR$/rank_cluster.py" />
+        <option value="$PROJECT_DIR$/model_evaluation.py" />
         <option value="$PROJECT_DIR$/combine_album_server.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1905" />
-    <option name="y" value="117" />
-    <option name="width" value="1875" />
-    <option name="height" value="1039" />
+    <option name="x" value="-1920" />
+    <option name="y" value="116" />
+    <option name="width" value="1920" />
+    <option name="height" value="1057" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -422,9 +439,9 @@
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.122696154" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2763018" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19553666" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21253985" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3092455" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30862328" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34112647" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -492,7 +509,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="342" />
+      <option name="time" value="350" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -556,17 +573,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/gprof2dot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="516">
-          <caret line="3302" column="30" lean-forward="false" selection-start-line="3302" selection-start-column="30" selection-end-line="3302" selection-end-column="30" />
-          <folding>
-            <element signature="e#822#832#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/aa078c76d25a6ca599da6fb69c1d51a6/Message/MessageTemp/9e20f478899dc29eb19741386f9343c8/File/api.py" />
     <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/site-packages/requests/api.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="151">
@@ -643,19 +649,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="24">
           <caret line="288" column="27" lean-forward="false" selection-start-line="288" selection-start-column="27" selection-end-line="288" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common_lib.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="339" column="0" lean-forward="false" selection-start-line="339" selection-start-column="0" selection-end-line="339" selection-end-column="0" />
-          <folding>
-            <element signature="e#90#181#0" expanded="false" />
-            <element signature="e#322#9063#0" expanded="false" />
-            <element signature="e#9530#9638#0" expanded="false" />
-            <element signature="e#9702#9827#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -788,14 +781,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sudo_get_input_json.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="48" column="48" lean-forward="false" selection-start-line="48" selection-start-column="34" selection-end-line="48" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/timeonly_data_retriever_server.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="241">
@@ -904,71 +889,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rank_cluster.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="455" column="0" lean-forward="false" selection-start-line="455" selection-start-column="0" selection-end-line="455" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-            <element signature="e#492#860#0" expanded="false" />
-            <element signature="e#967#1214#0" expanded="false" />
-            <element signature="e#1354#1837#0" expanded="false" />
-            <element signature="e#1988#2380#0" expanded="false" />
-            <element signature="e#2519#2898#0" expanded="false" />
-            <element signature="e#3034#3506#0" expanded="false" />
-            <element signature="e#3796#5141#0" expanded="false" />
-            <element signature="e#5252#5594#0" expanded="false" />
-            <element signature="e#5767#6199#0" expanded="false" />
-            <element signature="e#6385#6556#0" expanded="false" />
-            <element signature="e#6688#7748#0" expanded="false" />
-            <element signature="e#7963#11084#0" expanded="false" />
-            <element signature="e#9128#9320#0" expanded="false" />
-            <element signature="e#11205#11934#0" expanded="false" />
-            <element signature="e#17036#17261#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/timeonly_wide_deep_train.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1033">
           <caret line="32" column="46" lean-forward="true" selection-start-line="32" selection-start-column="46" selection-end-line="32" selection-end-column="46" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/wide_deep_predict.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="67" column="18" lean-forward="false" selection-start-line="67" selection-start-column="18" selection-end-line="67" selection-end-column="18" />
-          <folding>
-            <element signature="e#273#282#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/data_retriever_server.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="616" column="68" lean-forward="false" selection-start-line="616" selection-start-column="57" selection-end-line="616" selection-end-column="68" />
-          <folding>
-            <element signature="e#106#115#0" expanded="true" />
-            <element signature="e#1043#1315#0" expanded="false" />
-            <element signature="e#1480#1635#0" expanded="false" />
-            <element signature="e#1801#1901#0" expanded="false" />
-            <element signature="e#1952#3023#0" expanded="false" />
-            <element signature="e#3298#7218#0" expanded="false" />
-            <element signature="e#4343#4361#0" expanded="false" />
-            <element signature="e#5390#5397#0" expanded="false" />
-            <element signature="e#7398#7982#0" expanded="false" />
-            <element signature="e#8026#9979#0" expanded="false" />
-            <element signature="e#8063#8461#0" expanded="false" />
-            <element signature="e#10155#10941#0" expanded="false" />
-            <element signature="e#11364#15488#0" expanded="false" />
-            <element signature="e#15680#15915#0" expanded="false" />
-            <element signature="e#17515#20385#0" expanded="false" />
-            <element signature="e#25001#25086#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -985,16 +910,116 @@
         <state relative-caret-position="426">
           <caret line="149" column="75" lean-forward="false" selection-start-line="149" selection-start-column="75" selection-end-line="149" selection-end-column="75" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#0#9#0" expanded="false" />
             <element signature="e#1528#1627#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/wide_deep_predict.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+          <folding>
+            <element signature="e#273#282#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_retriever_server.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="548">
+          <caret line="544" column="14" lean-forward="false" selection-start-line="544" selection-start-column="14" selection-end-line="544" selection-end-column="14" />
+          <folding>
+            <element signature="e#106#115#0" expanded="true" />
+            <element signature="e#1086#1358#0" expanded="false" />
+            <element signature="e#1523#1678#0" expanded="false" />
+            <element signature="e#1844#1944#0" expanded="false" />
+            <element signature="e#1995#3066#0" expanded="false" />
+            <element signature="e#3341#7261#0" expanded="false" />
+            <element signature="e#7440#8024#0" expanded="false" />
+            <element signature="e#8197#10150#0" expanded="false" />
+            <element signature="e#8234#8632#0" expanded="false" />
+            <element signature="e#10326#11112#0" expanded="false" />
+            <element signature="e#11409#14966#0" expanded="false" />
+            <element signature="e#15355#15674#1" expanded="false" />
+            <element signature="e#16064#19683#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sudo_get_input_json.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="582">
+          <caret line="48" column="48" lean-forward="false" selection-start-line="48" selection-start-column="34" selection-end-line="48" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rank_cluster.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-814">
+          <caret line="273" column="62" lean-forward="false" selection-start-line="273" selection-start-column="47" selection-end-line="273" selection-end-column="62" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#982#1229#0" expanded="false" />
+            <element signature="e#1369#1852#0" expanded="false" />
+            <element signature="e#2003#2395#0" expanded="false" />
+            <element signature="e#2534#2913#0" expanded="false" />
+            <element signature="e#3049#3521#0" expanded="false" />
+            <element signature="e#3811#5156#0" expanded="false" />
+            <element signature="e#5267#5609#0" expanded="false" />
+            <element signature="e#5782#6214#0" expanded="false" />
+            <element signature="e#6421#9542#0" expanded="false" />
+            <element signature="e#7586#7778#0" expanded="false" />
+            <element signature="e#12318#12543#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model_evaluation.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="81">
+          <caret line="152" column="0" lean-forward="false" selection-start-line="152" selection-start-column="0" selection-end-line="152" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#270#444#0" expanded="false" />
+            <element signature="e#584#1764#0" expanded="false" />
+            <element signature="e#1885#2688#0" expanded="false" />
+            <element signature="e#2840#4051#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common_lib.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="460" column="0" lean-forward="false" selection-start-line="460" selection-start-column="0" selection-end-line="460" selection-end-column="0" />
+          <folding>
+            <element signature="e#90#181#0" expanded="true" />
+            <element signature="e#475#9216#0" expanded="false" />
+            <element signature="e#9949#10057#0" expanded="false" />
+            <element signature="e#10254#10379#0" expanded="false" />
+            <element signature="e#10564#11315#0" expanded="false" />
+            <element signature="e#11565#13358#0" expanded="false" />
+            <element signature="e#13546#14175#0" expanded="false" />
+            <element signature="e#14366#14601#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda/envs/tf_py3/lib/python3.6/site-packages/matplotlib/image.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="174" column="0" lean-forward="false" selection-start-line="174" selection-start-column="0" selection-end-line="174" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/combine_album_server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="33" column="58" lean-forward="true" selection-start-line="33" selection-start-column="58" selection-end-line="33" selection-end-column="58" />
+        <state relative-caret-position="220">
+          <caret line="20" column="40" lean-forward="true" selection-start-line="20" selection-start-column="40" selection-end-line="20" selection-end-column="40" />
           <folding>
             <element signature="e#105#114#0" expanded="true" />
           </folding>

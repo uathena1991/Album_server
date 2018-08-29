@@ -2,17 +2,22 @@
 
 """retrieve feature matrix and labels from plist files, and save those to csv"""
 import os
+import pdb
 import argparse
 import ast
+import datetime
+import json
+
 import data_retriever_server as drs
 import wide_deep_predict as wdp
 import rank_cluster as rcr
+import model_evaluation as me
 ##
 parser = argparse.ArgumentParser(description="All parameters")
 
 ######################common string#####################
 
-parser.add_argument('--usr_nm', type=str, default='zd',
+parser.add_argument('--usr_nm', type=str, default='hxl',
                     help='User name')
 
 parser.add_argument('--working_path', type = str,
@@ -26,31 +31,24 @@ parser.add_argument('--image_parent_path', type = str,
                     help='Parent path of images')
 
 
-parser.add_argument('--model_type', type=str, default='timeonly',
+parser.add_argument('--model_type', type=str, default='timegps',
                 help='Model type: timegps, or timeonly; Raise error otherwise.')
 
-parser.add_argument('--model_folder_name', type=str, default='timeonly_Adadelta_L3_noDO_noBN_00003_2',
+parser.add_argument('--model_folder_name', type=str, default='new_timegps_Adadelta_L4_noDO_BN_00003_004_0',
                     help='Base directory for the model.')
 
-##################### bool #####################
+################################ bool ################################
+parser.add_argument('--save_feature_idx', type = ast.literal_eval, default = True,
+                    help='if True, save feature_matrix and pair_feature_matrix to .npy and .npz respectively ')
 
+parser.add_argument('--save_predict_idx', type = ast.literal_eval, default = True,
+                    help='if True, save model prediction to .csv file')
 
-parser.add_argument('--generate_plist_idx', type = ast.literal_eval, default = False,
-                help='if True, generate features from plist info, otherwise, load from the .npy file ')
-
-parser.add_argument('--generate_feature_idx', type = ast.literal_eval, default = False,
-                help='if True, generate features for two-two compare, otherwise, load from the .npy file ')
-
-
-parser.add_argument('--generate_holiday_tab', type = ast.literal_eval, default= False,
-                help='if True, generate holiday table using api')
-
+parser.add_argument('--eval_index', type=ast.literal_eval, default = True,
+                    help='Bool value: whether to evaluate the model results')
 
 parser.add_argument('--vis_idx_cluster', type=ast.literal_eval, default = False,
                     help='Bool value: whether to show clusters.')
-
-parser.add_argument('--vis_idx_rank', type=ast.literal_eval, default = False,
-                    help='Bool value: whether to show ranked albums.')
 
 parser.add_argument('--vis_idx_final', type=ast.literal_eval, default = True,
                     help='Bool value: whether to show final selected albums.')
@@ -73,8 +71,6 @@ parser.add_argument('--max_album', type=int, default= 50,
                     help='Max numbers of albums needed')
 
 
-parser.add_argument('--thres_scene', type=float, default = 0.16,
-                    help='Threshold(normalized) for clustering small scenes')
 
 parser.add_argument('--train_ratio', type=float, default = 0.0,
                     help='Ratio between train/test')
@@ -129,22 +125,32 @@ def main(FLAGS):
 	###### data preprocessing ############
 	print('++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 	print("Data preprocessing....")
-	original_path, train_path, predict_path = drs.main(FLAGS)
-	FLAGS.predict_input = predict_path
+	model_inputs, npz_features = drs.main(FLAGS)
 	####### model prediction #############
 	print('++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 	print("Model prediction....")
-	cts, acc, prec, rec, auc, predict_fn = wdp.main(FLAGS)
-	FLAGS.predict_output = predict_fn
-	res['Event_res'] = {'eval': (cts, acc, prec, rec, auc), 'file': predict_fn}
-	print("Double-check: prediction file: %s" %FLAGS.predict_output)
-	######## rank cluster #############
+	predict_df = wdp.main(FLAGS, model_inputs)
+	if FLAGS.save_predict_idx:
+		new_headers = list(model_inputs.columns) + ['predict_label', 'probability']
+		output_fn = os.path.join(FLAGS.working_path, FLAGS.prediction_path,
+                     "%s_pred_%s_%s_%s.csv" % (FLAGS.model_type, FLAGS.usr_nm, FLAGS.model_folder_name, datetime.datetime.now().strftime("%Y%m%d%H%M%S")))	######## rank cluster #############
+		predict_df.to_csv(output_fn, header=new_headers, index = False)
+
+	####### clustering based on model prediction #############
 	print('++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 	print('Scene splitting...')
 	FLAGS.label_pic_path = FLAGS.usr_nm + '_label_raw'
-	res_file, acc, rec, prec, auc = rcr.main(FLAGS)
-	res['Scene_res'] = {'eval': ( acc, rec, prec, auc), 'file': res_file}
-	return res_file, res
+	res_dict = rcr.main(FLAGS, npz_features, predict_df)
+	res['Scene_res'] = res_dict
+	if FLAGS.eval_index:
+		res['Evaluation'] = me.main(predict_df['predict_event'], predict_df['Label_e'],
+		                            res_dict['predict_img_label'], npz_features['true_label'],
+		                            json.loads(res_dict['res_final']),
+		                            npz_features['file_names'],
+		                            FLAGS.min_pic_num, FLAGS.max_pic)
+
+	return res
+
 
 
 

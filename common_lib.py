@@ -12,9 +12,11 @@ from __future__ import (
 # Third-party libraries
 import numpy as np
 import os
+import pandas as pd
 from skimage import io
 import matplotlib.pyplot as plt
 
+####################################################################################################################################
 
 class UnionFind(object):
     """Union-find disjoint sets datastructure.
@@ -333,6 +335,7 @@ class UnionFind(object):
             # comps.update({x: set(comp) for x in comp})
         return comps
 
+####################################################################################################################################
 
 
 def find_all_file_name(file_dir, file_type = '.jpg', keyword = ''):  # 特定类型的文件
@@ -343,6 +346,7 @@ def find_all_file_name(file_dir, file_type = '.jpg', keyword = ''):  # 特定类
                 L.append((os.path.join(root, file), file))
     print("%d files found in %s\n" %(len(L),file_dir))
     return L
+####################################################################################################################################
 
 
 
@@ -352,6 +356,7 @@ def save_file(list, filename, filepath = os.getcwd(), filesep = '/'):
     for item in list:
         thefile.write("%s\n" %item)
 
+####################################################################################################################################
 
 
 
@@ -364,6 +369,7 @@ def load_image(filename, path = '', full_path = True):
 
 
 
+####################################################################################################################################
 
 def visualize_cluster(clusters, img_path):
     idx = 0
@@ -386,4 +392,70 @@ def visualize_cluster(clusters, img_path):
         plt.suptitle("Event %d has %d pics" %(idx, len(cl)))
         idx += 1
     plt.show(all)
+
+
+
+################################################################################################################################
+def save2csv(features_m, file_names, usr_nm, train_ratio, save_path, file_type='original', convert_idx_fn=True):
+    # (optional) save it to a file
+    # pdb.set_trace()
+    columns_name = ['1st Image', '2nd Image', 'Distance', 'Sec', 'Day', 'Sec_in_day', 'Delta_time_freq',
+                    'ExposureTime', 'Flash', 'FocalLength', 'ShutterSpeedValue', 'SceneType', 'SensingMethod',
+                    'Holiday', 'Delta_closest_holiday', 'Average_closest_holiday', 'Average_city_prop',
+                    'Label_e', "Label_s"]
+    try:
+        df = pd.DataFrame(features_m, columns = columns_name)
+        # pdb.set_trace()
+        if convert_idx_fn:
+            df.loc[:, '1st Image'] = file_names[df['1st Image'].apply(int)]  # convert 1st Image to an int
+            df.loc[:, '2nd Image'] = file_names[df['2nd Image'].apply(int)]  # convert 2nd Image to an int
+
+        df.loc[:, 'Day'] = df['Day'].apply(int)  # convert Day to an int
+        df.loc[:, 'SceneType'] = df['SceneType'].apply(int)  # convert SceneType to an int
+        df.loc[:, 'SensingMethod'] = df['SensingMethod'].apply(int)  # convert SensingMethod to an int
+        df.loc[:, 'Label_e'] = df['Label_e'].apply(int)  # convert Label_e to an int
+        df.loc[:, 'Label_s'] = df['Label_s'].apply(int)  # convert Label_s to an int
+        df.loc[:, 'Holiday'] = df['Holiday'].apply(int)  # convert Holiday to an int
+        df.to_csv(os.path.join(save_path, file_type, "%s_%s_data_%1.2f.csv" %(usr_nm, file_type, train_ratio)), header=None, index=False)
+        print("Number of %s samples is %d" %(file_type, len(df)))
+    except Exception as e:
+        print('Error: save %s failed!!!' %file_type)
+        print(str(e))
+        return os.path.join(save_path, file_type, "%s_%s_data_%1.2f.csv" %(usr_nm, file_type, train_ratio))
+    return os.path.join(save_path, file_type, "%s_%s_data_%1.2f.csv" %(usr_nm, file_type, train_ratio))
+
+
+################################################################################################################################
+def combine_csv(name_list, output_nm, common_path):
+    """
+    name_list = ['hxl', 'hw', 'zzx', 'zt', 'zd', 'wy_tmp', 'lf', 'hhl', 'hxl2016']
+    :param name_list:
+    :param output_nm:
+    :param common_path:
+    :return:
+    """
+    try:
+        if os.path.exists(os.path.join(common_path, output_nm)):
+            fout = open(os.path.join(common_path, output_nm), 'w')
+        else:
+            fout = open(os.path.join(common_path, output_nm), 'a')
+        for nm in name_list:
+            fnm = open(os.path.join(common_path, nm))
+            [fout.write(line) for line in fnm]
+        fout.close()
+    except Exception as e:
+        print(e)
+        return False
+    return True
+
+
+####################################################################################################################################
+def seperate_train_val(filename, train_size=0.98):
+    features_m = (pd.read_csv(filename)).values
+    np.random.shuffle(features_m)
+    # split into training and validation data set
+    sep_idx = int(len(features_m) * train_size)
+    return features_m[:sep_idx, :], features_m[sep_idx:, :]
+
+
 
